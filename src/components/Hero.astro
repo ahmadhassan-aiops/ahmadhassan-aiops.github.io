@@ -1,0 +1,353 @@
+---
+---
+
+<section id="hero" class="hero-section">
+  <!-- Background -->
+  <div class="hero-bg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <div class="bg-grid hero-grid"></div>
+  </div>
+
+  <div class="section-container hero-container">
+    <!-- Badge -->
+    <div class="hero-badge reveal">
+      <span class="badge-dot"></span>
+      <span>Available for Freelance & Full-Time Roles</span>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="hero-name reveal">
+      Ahmad<br />
+      <span class="gradient-text">Hassan</span>
+    </h1>
+
+    <!-- Titles -->
+    <div class="hero-titles reveal">
+      <span id="typed-title" class="typed-text"></span>
+      <span class="cursor">|</span>
+    </div>
+
+    <!-- Tagline -->
+    <p class="hero-tagline reveal">
+      ML Engineer & AI Educator bridging the gap between complex algorithms and real-world impact.
+      <br class="hidden md:block" />
+      From drug molecules to neural networks — a unique perspective on learning and building.
+    </p>
+
+    <!-- CTAs -->
+    <div class="hero-actions reveal">
+      <a href="#projects" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Explore My Work
+      </a>
+      <a href="#roadmaps" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+        </svg>
+        Teaching Roadmaps
+      </a>
+    </div>
+
+    <!-- Hero stats -->
+    <div class="hero-stats reveal">
+      <div class="stat-item">
+        <span class="stat-number gradient-text">1500+</span>
+        <span class="stat-label">Teaching Hours</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number gradient-text">100+</span>
+        <span class="stat-label">Students Mentored</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number gradient-text">30+</span>
+        <span class="stat-label">ML Projects</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number gradient-text">5+</span>
+        <span class="stat-label">Years in Data Science</span>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <a href="#about" class="scroll-indicator" aria-label="Scroll to about">
+      <span class="scroll-dot"></span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 120px 0 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+  }
+
+  .orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
+    top: -200px;
+    right: -100px;
+  }
+
+  .orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.08), transparent 70%);
+    bottom: -100px;
+    left: -100px;
+  }
+
+  .orb-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.06), transparent 70%);
+    top: 40%;
+    left: 40%;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px 6px 8px;
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #34d399;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+  }
+
+  .hero-name {
+    font-size: clamp(56px, 10vw, 104px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: var(--text-primary);
+  }
+
+  .hero-titles {
+    font-size: clamp(18px, 3vw, 26px);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .typed-text {
+    color: var(--primary-light);
+  }
+
+  .cursor {
+    animation: blink 1s step-end infinite;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .hero-tagline {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    background: rgba(17, 17, 39, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 28px;
+    backdrop-filter: blur(12px);
+    gap: 0;
+    margin-top: 8px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 28px;
+    gap: 4px;
+  }
+
+  .stat-item:first-child {
+    padding-left: 0;
+  }
+
+  .stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--border);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+
+  .scroll-indicator:hover {
+    opacity: 1;
+  }
+
+  .scroll-dot {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .scroll-dot::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: var(--primary-light);
+    border-radius: 2px;
+    animation: scroll-bounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(12px); opacity: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats {
+      padding: 16px 20px;
+    }
+    .stat-item {
+      padding: 8px 16px;
+    }
+    .stat-divider {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const titles = [
+    'ML Engineer',
+    'Data Scientist',
+    'AI Educator',
+    'DevOps Practitioner',
+    'GenAI Developer',
+    'Cloud & Security Specialist',
+  ];
+
+  const el = document.getElementById('typed-title');
+  let titleIdx = 0;
+  let charIdx = 0;
+  let deleting = false;
+  let pauseCount = 0;
+
+  function type() {
+    const current = titles[titleIdx];
+
+    if (!deleting) {
+      charIdx++;
+      if (el) el.textContent = current.slice(0, charIdx);
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(type, 1800);
+        return;
+      }
+    } else {
+      charIdx--;
+      if (el) el.textContent = current.slice(0, charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        titleIdx = (titleIdx + 1) % titles.length;
+      }
+    }
+
+    setTimeout(type, deleting ? 50 : 80);
+  }
+
+  setTimeout(type, 500);
+</script>

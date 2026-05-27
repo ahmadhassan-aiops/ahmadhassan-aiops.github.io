@@ -1,0 +1,330 @@
+---
+const achievements = [
+  {
+    icon: '🎓',
+    title: 'PharmD — Quaid-i-Azam University',
+    subtitle: '3.9 / 4.0 cGPA · Graduated 2024',
+    desc: 'Top-performing graduate in one of Pakistan\'s most rigorous pharmaceutical programs, building a foundation in scientific research, data interpretation, and analytical thinking.',
+    tags: ['Research', 'Analytical Chemistry', 'Clinical Data'],
+    color: 'purple',
+    year: '2024',
+  },
+  {
+    icon: '📜',
+    title: 'AIOPS Eduqual Level 6 Diploma',
+    subtitle: 'ALNafi Institute · In Progress',
+    desc: 'Industry-level AIOps diploma covering Cyber Security, DevOps, Cloud Architecture, System Administration, and AI Systems — the complete operational stack for modern AI deployment.',
+    tags: ['DevOps', 'Cloud', 'Cyber Security', 'AI Systems'],
+    color: 'cyan',
+    year: '2024–Now',
+    inProgress: true,
+  },
+  {
+    icon: '🧑‍🏫',
+    title: '1,500+ Teaching Hours',
+    subtitle: 'Superprof · Top Tutor',
+    desc: 'Accumulated over 1500 hours of live 1-on-1 and group instruction in Data Science, ML, and AI over approximately 2 years — making complex topics accessible to complete beginners.',
+    tags: ['Superprof', 'Online Teaching', 'Mentoring'],
+    color: 'green',
+    year: '2022–Now',
+  },
+  {
+    icon: '👥',
+    title: '100+ Students Mentored',
+    subtitle: 'Cross-domain · Career Transitions',
+    desc: 'Collaborated with over 100 students from medicine, business, engineering, and liberal arts backgrounds — guiding them through career transitions into Data Science and MLOps roles.',
+    tags: ['Career Coaching', 'Curriculum Design', 'DS/ML'],
+    color: 'warn',
+    year: '2022–Now',
+  },
+  {
+    icon: '☁️',
+    title: 'Kubernetes Certification Path',
+    subtitle: 'KCNA · CKAD · CKA · CKS · KCSA',
+    desc: 'Pursuing the full Kubestronaut certification stack — from cloud native associate through security specialist — as part of the Golden Kubestronaut program.',
+    tags: ['Kubernetes', 'CNCF', 'Cloud Native'],
+    color: 'cyan',
+    year: 'In Progress',
+    inProgress: true,
+  },
+  {
+    icon: '🔐',
+    title: 'Security Certifications Path',
+    subtitle: 'CISSP · CCSP · CCSK · ISSAP',
+    desc: 'Actively studying toward top-tier security certifications covering enterprise security architecture, cloud security, and identity management at the advanced practitioner level.',
+    tags: ['CISSP', 'CCSP', 'Cloud Security'],
+    color: 'warn',
+    year: 'In Progress',
+    inProgress: true,
+  },
+  {
+    icon: '🤖',
+    title: '30+ End-to-End ML Projects',
+    subtitle: 'Production-Grade · Multi-Domain',
+    desc: 'Delivered 30+ complete ML projects spanning data analysis, machine learning, deep learning, NLP, computer vision, GenAI, and business intelligence.',
+    tags: ['Python', 'ML/DL', 'GenAI', 'BI'],
+    color: 'green',
+    year: '2020–Now',
+  },
+  {
+    icon: '⚡',
+    title: '5+ Years in Data Science',
+    subtitle: 'Self-taught → Industry Expert',
+    desc: 'Built expertise from zero in 2020 through deliberate practice, real projects, and hands-on teaching — compressing years of experience into a proven skill set.',
+    tags: ['ML', 'Deep Learning', 'MLOps', 'GenAI'],
+    color: 'purple',
+    year: '2020–Now',
+  },
+];
+
+const stats = [
+  { number: '1,500+', label: 'Teaching Hours', icon: '⏱' },
+  { number: '100+', label: 'Students', icon: '👥' },
+  { number: '30+', label: 'Projects', icon: '🚀' },
+  { number: '3.9/4.0', label: 'cGPA', icon: '🎓' },
+  { number: '5+', label: 'Years DS/ML', icon: '📈' },
+  { number: '7+', label: 'Tech Domains', icon: '🧠' },
+];
+---
+
+<section id="achievements" class="achievements-section">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <span class="section-label">Milestones</span>
+      <h2 class="section-heading">
+        Achievements & <span class="gradient-text">Recognition</span>
+      </h2>
+      <p class="section-desc">
+        A track record built through years of consistent learning, teaching, and building.
+      </p>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stats-row reveal">
+      {stats.map(stat => (
+        <div class="stat-card">
+          <span class="stat-emoji">{stat.icon}</span>
+          <span class="stat-num gradient-text">{stat.number}</span>
+          <span class="stat-lbl">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Achievement cards grid -->
+    <div class="achievements-grid">
+      {achievements.map((item, i) => (
+        <div class={`achievement-card color-${item.color} reveal`} style={`animation-delay: ${i * 0.05}s`}>
+          <div class="ach-header">
+            <span class="ach-icon">{item.icon}</span>
+            <div class="ach-meta">
+              <h3 class="ach-title">{item.title}</h3>
+              <p class="ach-subtitle">
+                {item.subtitle}
+                {item.inProgress && <span class="progress-pill">In Progress</span>}
+              </p>
+            </div>
+            <span class="ach-year">{item.year}</span>
+          </div>
+          <p class="ach-desc">{item.desc}</p>
+          <div class="ach-tags">
+            {item.tags.map(tag => (
+              <span class={`tag tag-${item.color === 'cyan' ? 'cyan' : item.color === 'green' ? 'green' : item.color === 'warn' ? 'warn' : ''}`}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .achievements-section {
+    padding: 100px 0;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .achievements-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-heading {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 12px 0 16px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 460px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 60px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .stat-emoji {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .stat-num {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Achievement cards */
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 20px;
+  }
+
+  .achievement-card {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border-left: 3px solid;
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .color-purple { border-left-color: var(--primary); }
+  .color-cyan   { border-left-color: var(--accent); }
+  .color-green  { border-left-color: var(--success); }
+  .color-warn   { border-left-color: var(--warn); }
+
+  .color-purple:hover { box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15); }
+  .color-cyan:hover   { box-shadow: 0 8px 32px rgba(34, 211, 238, 0.15); }
+  .color-green:hover  { box-shadow: 0 8px 32px rgba(52, 211, 153, 0.15); }
+  .color-warn:hover   { box-shadow: 0 8px 32px rgba(251, 191, 36, 0.15); }
+
+  .ach-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .ach-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .ach-meta {
+    flex: 1;
+  }
+
+  .ach-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+
+  .ach-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .progress-pill {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    color: var(--warn);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .ach-year {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+
+  .ach-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .ach-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  @media (max-width: 1024px) {
+    .stats-row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .achievements-grid {
+      grid-template-columns: 1fr;
+    }
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

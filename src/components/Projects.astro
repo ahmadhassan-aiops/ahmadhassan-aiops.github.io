@@ -1,0 +1,544 @@
+---
+const projects = [
+  // Data Analysis
+  {
+    title: 'Instacart Customer Behavior Analysis',
+    desc: 'Deep EDA on grocery ordering patterns — repeat purchases, order timing, product affinities, and customer segmentation.',
+    tags: ['Python', 'Pandas', 'Matplotlib', 'EDA'],
+    category: 'analysis',
+    gradient: 'from-violet-900 to-purple-900',
+  },
+  {
+    title: 'Megaline Telecom Usage Analysis',
+    desc: 'Statistical analysis of two prepaid plans (Surf vs. Ultimate) to determine which generates more revenue for the business.',
+    tags: ['Python', 'Statistics', 'Hypothesis Testing', 'Seaborn'],
+    category: 'analysis',
+    gradient: 'from-purple-900 to-indigo-900',
+  },
+  {
+    title: 'Microsoft SaaS Products Analysis',
+    desc: 'Multi-dimensional analysis of SaaS product usage, customer segments, and retention patterns across Microsoft product lines.',
+    tags: ['Pandas', 'EDA', 'Business Intelligence'],
+    category: 'analysis',
+    gradient: 'from-indigo-900 to-blue-900',
+  },
+  {
+    title: 'San Francisco Housing Rental Analysis',
+    desc: 'Geographic and temporal analysis of rental markets in SF, uncovering pricing trends, neighborhood patterns, and investment opportunities.',
+    tags: ['Python', 'GeoPandas', 'Visualization', 'Real Estate'],
+    category: 'analysis',
+    gradient: 'from-blue-900 to-cyan-900',
+  },
+  {
+    title: 'Taxi Company Revenue Analysis',
+    desc: 'Analysis of ride patterns, peak hours, driver efficiency, and revenue optimization strategies for a taxi service.',
+    tags: ['Pandas', 'Time Series', 'Matplotlib'],
+    category: 'analysis',
+    gradient: 'from-cyan-900 to-teal-900',
+  },
+  {
+    title: 'Video Games Console Sale Analysis',
+    desc: 'Sales trend analysis across gaming platforms, genres, and regions to identify the most profitable market segments.',
+    tags: ['Python', 'EDA', 'Statistical Testing'],
+    category: 'analysis',
+    gradient: 'from-teal-900 to-emerald-900',
+  },
+  {
+    title: 'Stroke Risk Exploratory Analysis',
+    desc: 'Clinical data analysis identifying key risk factors for stroke — including hypertension, BMI, glucose levels, and age correlations.',
+    tags: ['Medical Data', 'Seaborn', 'Correlation Analysis'],
+    category: 'analysis',
+    gradient: 'from-rose-900 to-pink-900',
+  },
+
+  // Machine Learning
+  {
+    title: 'Bank Customer Churn Prediction',
+    desc: 'Ensemble model (XGBoost + Random Forest) to predict which customers are likely to leave Beta Bank, achieving 85%+ F1-score.',
+    tags: ['XGBoost', 'Scikit-learn', 'SMOTE', 'Feature Engineering'],
+    category: 'ml',
+    gradient: 'from-violet-900 to-purple-800',
+    featured: true,
+  },
+  {
+    title: 'Gold Recovery Prediction (Mining)',
+    desc: 'Multi-stage regression model predicting gold recovery rate at rougher and final purification stages to optimize extraction.',
+    tags: ['Regression', 'Pipeline', 'Cross-validation', 'sMAPE'],
+    category: 'ml',
+    gradient: 'from-yellow-900 to-amber-900',
+    featured: true,
+  },
+  {
+    title: 'Optimal Oil Well Location (Bootstrapping)',
+    desc: 'Geospatial ML model using bootstrapping to identify the most profitable oil well locations, balancing risk and expected return.',
+    tags: ['Linear Regression', 'Bootstrapping', 'Risk Analysis'],
+    category: 'ml',
+    gradient: 'from-gray-900 to-slate-900',
+  },
+  {
+    title: 'Rusty Bargain — Used Car Price Model',
+    desc: 'Gradient boosting model for a used car marketplace to predict fair market prices, compared across LightGBM, XGBoost, and Random Forest.',
+    tags: ['LightGBM', 'XGBoost', 'RMSE Optimization'],
+    category: 'ml',
+    gradient: 'from-orange-900 to-red-900',
+  },
+  {
+    title: 'Sweet Lift Taxi Demand Forecasting',
+    desc: 'Time series forecasting of hourly taxi demand at airports using ARIMA, LightGBM, and feature engineering on lag/window features.',
+    tags: ['Time Series', 'LightGBM', 'ARIMA', 'Feature Engineering'],
+    category: 'ml',
+    gradient: 'from-sky-900 to-blue-900',
+  },
+  {
+    title: 'Insurance Benefit Regression',
+    desc: 'Linear regression and obfuscation-safe model for predicting insurance payouts while protecting customer data privacy.',
+    tags: ['Linear Regression', 'Data Masking', 'Similarity Analysis'],
+    category: 'ml',
+    gradient: 'from-emerald-900 to-green-900',
+  },
+  {
+    title: 'Mobile User Plan Classification',
+    desc: 'Decision tree and random forest classifier to recommend the optimal mobile plan (Smart/Ultra) based on user behavior.',
+    tags: ['Classification', 'Decision Tree', 'Random Forest'],
+    category: 'ml',
+    gradient: 'from-indigo-900 to-violet-900',
+  },
+  {
+    title: 'Bank Loan Default Prediction',
+    desc: 'End-to-end ML pipeline predicting probability of loan default with model explainability using SHAP values.',
+    tags: ['XGBoost', 'SHAP', 'Class Imbalance', 'Pipeline'],
+    category: 'ml',
+    gradient: 'from-red-900 to-rose-900',
+  },
+  {
+    title: 'Predictive Maintenance Cost Reduction',
+    desc: 'ML model predicting equipment failure probability to shift from reactive to proactive maintenance, reducing operational costs.',
+    tags: ['Classification', 'Cost-benefit Analysis', 'Reliability'],
+    category: 'ml',
+    gradient: 'from-zinc-900 to-gray-900',
+  },
+
+  // Deep Learning
+  {
+    title: 'Churn Prediction via Neural Network',
+    desc: 'Deep learning approach to customer churn — ANN with dropout regularization outperforming classical ML baselines.',
+    tags: ['Keras', 'ANN', 'Dropout', 'Binary Classification'],
+    category: 'dl',
+    gradient: 'from-purple-900 to-pink-900',
+    featured: true,
+  },
+
+  // Computer Vision / NLP
+  {
+    title: 'Computer Vision Classification',
+    desc: 'CNN-based image classification pipeline with transfer learning (ResNet), data augmentation, and production-ready inference.',
+    tags: ['CNN', 'ResNet', 'Transfer Learning', 'OpenCV'],
+    category: 'cv-nlp',
+    gradient: 'from-blue-900 to-violet-900',
+    featured: true,
+  },
+  {
+    title: 'Bank Customer Complaints Summarization',
+    desc: 'NLP pipeline using transformer-based models to automatically summarize customer complaints, reducing support team workload.',
+    tags: ['Transformers', 'Hugging Face', 'NLP', 'Text Summarization'],
+    category: 'cv-nlp',
+    gradient: 'from-teal-900 to-cyan-900',
+  },
+
+  // GenAI
+  {
+    title: 'Complaints Classification — Fine-tuned LLM',
+    desc: 'Fine-tuned DistilBERT for multi-class complaint categorization, achieving >92% accuracy vs. zero-shot baseline.',
+    tags: ['LoRA', 'Hugging Face', 'Fine-tuning', 'NLP'],
+    category: 'genai',
+    gradient: 'from-fuchsia-900 to-purple-900',
+    featured: true,
+  },
+  {
+    title: 'AI Nutritional Advisor Bot',
+    desc: 'LLM-powered conversational bot providing personalized nutritional advice, integrated with dietary databases and RAG.',
+    tags: ['LangChain', 'RAG', 'GPT API', 'Streamlit'],
+    category: 'genai',
+    gradient: 'from-green-900 to-teal-900',
+  },
+  {
+    title: 'Text-to-Image with Stable Diffusion',
+    desc: 'DreamBooth fine-tuning pipeline to generate personalized images with Stable Diffusion, including custom artist style training.',
+    tags: ['Stable Diffusion', 'DreamBooth', 'LoRA', 'Diffusers'],
+    category: 'genai',
+    gradient: 'from-rose-900 to-fuchsia-900',
+    featured: true,
+  },
+
+  // SQL & BI
+  {
+    title: 'AdventureHubs SQL Analysis',
+    desc: 'Complex SQL queries on AdventureWorks database — joins, window functions, CTEs, and performance optimization.',
+    tags: ['SQL', 'Window Functions', 'CTEs', 'Query Optimization'],
+    category: 'sql-bi',
+    gradient: 'from-blue-900 to-indigo-900',
+  },
+  {
+    title: 'SQL + Python + Power BI ETL Pipeline',
+    desc: 'Full ETL pipeline extracting from SQL Server, transforming with Python/Pandas, loading to Power BI for executive dashboards.',
+    tags: ['SQL', 'Python', 'Power BI', 'ETL'],
+    category: 'sql-bi',
+    gradient: 'from-cyan-900 to-sky-900',
+    featured: true,
+  },
+  {
+    title: 'HR Attrition Dashboard (Tableau)',
+    desc: 'Interactive Tableau dashboard visualizing employee attrition patterns, satisfaction scores, and retention risk factors.',
+    tags: ['Tableau', 'HR Analytics', 'Dashboard Design'],
+    category: 'sql-bi',
+    gradient: 'from-orange-900 to-amber-900',
+  },
+  {
+    title: 'Medical Settings Comparative Analysis',
+    desc: 'Tableau analysis comparing performance across medical settings — patient outcomes, treatment efficacy, resource utilization.',
+    tags: ['Tableau', 'Healthcare Analytics', 'KPI Visualization'],
+    category: 'sql-bi',
+    gradient: 'from-emerald-900 to-teal-900',
+  },
+];
+
+const filters = [
+  { id: 'all', label: 'All Projects', count: projects.length },
+  { id: 'analysis', label: 'Data Analysis', count: projects.filter(p => p.category === 'analysis').length },
+  { id: 'ml', label: 'Machine Learning', count: projects.filter(p => p.category === 'ml').length },
+  { id: 'dl', label: 'Deep Learning', count: projects.filter(p => p.category === 'dl').length },
+  { id: 'cv-nlp', label: 'CV & NLP', count: projects.filter(p => p.category === 'cv-nlp').length },
+  { id: 'genai', label: 'Generative AI', count: projects.filter(p => p.category === 'genai').length },
+  { id: 'sql-bi', label: 'SQL & BI', count: projects.filter(p => p.category === 'sql-bi').length },
+];
+---
+
+<section id="projects" class="projects-section">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-heading">
+        Projects That <span class="gradient-text">Speak for Themselves</span>
+      </h2>
+      <p class="section-desc">
+        Over 30 projects spanning data analysis, machine learning, generative AI, and BI — each built to solve a real problem.
+      </p>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs reveal" role="group" aria-label="Project filters">
+      {filters.map((f, i) => (
+        <button
+          class={`filter-btn ${i === 0 ? 'active' : ''}`}
+          data-filter={f.id}
+        >
+          {f.label}
+          <span class="filter-count">{f.count}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Projects grid -->
+    <div class="projects-grid" id="projects-grid">
+      {projects.map(project => (
+        <article
+          class={`project-card ${project.featured ? 'featured' : ''}`}
+          data-category={project.category}
+        >
+          <!-- Card gradient header -->
+          <div class={`card-header bg-gradient-to-br ${project.gradient}`}>
+            {project.featured && (
+              <span class="featured-badge">⭐ Featured</span>
+            )}
+            <span class={`category-badge cat-${project.category}`}>
+              {filters.find(f => f.id === project.category)?.label}
+            </span>
+          </div>
+
+          <!-- Card body -->
+          <div class="card-body">
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-desc">{project.desc}</p>
+          </div>
+
+          <!-- Card footer -->
+          <div class="card-footer">
+            <div class="tech-tags">
+              {project.tags.slice(0, 3).map(tag => (
+                <span class="tech-tag">{tag}</span>
+              ))}
+              {project.tags.length > 3 && (
+                <span class="tech-tag more">+{project.tags.length - 3}</span>
+              )}
+            </div>
+            <a href="https://github.com/ahmadhassan-aiops" target="_blank" rel="noopener" class="github-link" aria-label="View on GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- No results -->
+    <div id="no-results" class="no-results" style="display: none;">
+      <p>No projects in this category yet.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    padding: 100px 0;
+    background: var(--bg-secondary);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-heading {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 12px 0 16px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Filters */
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: rgba(139, 92, 246, 0.3);
+    color: var(--text-secondary);
+  }
+
+  .filter-btn.active {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.5);
+    color: var(--primary-light);
+  }
+
+  .filter-count {
+    font-size: 11px;
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--primary-light);
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  /* Card */
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .project-card:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.15);
+  }
+
+  .project-card.featured {
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+
+  .project-card.hidden {
+    display: none;
+  }
+
+  .card-header {
+    height: 80px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .featured-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(251, 191, 36, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+  }
+
+  .category-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: auto;
+  }
+
+  .cat-analysis { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+  .cat-ml { background: rgba(34, 211, 238, 0.2); color: #67e8f9; }
+  .cat-dl { background: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+  .cat-cv-nlp { background: rgba(251, 146, 60, 0.2); color: #fdba74; }
+  .cat-genai { background: rgba(236, 72, 153, 0.2); color: #f9a8d4; }
+  .cat-sql-bi { background: rgba(96, 165, 250, 0.2); color: #93c5fd; }
+
+  .card-body {
+    padding: 20px;
+    flex: 1;
+  }
+
+  .project-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .card-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .tech-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .tech-tag.more {
+    background: rgba(30, 30, 56, 0.8);
+    border-color: var(--border);
+  }
+
+  .project-card:hover .tech-tag {
+    border-color: rgba(139, 92, 246, 0.25);
+    color: var(--text-secondary);
+  }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .github-link:hover {
+    color: var(--primary-light);
+    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.08);
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+  const noResults = document.getElementById('no-results');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      let visible = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+
+      if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+</script>

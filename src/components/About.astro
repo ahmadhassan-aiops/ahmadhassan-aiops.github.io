@@ -1,0 +1,273 @@
+---
+---
+
+<section id="about" class="about-section">
+  <div class="glow-orb about-orb"></div>
+  <div class="section-container">
+    <div class="about-grid">
+
+      <!-- Left: Avatar + Quick info -->
+      <div class="about-left reveal">
+        <div class="avatar-container">
+          <div class="avatar">
+            <span>AH</span>
+          </div>
+          <div class="avatar-ring"></div>
+          <div class="avatar-badge">
+            <span>🧪→🤖</span>
+            <span>PharmD → ML</span>
+          </div>
+        </div>
+
+        <div class="quick-info">
+          <div class="info-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Pakistan</span>
+          </div>
+          <div class="info-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+            <span>PharmD · QAU · 3.9/4.0 cGPA</span>
+          </div>
+          <div class="info-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.95 3.38 2 2 0 0 1 3.94 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span>Freelancer · Superprof</span>
+          </div>
+          <div class="info-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span>ahmad.hds393@gmail.com</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Story -->
+      <div class="about-right">
+        <div class="reveal">
+          <span class="section-label">About Me</span>
+          <h2 class="section-heading">
+            From Drug Molecules<br />
+            to <span class="gradient-text">Neural Networks</span>
+          </h2>
+        </div>
+
+        <div class="about-story reveal">
+          <p>
+            I started my journey in pharmacy at Quaid-i-Azam University, graduating with a
+            <strong>3.9/4.0 cGPA</strong> in 2024. But halfway through my degree in 2020, I discovered
+            data science — and it changed everything.
+          </p>
+          <p>
+            What began as curiosity quickly became expertise. I self-taught ML, Deep Learning,
+            Computer Vision, NLP, and Generative AI while completing my PharmD. The analytical
+            rigor of pharmaceutical sciences turned out to be the perfect foundation for understanding
+            complex models and interpreting data.
+          </p>
+          <p>
+            Today I combine that dual background with <strong>5+ years of hands-on experience</strong>
+            in building and deploying ML systems — and I've turned that knowledge into
+            <strong>1500+ hours of teaching</strong> on Superprof, mentoring over 100 students from
+            non-technical backgrounds into ML practitioners.
+          </p>
+          <p>
+            I'm currently deepening my formal AI credentials through an
+            <strong>AIOPS Eduqual Level 6 Diploma</strong> at ALNafi — covering Cyber Security,
+            DevOps, Cloud Architecture, and AI Systems — building a rare end-to-end perspective
+            from data pipeline to production infrastructure.
+          </p>
+        </div>
+
+        <!-- Current focus tags -->
+        <div class="focus-tags reveal">
+          <span class="section-label" style="display: block; margin-bottom: 12px;">Current Focus</span>
+          <div class="tag-list">
+            <span class="tag">MLOps / AIOps</span>
+            <span class="tag tag-cyan">Kubernetes (CKA/CKAD)</span>
+            <span class="tag tag-green">Generative AI</span>
+            <span class="tag">Cloud Security</span>
+            <span class="tag tag-warn">n8n Automation</span>
+            <span class="tag tag-cyan">AWS / Azure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    position: relative;
+    padding: 100px 0;
+    overflow: hidden;
+  }
+
+  .about-orb {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.06), transparent 70%);
+    top: 50%;
+    right: -200px;
+    transform: translateY(-50%);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Left column */
+  .about-left {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .avatar-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  .avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4c1d95 0%, #0e7490 50%, #065f46 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .avatar-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, #8b5cf6, #22d3ee, #34d399) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: spin-slow 8s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .avatar-badge {
+    position: absolute;
+    bottom: 0;
+    right: -20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(12px);
+    z-index: 2;
+  }
+
+  .quick-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .info-item svg {
+    color: var(--primary-light);
+    flex-shrink: 0;
+  }
+
+  /* Right column */
+  .section-heading {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }
+
+  .about-story {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .about-story p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .about-story strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .focus-tags {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .about-left {
+      align-items: flex-start;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .avatar-container {
+      width: 120px;
+      height: 120px;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      font-size: 32px;
+    }
+  }
+</style>

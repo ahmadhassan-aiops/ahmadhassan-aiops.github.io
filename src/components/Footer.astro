@@ -1,0 +1,304 @@
+---
+const links = [
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
+    label: 'GitHub',
+    href: 'https://github.com/ahmadhassan-aiops',
+    color: 'text-gray-400 hover:text-white',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/ahmad-hassan-79a44b1a3',
+    color: 'text-blue-400 hover:text-blue-300',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
+    label: 'Email',
+    href: 'mailto:ahmad.hds393@gmail.com',
+    color: 'text-purple-400 hover:text-purple-300',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+    label: 'Superprof',
+    href: 'https://www.superprof.co.uk',
+    color: 'text-green-400 hover:text-green-300',
+  },
+];
+---
+
+<footer id="contact" class="footer-section">
+  <!-- Contact CTA -->
+  <div class="contact-cta-wrapper">
+    <div class="section-container">
+      <div class="contact-cta glass-card reveal">
+        <div class="cta-glow"></div>
+        <div class="cta-content">
+          <span class="section-label" style="text-align:center;display:block;">Get in Touch</span>
+          <h2 class="cta-heading">
+            Ready to Build Something <span class="gradient-text">Remarkable?</span>
+          </h2>
+          <p class="cta-desc">
+            Whether you're looking to hire an ML engineer, book tutoring sessions,
+            or collaborate on an AI project — I'd love to hear from you.
+          </p>
+          <div class="cta-actions">
+            <a href="mailto:ahmad.hds393@gmail.com" class="btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Send an Email
+            </a>
+            <a href="https://www.superprof.co.uk" target="_blank" rel="noopener" class="btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                <line x1="4" y1="22" x2="4" y2="15"/>
+              </svg>
+              Book a Session
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer bar -->
+  <div class="footer-bar">
+    <div class="section-container">
+      <div class="footer-inner">
+        <!-- Logo -->
+        <a href="#" class="footer-logo">
+          <div class="logo-mark-sm">AH</div>
+          <div class="footer-info">
+            <span class="footer-name">Ahmad Hassan</span>
+            <span class="footer-tagline">ML Engineer · AI Educator · DevOps Practitioner</span>
+          </div>
+        </a>
+
+        <!-- Social links -->
+        <div class="social-links">
+          {links.map(link => (
+            <a
+              href={link.href}
+              target={link.href.startsWith('mailto') ? undefined : '_blank'}
+              rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              class={`social-link ${link.color}`}
+              aria-label={link.label}
+              title={link.label}
+            >
+              <Fragment set:html={link.icon} />
+            </a>
+          ))}
+        </div>
+
+        <!-- Copyright -->
+        <p class="footer-copy">
+          © 2024–2025 Ahmad Hassan. Built with Astro.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+  }
+
+  /* CTA block */
+  .contact-cta-wrapper {
+    padding: 100px 0 60px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-cta {
+    position: relative;
+    padding: 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(139, 92, 246, 0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-heading {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 12px 0 20px;
+    line-height: 1.15;
+  }
+
+  .cta-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Footer bar */
+  .footer-bar {
+    padding: 28px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-mark-sm {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #8b5cf6, #22d3ee);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .footer-tagline {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: var(--text-muted);
+  }
+
+  .social-link:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .contact-cta {
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+</style>
+
+<!-- Back to top button -->
+<button id="back-to-top" aria-label="Back to top" class="back-to-top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+</button>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    border-color: var(--primary);
+    color: var(--primary-light);
+    background: rgba(139, 92, 246, 0.1);
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn?.classList.toggle('visible', window.scrollY > 400);
+  });
+  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
