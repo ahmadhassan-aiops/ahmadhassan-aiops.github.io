@@ -20,22 +20,18 @@ const signals = [
   {
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
     label: 'Production-Grade',
-    desc: 'JWT auth, rate limiting, full audit trail, PostgreSQL persistence',
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
     label: 'Deterministic & Auditable',
-    desc: 'Rule engine with traceable BLOCK / WARN / SUGGEST decisions — no black-box outputs',
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
     label: '146-Test Coverage',
-    desc: 'Full test suite across clinical rules, API endpoints, and edge cases',
   },
   {
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
     label: 'Regulatory Aware',
-    desc: 'Framed as clinical decision support — LLM is explanation-only, not diagnostic',
   },
 ];
 ---
@@ -85,16 +81,8 @@ const signals = [
           </div>
 
           <p class="startup-desc">
-            A production-grade, full-stack AI application built at the intersection of clinical pharmacy
-            and modern software engineering. The system integrates a deterministic rule engine,
-            a RAG-augmented LLM explanation pipeline, live pharmaceutical data sources, and a
-            role-based frontend — all backed by a hardened API with authentication, rate limiting,
-            and a complete audit trail.
-          </p>
-          <p class="startup-desc">
-            This project demonstrates end-to-end ownership: from clinical rule design rooted in
-            pharmacotherapy knowledge, through backend API architecture, to a Next.js physician
-            dashboard — with regulatory framing and test coverage throughout.
+            A production-grade, full-stack AI application built at the intersection of clinical
+            pharmacy and modern software engineering — details available on request.
           </p>
 
           <div class="confidential-note">
@@ -125,7 +113,6 @@ const signals = [
             </div>
             <div class="signal-text">
               <span class="signal-label">{s.label}</span>
-              <span class="signal-desc">{s.desc}</span>
             </div>
           </div>
         ))}
@@ -390,12 +377,6 @@ const signals = [
     font-size: 13px;
     font-weight: 700;
     color: var(--text-primary);
-  }
-
-  .signal-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.5;
   }
 
   @media (max-width: 1024px) {
