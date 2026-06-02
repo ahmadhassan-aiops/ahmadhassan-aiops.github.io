@@ -1,0 +1,445 @@
+---
+const stack = [
+  { label: 'FastAPI', color: 'cyan' },
+  { label: 'PostgreSQL', color: 'blue' },
+  { label: 'Next.js 16', color: 'white' },
+  { label: 'React 19', color: 'cyan' },
+  { label: 'TypeScript', color: 'blue' },
+  { label: 'Tailwind v4', color: 'cyan' },
+  { label: 'RAG Pipeline', color: 'violet' },
+  { label: 'ChromaDB', color: 'violet' },
+  { label: 'Groq LLM', color: 'violet' },
+  { label: 'JWT Auth', color: 'green' },
+  { label: 'RxNorm', color: 'green' },
+  { label: 'OpenFDA', color: 'green' },
+  { label: 'Docker', color: 'blue' },
+  { label: 'Pytest', color: 'white' },
+];
+
+const signals = [
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    label: 'Production-Grade',
+    desc: 'JWT auth, rate limiting, full audit trail, PostgreSQL persistence',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
+    label: 'Deterministic & Auditable',
+    desc: 'Rule engine with traceable BLOCK / WARN / SUGGEST decisions — no black-box outputs',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+    label: '146-Test Coverage',
+    desc: 'Full test suite across clinical rules, API endpoints, and edge cases',
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    label: 'Regulatory Aware',
+    desc: 'Framed as clinical decision support — LLM is explanation-only, not diagnostic',
+  },
+];
+---
+
+<section id="startup" class="startup-section">
+  <div class="startup-bg">
+    <div class="startup-orb orb-a"></div>
+    <div class="startup-orb orb-b"></div>
+    <div class="bg-grid startup-grid"></div>
+  </div>
+
+  <div class="section-container">
+    <!-- Header -->
+    <div class="startup-header reveal">
+      <div class="startup-label-row">
+        <span class="section-label">Startup Initiative</span>
+        <span class="stealth-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          Stealth Mode
+        </span>
+      </div>
+      <h2 class="startup-heading">
+        Where <span class="gradient-text">PharmD</span> Meets<br />
+        Production AI Engineering
+      </h2>
+      <p class="startup-subhead">
+        Translating clinical domain knowledge into a full-stack, regulated-aware AI system —
+        the kind of depth that only comes from understanding both the medicine and the machine.
+      </p>
+    </div>
+
+    <!-- Main card -->
+    <div class="startup-card glass-card reveal">
+      <div class="card-glow"></div>
+
+      <div class="startup-card-inner">
+        <!-- Left: description -->
+        <div class="startup-desc-col">
+          <div class="project-domain-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            AI Clinical Decision Support System
+          </div>
+
+          <p class="startup-desc">
+            A production-grade, full-stack AI application built at the intersection of clinical pharmacy
+            and modern software engineering. The system integrates a deterministic rule engine,
+            a RAG-augmented LLM explanation pipeline, live pharmaceutical data sources, and a
+            role-based frontend — all backed by a hardened API with authentication, rate limiting,
+            and a complete audit trail.
+          </p>
+          <p class="startup-desc">
+            This project demonstrates end-to-end ownership: from clinical rule design rooted in
+            pharmacotherapy knowledge, through backend API architecture, to a Next.js physician
+            dashboard — with regulatory framing and test coverage throughout.
+          </p>
+
+          <div class="confidential-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Details shared selectively. Available for discussion in interview contexts.
+          </div>
+        </div>
+
+        <!-- Right: stack grid -->
+        <div class="startup-stack-col">
+          <span class="stack-label">Tech Stack</span>
+          <div class="stack-grid">
+            {stack.map(item => (
+              <span class={`stack-tag stack-${item.color}`}>{item.label}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Signal strips -->
+      <div class="signal-strips">
+        {signals.map(s => (
+          <div class="signal-item">
+            <div class="signal-icon">
+              <Fragment set:html={s.icon} />
+            </div>
+            <div class="signal-text">
+              <span class="signal-label">{s.label}</span>
+              <span class="signal-desc">{s.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .startup-section {
+    position: relative;
+    padding: 100px 0;
+    overflow: hidden;
+    background: var(--bg-primary);
+  }
+
+  .startup-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .startup-grid {
+    position: absolute;
+    inset: 0;
+  }
+
+  .startup-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+  }
+
+  .orb-a {
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent 70%);
+    top: -200px;
+    left: -200px;
+  }
+
+  .orb-b {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.08), transparent 70%);
+    bottom: -100px;
+    right: -100px;
+  }
+
+  /* Header */
+  .startup-header {
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .startup-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stealth-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .startup-heading {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .startup-subhead {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Card */
+  .startup-card {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(139, 92, 246, 0.25);
+    z-index: 1;
+  }
+
+  .card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), rgba(52, 211, 153, 0.4), transparent);
+  }
+
+  .startup-card-inner {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+    padding: 40px 40px 32px;
+  }
+
+  /* Left col */
+  .project-domain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    color: #34d399;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .startup-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+
+  .confidential-note {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(251, 191, 36, 0.05);
+    border: 1px solid rgba(251, 191, 36, 0.15);
+    color: #a78040;
+    margin-top: 4px;
+  }
+
+  /* Right col */
+  .startup-stack-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .stack-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+
+  .stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack-tag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .stack-violet {
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    color: #c4b5fd;
+  }
+
+  .stack-cyan {
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    color: #67e8f9;
+  }
+
+  .stack-green {
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    color: #6ee7b7;
+  }
+
+  .stack-blue {
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    color: #93c5fd;
+  }
+
+  .stack-white {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+  }
+
+  /* Signal strips */
+  .signal-strips {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    padding: 0 40px;
+  }
+
+  .signal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px 20px 24px 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .signal-item:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .signal-item:not(:first-child) {
+    padding-left: 20px;
+  }
+
+  .signal-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-light);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .signal-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .signal-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .signal-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1024px) {
+    .startup-card-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .signal-strips {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 24px;
+    }
+
+    .signal-item:nth-child(2) {
+      border-right: none;
+    }
+
+    .signal-item:nth-child(3) {
+      border-top: 1px solid var(--border);
+    }
+
+    .signal-item:nth-child(4) {
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .startup-card-inner {
+      padding: 24px 20px 20px;
+    }
+
+    .signal-strips {
+      grid-template-columns: 1fr;
+      padding: 0 20px;
+    }
+
+    .signal-item {
+      border-right: none;
+      border-top: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .signal-item:first-child {
+      border-top: none;
+    }
+  }
+</style>

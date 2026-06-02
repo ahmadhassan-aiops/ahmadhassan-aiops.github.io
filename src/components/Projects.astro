@@ -133,6 +133,34 @@ const projects = [
     gradient: 'from-zinc-900 to-gray-900',
     githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/2.%20Machine%20Learning%20Projects/Maintenance%20cost%20reduction%20through%20predictive%20techniques',
   },
+  {
+    title: 'Stroke Prediction Model',
+    desc: 'Combined EDA and ML pipeline predicting stroke occurrence from clinical features including hypertension, heart disease, BMI, and glucose levels, with loop-based comparative graphs.',
+    tags: ['Classification', 'Scikit-learn', 'Medical Data', 'EDA'],
+    category: 'ml',
+    healthcare: true,
+    gradient: 'from-rose-900 to-red-900',
+    githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/2.%20Machine%20Learning%20Projects/Stroke%20Prediction',
+  },
+  {
+    title: 'Lung Cancer Risk Prediction App',
+    desc: 'End-to-end ML pipeline classifying lung cancer risk (Low/Medium/High) from patient data, deployed as a Flask web app with PDF report generation, analytics dashboard, and Docker support.',
+    tags: ['Flask', 'Scikit-learn', 'Docker', 'Medical AI', 'Web App'],
+    category: 'ml',
+    healthcare: true,
+    gradient: 'from-red-900 to-orange-900',
+    featured: true,
+    githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/2.%20Machine%20Learning%20Projects/Lungs%20cancer%20Prediction%20App',
+  },
+  {
+    title: 'RUL Jet Engine Prediction App',
+    desc: 'Remaining Useful Life (RUL) prediction for jet engines using the NASA CMAPSS dataset, deployed as a Flask safety application that alerts maintenance teams before critical failure.',
+    tags: ['Random Forest', 'Time Series', 'Flask', 'Docker', 'Predictive Maintenance'],
+    category: 'ml',
+    gradient: 'from-slate-900 to-blue-900',
+    featured: true,
+    githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/2.%20Machine%20Learning%20Projects/RLU%20jet%20prediction',
+  },
 
   // Deep Learning
   {
@@ -143,6 +171,15 @@ const projects = [
     gradient: 'from-purple-900 to-pink-900',
     featured: true,
     githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/3.%20Deep%20Learning%20Projects/Churn%20prediction%20using%20neural%20network',
+  },
+  {
+    title: "Alzheimer's Disease Detection",
+    desc: "Deep learning model for multi-class Alzheimer's disease detection from clinical data, classifying patients across severity stages to support early diagnosis.",
+    tags: ['Deep Learning', 'Keras', 'Medical AI', 'Classification'],
+    category: 'dl',
+    healthcare: true,
+    gradient: 'from-indigo-900 to-blue-900',
+    githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/3.%20Deep%20Learning%20Projects/alzheimer%20Disease%20Detection',
   },
 
   // Computer Vision / NLP
@@ -179,6 +216,7 @@ const projects = [
     desc: 'LLM-powered conversational bot providing personalized nutritional advice, integrated with dietary databases and RAG.',
     tags: ['LangChain', 'RAG', 'GPT API', 'Streamlit'],
     category: 'genai',
+    healthcare: true,
     gradient: 'from-green-900 to-teal-900',
     githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/6.%20Gen%20AI%20Projects/GEN%20AI%20(Nutritional%20Bot)',
   },
@@ -223,6 +261,7 @@ const projects = [
     desc: 'Tableau analysis comparing performance across medical settings, patient outcomes, treatment efficacy, resource utilization.',
     tags: ['Tableau', 'Healthcare Analytics', 'KPI Visualization'],
     category: 'sql-bi',
+    healthcare: true,
     gradient: 'from-emerald-900 to-teal-900',
     githubUrl: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects/tree/main/Tableau/Medical%20seetings%20comparative%20Analysis',
   },
@@ -230,6 +269,7 @@ const projects = [
 
 const filters = [
   { id: 'all', label: 'All Projects', count: projects.length },
+  { id: 'healthcare', label: '🏥 Healthcare & Medical AI', count: projects.filter(p => p.healthcare).length },
   { id: 'analysis', label: 'Data Analysis', count: projects.filter(p => p.category === 'analysis').length },
   { id: 'ml', label: 'Machine Learning', count: projects.filter(p => p.category === 'ml').length },
   { id: 'dl', label: 'Deep Learning', count: projects.filter(p => p.category === 'dl').length },
@@ -270,6 +310,7 @@ const filters = [
         <article
           class={`project-card ${project.featured ? 'featured' : ''}`}
           data-category={project.category}
+          data-healthcare={project.healthcare ? 'true' : undefined}
         >
           <!-- Card gradient header -->
           <div class={`card-header bg-gradient-to-br ${project.gradient}`}>
@@ -374,6 +415,22 @@ const filters = [
     background: rgba(139, 92, 246, 0.12);
     border-color: rgba(139, 92, 246, 0.5);
     color: var(--primary-light);
+  }
+
+  .filter-btn[data-filter="healthcare"] {
+    border-color: rgba(52, 211, 153, 0.3);
+    color: #34d399;
+  }
+
+  .filter-btn[data-filter="healthcare"].active {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.5);
+    color: #34d399;
+  }
+
+  .filter-btn[data-filter="healthcare"] .filter-count {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
   }
 
   .filter-count {
@@ -559,7 +616,9 @@ const filters = [
 
       let visible = 0;
       cards.forEach(card => {
-        const show = filter === 'all' || card.dataset.category === filter;
+        const show = filter === 'all'
+          || card.dataset.category === filter
+          || (filter === 'healthcare' && card.dataset.healthcare === 'true');
         card.classList.toggle('hidden', !show);
         if (show) visible++;
       });
