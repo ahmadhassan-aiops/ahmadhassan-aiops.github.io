@@ -1,6 +1,6 @@
 # Ahmad Hassan, AI Engineer Portfolio
 
-**Live site: https://ahmadhassan-aiops.github.io**
+**Live site: https://ahmadhassanrx.com**
 
 Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It shares the platform's design system (colours, type, components, light and dark themes) and tells the same story, so the two sites read as one brand.
 
@@ -48,6 +48,8 @@ npm run preview   # serve the build
 ## Deployment
 
 Every push to `main` builds the site with GitHub Actions (Node 24) and deploys `dist/` to GitHub Pages. Workflow: `.github/workflows/deploy.yml`.
+
+Custom domain: `ahmadhassanrx.com` (set in the repo's Settings → Pages, also kept in `public/CNAME`). DNS is on Cloudflare: four apex `A` records to GitHub Pages and `www` as a `CNAME` to `ahmadhassan-aiops.github.io`, all DNS only (grey cloud) so GitHub can issue the HTTPS certificate. The old `ahmadhassan-aiops.github.io` address redirects here.
 
 ## Contact
 
