@@ -1,0 +1,72 @@
+---
+import Icon from './ui/Icon.astro';
+import Section from './ui/Section.astro';
+import { platform, roadmaps } from '../content/site';
+import { badge, button, cx, external } from '../lib/ui';
+
+const accent = (a: { light: string; dark: string }) => `--accent: light-dark(${a.light}, ${a.dark})`;
+const flagship = roadmaps.list.find((r) => r.flagship)!;
+const supporting = roadmaps.list.filter((r) => !r.flagship);
+const roadmapUrl = (slug: string) => `${platform.url}/roadmaps/${slug}`;
+---
+
+<!--
+  The six roadmaps by name only (the platform's list design: flagship card, then a two-column grid with
+  accent bars). Topics, stages and lessons live on AI with Ahmad, so every card opens the roadmap there.
+-->
+<Section id="roadmaps" tone="subtle" eyebrow={roadmaps.eyebrow} title={roadmaps.title} intro={roadmaps.intro}>
+  <div class="mt-12 space-y-4">
+    <a
+      data-reveal
+      href={roadmapUrl(flagship.slug)}
+      {...external}
+      style={accent(flagship.accent)}
+      class="group relative block overflow-hidden rounded-3xl border border-line bg-surface p-6 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-accent hover:shadow-md sm:p-8"
+    >
+      <span
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_120%_at_100%_0%,color-mix(in_oklab,var(--accent)_10%,transparent),transparent_60%)] dark:bg-[radial-gradient(90%_120%_at_100%_0%,color-mix(in_oklab,var(--accent)_15%,transparent),transparent_60%)]"
+      ></span>
+      <span class="relative block">
+        <span class={badge('brand')}>{roadmaps.flagshipBadge}</span>
+        <span class="mt-4 block text-h2 font-semibold text-fg sm:text-h2-lg">{flagship.title}</span>
+      </span>
+      <span class={cx(button('primary', 'md'), 'relative mt-7')}>
+        {roadmaps.openLabel}
+        <Icon name="ArrowUpRight" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
+    </a>
+
+    <ul class="grid gap-4 md:grid-cols-2">
+      {
+        supporting.map((r, i) => (
+          <li data-reveal style={`${accent(r.accent)}; --reveal-delay: ${i * 60}ms`}>
+            <a
+              href={roadmapUrl(r.slug)}
+              {...external}
+              class="group relative flex h-full items-center gap-4 overflow-hidden rounded-2xl border border-line bg-surface p-5 pt-6 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-accent hover:shadow-md sm:p-6 sm:pt-7"
+            >
+              <span aria-hidden="true" class="absolute inset-x-0 top-0 h-1 bg-accent" />
+              <span class="min-w-0 flex-1 text-h3 font-semibold text-fg">{r.title}</span>
+              <Icon name="ArrowUpRight" class="size-5 text-fg-subtle transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div data-reveal class="mt-10 flex flex-col items-start gap-4 rounded-2xl bg-brand-soft px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="font-semibold text-fg">{platform.name}</p>
+      <p class="mt-1 text-small text-fg-muted">{platform.pitch}</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href={`${platform.url}/roadmaps`} {...external} class={button('primary', 'md')}>
+        {platform.roadmapsCta}
+        <Icon name="ArrowUpRight" />
+      </a>
+      <a href={`${platform.url}/join`} {...external} class={button('secondary', 'md')}>{platform.joinCta}</a>
+    </div>
+  </div>
+</Section>

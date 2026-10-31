@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://ahmadhassan-aiops.github.io',
   base: '/',
-  integrations: [tailwind()],
   output: 'static',
+  vite: { plugins: [tailwindcss()] },
 });

@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+/* Dark mode follows the `.dark` class the theme script puts on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens, the same as the AI with Ahmad learning platform (learn.ahmadhassanrx.com), so both
+ * sites read as one brand. Light is the default, `.dark` overrides. Components use only the semantic
+ * utilities mapped in @theme below, never raw hex. Roadmap accents are set per card as
+ * `--accent: light-dark(<light>, <dark>)`, which resolves against the element's color-scheme.
+ */
+:root {
+  color-scheme: light;
+
+  --brand-50: #eff4ff;
+  --brand-100: #dbe6fe;
+  --brand-200: #bfd3fe;
+  --brand-300: #93b4fd;
+  --brand-400: #6b93ff;
+  --brand-500: #3b6cf6;
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+  --brand-950: #0f1d4a;
+
+  --bg: #ffffff;
+  --bg-subtle: #f6f8fc;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-hover: #f1f5fb;
+  --line: #e5eaf2;
+  --line-strong: #cfd8e6;
+  --fg: #0b1220;
+  --fg-muted: #475569;
+  --fg-subtle: #64748b;
+  --brand: var(--brand-600);
+  --brand-solid: var(--brand-600);
+  --brand-soft: var(--brand-50);
+  --on-brand: #ffffff;
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+  --whatsapp: #25d366;
+  --selection: var(--brand-200);
+
+  /* Default accent outside a roadmap card: the brand. */
+  --accent: var(--brand);
+  --on-accent: light-dark(#ffffff, #0a1020);
+
+  --elev-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+  --elev-md: 0 4px 16px -4px rgb(15 23 42 / 0.1);
+  --elev-brand: 0 12px 32px -12px rgb(37 99 235 / 0.35);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0a1020;
+  --bg-subtle: #0d1428;
+  --surface: #121a2e;
+  --surface-raised: #17213a;
+  --surface-hover: #1a2540;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
+  --fg: #e6ecf5;
+  --fg-muted: #a3b0c4;
+  --fg-subtle: #8391a7;
+  --brand: var(--brand-400);
+  --brand-soft: rgb(107 147 255 / 0.12);
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --selection: var(--brand-800);
+
+  /* Dark depth comes from surface steps and borders, not shadows. */
+  --elev-sm: 0 0 #0000;
+  --elev-md: 0 0 #0000;
+  --elev-brand: 0 0 #0000;
+}
+
+@theme inline {
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --color-brand-950: var(--brand-950);
+
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-hover: var(--surface-hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-brand: var(--brand);
+  --color-brand-solid: var(--brand-solid);
+  --color-brand-soft: var(--brand-soft);
+  --color-on-brand: var(--on-brand);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-whatsapp: var(--whatsapp);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+
+  --font-sans: "Geist Variable", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  /* Type scale. Minimum size anywhere is 12px (text-caption / text-xs). */
+  --text-display: 3rem;
+  --text-display--line-height: 3.25rem;
+  --text-display--letter-spacing: -0.03em;
+  --text-display-lg: 4rem;
+  --text-display-lg--line-height: 4.25rem;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-h1: 2rem;
+  --text-h1--line-height: 2.375rem;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1-lg: 2.5rem;
+  --text-h1-lg--line-height: 2.875rem;
+  --text-h1-lg--letter-spacing: -0.02em;
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 1.875rem;
+  --text-h2-lg: 1.875rem;
+  --text-h2-lg--line-height: 2.25rem;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.75rem;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.625rem;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.25rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+
+  --tracking-eyebrow: 0.08em;
+
+  --radius-control: 0.625rem;
+
+  --shadow-sm: var(--elev-sm);
+  --shadow-md: var(--elev-md);
+  --shadow-brand: var(--elev-brand);
+}
+
+/* Page container: 1200px, padding 16 / 24 (sm) / 32 (lg). */
+@utility container-wide {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @variant sm { padding-inline: 1.5rem; }
+  @variant lg { padding-inline: 2rem; }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+  }
+  :focus-visible {
+    outline: 3px solid color-mix(in oklab, var(--brand-500) 50%, transparent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--selection);
+  }
+}
+
+/* Section reveal: fade + 12px rise, once per element, only for motion-OK visitors with JS. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition: opacity 400ms ease-out, translate 400ms ease-out;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

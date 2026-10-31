@@ -1,0 +1,13 @@
+---
+import { brandPaths } from '../../lib/brand-icons';
+
+/** A monochrome brand logo in currentColor. */
+interface Props {
+  icon: string;
+  class?: string;
+}
+const { icon, class: cls = '' } = Astro.props;
+const className = /(^|\s)size-/.test(cls) ? cls : `size-4 ${cls}`;
+---
+
+<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class={`shrink-0 ${className}`}><path d={brandPaths[icon]} /></svg>

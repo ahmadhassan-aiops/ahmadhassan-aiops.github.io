@@ -1,0 +1,36 @@
+---
+import { cx } from '../../lib/ui';
+
+/**
+ * A full-width section, as on the platform: alternating default / subtle backgrounds, 80px → 112px
+ * vertical rhythm, and an optional eyebrow + H2 + intro heading (left or centred).
+ */
+interface Props {
+  id: string;
+  tone?: 'default' | 'subtle';
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+const { id, tone = 'default', eyebrow, title, intro, align = 'left', class: className } = Astro.props;
+const titleId = `${id}-title`;
+---
+
+<section id={id} aria-labelledby={title ? titleId : undefined} class={cx('scroll-mt-16 py-20 lg:py-28', tone === 'subtle' && 'bg-bg-subtle', className)}>
+  <div class="container-wide">
+    {
+      title && (
+        <div data-reveal class={cx(align === 'center' && 'mx-auto text-center')}>
+          {eyebrow && <p class="text-caption font-medium tracking-eyebrow text-brand uppercase">{eyebrow}</p>}
+          <h2 id={titleId} class={cx('text-h2 font-semibold text-balance text-fg sm:text-h2-lg', eyebrow && 'mt-2')}>
+            {title}
+          </h2>
+          {intro && <p class={cx('mt-3 max-w-160 text-body-lg text-fg-muted', align === 'center' && 'mx-auto')}>{intro}</p>}
+        </div>
+      )
+    }
+    <slot />
+  </div>
+</section>

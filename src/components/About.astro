@@ -1,290 +1,102 @@
 ---
+import Icon from './ui/Icon.astro';
+import Section from './ui/Section.astro';
+import { about, journey } from '../content/site';
+import { badge, card, cx } from '../lib/ui';
 ---
 
-<section id="about" class="about-section">
-  <div class="glow-orb about-orb"></div>
-  <div class="section-container">
-    <div class="about-grid">
-
-      <!-- Left: Avatar + Quick info -->
-      <div class="about-left reveal">
-        <div class="avatar-container">
-          <div class="avatar">
-            <img src="/picture.png?v=2" alt="Ahmad Hassan" />
-          </div>
-          <div class="avatar-ring"></div>
-          <div class="avatar-badge">
-            <span>🧪→🤖</span>
-            <span>PharmD → ML</span>
-          </div>
-        </div>
-
-        <div class="quick-info">
-          <div class="info-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-            <span>Pakistan</span>
-          </div>
-          <div class="info-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-            </svg>
-            <span>PharmD · QAU · 3.9/4.0 cGPA</span>
-          </div>
-          <div class="info-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
-            </svg>
-            <span>Eduqual Level 6 AIOPS · ALNafi · 94%</span>
-          </div>
-          <div class="info-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.95 3.38 2 2 0 0 1 3.94 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <span>Freelancer · Superprof</span>
-          </div>
-          <div class="info-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-            </svg>
-            <span>ahmad.hds393@gmail.com</span>
-          </div>
-          <div class="info-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-            </svg>
-            <span>+92 316 5193665</span>
-          </div>
-        </div>
+<!-- About: the platform's story, quick facts and current focus; then the journey timeline and credentials. -->
+<Section id="about" tone="subtle" eyebrow={about.eyebrow} title={about.title}>
+  <div class="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-12">
+    <div data-reveal class="space-y-5 text-body-lg text-fg-muted lg:col-span-7">
+      {about.story.map((p) => <p>{p}</p>)}
+    </div>
+    <div data-reveal style="--reveal-delay: 60ms" class="space-y-4 lg:col-span-5">
+      <div class={card}>
+        <ul class="space-y-3">
+          {
+            about.quickInfo.map((q) => (
+              <li class="flex items-center gap-3 text-small text-fg-muted">
+                <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand">
+                  <Icon name={q.icon} class="size-4" />
+                </span>
+                {'href' in q ? (
+                  <a href={q.href} class="break-all hover:text-fg hover:underline">
+                    {q.text}
+                  </a>
+                ) : (
+                  q.text
+                )}
+              </li>
+            ))
+          }
+        </ul>
       </div>
-
-      <!-- Right: Story -->
-      <div class="about-right">
-        <div class="reveal">
-          <span class="section-label">About Me</span>
-          <h2 class="section-heading">
-            From Drug Molecules<br />
-            to <span class="gradient-text">Neural Networks</span>
-          </h2>
-        </div>
-
-        <div class="about-story reveal">
-          <p>
-            I started my journey in pharmacy at Quaid-i-Azam University, graduating with a
-            <strong>3.9/4.0 cGPA</strong> in 2024. But halfway through my degree in 2020, I discovered
-            data science, and it changed everything.
-          </p>
-          <p>
-            What began as curiosity quickly became expertise. I self-taught ML, Deep Learning,
-            Computer Vision, NLP, and Generative AI while completing my PharmD. The analytical
-            rigor of pharmaceutical sciences turned out to be the perfect foundation for understanding
-            complex models and interpreting data.
-          </p>
-          <p>
-            Today I combine that dual background with <strong>5+ years of hands-on experience</strong>
-            in building and deploying ML systems, and I've turned that knowledge into
-            <strong>1500+ hours of teaching</strong> on Superprof, mentoring over 100 students from
-            non-technical backgrounds into ML practitioners.
-          </p>
-          <p>
-            In March 2026 I completed the <strong>AIOPS Eduqual Level 6 Diploma</strong> at
-            ALNafi, covering Cyber Security, DevOps, Cloud Architecture, and AI Systems,
-            giving me a rare end-to-end perspective from data pipeline to production infrastructure.
-            Alongside this, I am actively involved in <strong>AI Engineering and intelligent
-            automation</strong>, designing and deploying AI-driven workflows and agents that
-            solve real operational problems.
-          </p>
-        </div>
-
-        <!-- Current focus tags -->
-        <div class="focus-tags reveal">
-          <span class="section-label" style="display: block; margin-bottom: 12px;">Current Focus</span>
-          <div class="tag-list">
-            <span class="tag">MLOps / AIOps</span>
-            <span class="tag tag-cyan">Kubernetes (CKA/CKAD)</span>
-            <span class="tag tag-green">Generative AI</span>
-            <span class="tag">Cloud Security</span>
-            <span class="tag tag-warn">n8n Automation</span>
-            <span class="tag tag-cyan">AWS / Azure</span>
-          </div>
-        </div>
+      <div class={card}>
+        <p class="text-caption font-medium tracking-eyebrow text-fg-muted uppercase">{about.focusTitle}</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {about.focus.map((f, i) => <li class={badge(i === 0 ? 'brand' : 'outline')}>{f}</li>)}
+        </ul>
       </div>
     </div>
   </div>
-</section>
+</Section>
 
-<style>
-  .about-section {
-    position: relative;
-    padding: 100px 0;
-    overflow: hidden;
-  }
-
-  .about-orb {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.06), transparent 70%);
-    top: 50%;
-    right: -200px;
-    transform: translateY(-50%);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 80px;
-    align-items: start;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Left column */
-  .about-left {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .avatar-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 56px;
-  }
-
-  .avatar {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  }
-
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-
-  .avatar-ring {
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    background: linear-gradient(135deg, #8b5cf6, #22d3ee, #34d399) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    animation: spin-slow 8s linear infinite;
-  }
-
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .avatar-badge {
-    position: absolute;
-    bottom: -56px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    backdrop-filter: blur(12px);
-    z-index: 2;
-  }
-
-  .quick-info {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .info-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-
-  .info-item svg {
-    color: var(--primary-light);
-    flex-shrink: 0;
-  }
-
-  /* Right column */
-  .section-heading {
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    margin-top: 12px;
-    margin-bottom: 32px;
-  }
-
-  .about-story {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-
-  .about-story p {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--text-secondary);
-  }
-
-  .about-story strong {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
-
-  .focus-tags {
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-  }
-
-  .tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  @media (max-width: 900px) {
-    .about-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
+<Section id="journey" tone="default" align="center" title={journey.title} intro={journey.intro}>
+  <ol class="relative mx-auto mt-14 max-w-4xl space-y-6 before:absolute before:inset-y-2 before:left-5 before:w-0.5 before:bg-line-strong lg:space-y-0 lg:before:left-1/2 lg:before:-translate-x-1/2">
+    {
+      journey.timeline.map((t, i) => {
+        const right = i % 2 === 1;
+        return (
+          <li class="relative grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 lg:grid-cols-[minmax(0,1fr)_3rem_minmax(0,1fr)] lg:gap-x-6 lg:pb-4">
+            <span
+              aria-hidden="true"
+              class={cx(
+                'relative z-10 mt-4 grid size-10 place-items-center rounded-full border-2 lg:col-start-2 lg:row-start-1 lg:mx-auto lg:size-12',
+                t.future ? 'border-dashed border-brand/50 bg-bg-subtle text-brand' : 'border-brand bg-brand-solid text-on-brand',
+              )}
+            >
+              <Icon name={t.icon} class="size-4.5 lg:size-5" strokeWidth={1.75} />
+            </span>
+            <div data-reveal style={`--reveal-delay: ${i * 60}ms`} class={cx('lg:row-start-1', right ? 'lg:col-start-3' : 'lg:col-start-1')}>
+              <div
+                class={cx(
+                  'rounded-2xl border p-5 text-left transition-[border-color,box-shadow,translate] duration-150 hover:-translate-y-px hover:shadow-md sm:p-6',
+                  t.future ? 'border-dashed border-brand/50 bg-brand-soft' : 'border-line bg-surface shadow-sm hover:border-brand/40',
+                )}
+              >
+                {t.future ? (
+                  <span class={cx(badge('brand'), 'bg-surface')}>{journey.nextLabel}</span>
+                ) : (
+                  <p class="font-mono text-small font-semibold text-brand">{t.year}</p>
+                )}
+                <h3 class="mt-1.5 text-h3 font-semibold text-fg">{t.title}</h3>
+                <p class="mt-2 text-small text-fg-muted">{t.text}</p>
+              </div>
+            </div>
+          </li>
+        );
+      })
     }
-    .about-left {
-      align-items: flex-start;
-      flex-direction: row;
-      flex-wrap: wrap;
+  </ol>
+
+  <h3 class="mt-20 text-center text-h3 font-semibold text-fg">{journey.credentialsTitle}</h3>
+  <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      journey.credentials.map((c, i) => (
+        <li data-reveal style={`--reveal-delay: ${i * 60}ms`}>
+          <div class={cx(card, 'flex h-full flex-col', c.inProgress && 'border-dashed')}>
+            <div class="flex items-start justify-between gap-3">
+              <span class={cx('grid size-10 place-items-center rounded-xl', c.inProgress ? 'bg-surface-hover text-fg-muted' : 'bg-brand-soft text-brand')}>
+                <Icon name={c.icon} class="size-5" strokeWidth={1.5} />
+              </span>
+              <span class={badge(c.inProgress ? 'dashed' : 'success')}>{c.detail}</span>
+            </div>
+            <p class="mt-4 font-semibold text-fg">{c.title}</p>
+            <p class="mt-1 text-small text-fg-muted">{c.org}</p>
+          </div>
+        </li>
+      ))
     }
-    .avatar-container {
-      width: 120px;
-      height: 120px;
-    }
-    .avatar {
-      width: 120px;
-      height: 120px;
-      font-size: 32px;
-    }
-  }
-</style>
+  </ul>
+</Section>

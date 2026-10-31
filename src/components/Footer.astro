@@ -1,316 +1,103 @@
 ---
-const links = [
-  {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`,
-    label: 'GitHub',
-    href: 'https://github.com/ahmadhassan-aiops',
-    color: 'text-gray-400 hover:text-white',
-  },
-  {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>`,
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/ahmad-hassan-79a44b1a3',
-    color: 'text-blue-400 hover:text-blue-300',
-  },
-  {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
-    label: 'Email',
-    href: 'mailto:ahmad.hds393@gmail.com',
-    color: 'text-purple-400 hover:text-purple-300',
-  },
-  {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`,
-    label: 'WhatsApp',
-    href: 'https://wa.me/923165193665',
-    color: 'text-green-400 hover:text-green-300',
-  },
-  {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
-    label: 'Superprof',
-    href: 'https://www.superprof.com/tutor-data-science-devops-mlops-cloud-cybersecurity-python-machine-learning-automation-lessons.html',
-    color: 'text-green-400 hover:text-green-300',
-  },
+import BrandIcon from './ui/BrandIcon.astro';
+import Icon from './ui/Icon.astro';
+import Logo from './ui/Logo.astro';
+import ThemeToggle from './ui/ThemeToggle.astro';
+import { contact, footer, nav, person, platform, socials } from '../content/site';
+import { button, external } from '../lib/ui';
+
+const heading = 'text-caption font-medium tracking-eyebrow text-fg-muted uppercase';
+const link = 'inline-flex min-h-8 items-center gap-2 text-small text-fg-muted transition-colors hover:text-fg';
+const contactLinks = [
+  { href: `mailto:${socials.email}`, label: 'Email', icon: 'mail' },
+  { href: socials.whatsappUrl, label: 'WhatsApp', icon: 'whatsapp' },
+  { href: socials.linkedin, label: 'LinkedIn', icon: 'linkedin' },
+  { href: socials.github, label: 'GitHub', icon: 'github' },
+  { href: socials.huggingface, label: 'Hugging Face', icon: 'huggingface' },
+  { href: socials.superprof, label: 'Superprof profile', icon: 'superprof' },
 ];
 ---
 
-<footer id="contact" class="footer-section">
-  <!-- Contact CTA -->
-  <div class="contact-cta-wrapper">
-    <div class="section-container">
-      <div class="contact-cta glass-card reveal">
-        <div class="cta-glow"></div>
-        <div class="cta-content">
-          <span class="section-label" style="text-align:center;display:block;">Get in Touch</span>
-          <h2 class="cta-heading">
-            Ready to Build Something <span class="gradient-text">Remarkable?</span>
-          </h2>
-          <p class="cta-desc">
-            Whether you're looking to hire an ML engineer, book tutoring sessions,
-            or collaborate on an AI project, I'd love to hear from you.
-          </p>
-          <div class="cta-actions">
-            <a href="mailto:ahmad.hds393@gmail.com" class="btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-              Send an Email
-            </a>
-            <a href="https://wa.me/923165193665" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="color: #4ade80; border-color: rgba(74,222,128,0.35);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-              </svg>
-              WhatsApp
-            </a>
-            <a href="https://www.superprof.com/tutor-data-science-devops-mlops-cloud-cybersecurity-python-machine-learning-automation-lessons.html" target="_blank" rel="noopener" class="btn-secondary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
-                <line x1="4" y1="22" x2="4" y2="15"/>
-              </svg>
-              Book a Session
-            </a>
-          </div>
-        </div>
+<!-- The platform's closing brand band, as the contact call to action. -->
+<section id="contact" aria-labelledby="contact-title" class="scroll-mt-16 pb-20 lg:pb-28">
+  <div class="container-wide">
+    <div data-reveal class="rounded-3xl bg-brand-solid px-6 py-12 text-center shadow-brand sm:px-12 lg:py-16">
+      <p class="text-caption font-medium tracking-eyebrow text-on-brand/80 uppercase">{contact.eyebrow}</p>
+      <h2 id="contact-title" class="mt-2 text-h2 font-semibold text-balance text-on-brand sm:text-h2-lg">{contact.title}</h2>
+      <p class="mx-auto mt-3 max-w-160 text-body-lg text-on-brand/85">{contact.text}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href={`mailto:${socials.email}`} class={button('inverse', 'lg')}>
+          <Icon name="Mail" />
+          {contact.email}
+        </a>
+        <a href={socials.whatsappUrl} {...external} class={button('inverse-outline', 'lg')}>
+          <BrandIcon icon="whatsapp" />
+          {contact.whatsapp}
+        </a>
+        <a href={platform.url} {...external} class={button('inverse-outline', 'lg')}>
+          <Icon name="GraduationCap" />
+          {platform.cta}
+          <Icon name="ArrowUpRight" />
+        </a>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Footer bar -->
-  <div class="footer-bar">
-    <div class="section-container">
-      <div class="footer-inner">
-        <!-- Logo -->
-        <a href="#" class="footer-logo">
-          <div class="logo-mark-sm">AH</div>
-          <div class="footer-info">
-            <span class="footer-name">Ahmad Hassan</span>
-            <span class="footer-tagline">ML Engineer · AI Educator · DevOps Practitioner</span>
-          </div>
-        </a>
+<footer class="mt-auto border-t border-line bg-bg-subtle">
+  <div class="container-wide grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <Logo />
+      <p class="mt-4 max-w-xs text-small text-fg-muted">{footer.tagline}</p>
+      <p class="mt-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-caption font-medium text-fg-muted">
+        <span aria-hidden="true" class="size-2 rounded-full bg-success"></span>
+        {person.availability}
+      </p>
+    </div>
 
-        <!-- Social links -->
-        <div class="social-links">
-          {links.map(link => (
-            <a
-              href={link.href}
-              target={link.href.startsWith('mailto') ? undefined : '_blank'}
-              rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-              class={`social-link ${link.color}`}
-              aria-label={link.label}
-              title={link.label}
-            >
-              <Fragment set:html={link.icon} />
-            </a>
-          ))}
-        </div>
+    <nav aria-label="Portfolio">
+      <h2 class={heading}>{footer.portfolioTitle}</h2>
+      <ul class="mt-3 space-y-1">
+        {nav.filter((l) => l.href !== '#contact').map((l) => <li><a href={l.href} class={link}>{l.label}</a></li>)}
+      </ul>
+    </nav>
 
-        <!-- Copyright -->
-        <p class="footer-copy">
-          © 2024–2025 Ahmad Hassan. Built with Astro.
-        </p>
-      </div>
+    <nav aria-label="Learn">
+      <h2 class={heading}>{footer.learnTitle}</h2>
+      <ul class="mt-3 space-y-1">
+        {
+          footer.learn.map((l) => (
+            <li>
+              <a href={l.href} {...external} class={link}>
+                {l.label} <Icon name="ArrowUpRight" class="size-3.5" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-label="Contact">
+      <h2 class={heading}>{footer.contactTitle}</h2>
+      <ul class="mt-3 space-y-1">
+        {
+          contactLinks.map((l) => (
+            <li>
+              <a href={l.href} {...(l.href.startsWith('mailto:') ? {} : external)} class={link}>
+                {l.icon === 'mail' ? <Icon name="Mail" /> : l.icon === 'superprof' ? <Icon name="Presentation" /> : <BrandIcon icon={l.icon} />}
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="container-wide flex items-center justify-between gap-4 py-4 text-small text-fg-muted">
+      <p>© {new Date().getFullYear()} {person.name} · {person.location}</p>
+      <ThemeToggle />
     </div>
   </div>
 </footer>
-
-<style>
-  .footer-section {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border);
-  }
-
-  /* CTA block */
-  .contact-cta-wrapper {
-    padding: 100px 0 60px;
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .contact-cta {
-    position: relative;
-    padding: 60px;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .cta-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(ellipse, rgba(139, 92, 246, 0.12), transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta-content {
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-heading {
-    font-size: clamp(28px, 4vw, 44px);
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin: 12px 0 20px;
-    line-height: 1.15;
-  }
-
-  .cta-desc {
-    font-size: 16px;
-    color: var(--text-muted);
-    max-width: 500px;
-    margin: 0 auto 36px;
-    line-height: 1.7;
-  }
-
-  .cta-actions {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* Footer bar */
-  .footer-bar {
-    padding: 28px 0;
-  }
-
-  .footer-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-  }
-
-  .logo-mark-sm {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #8b5cf6, #22d3ee);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 800;
-    color: white;
-    flex-shrink: 0;
-  }
-
-  .footer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .footer-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .footer-tagline {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .social-links {
-    display: flex;
-    gap: 8px;
-  }
-
-  .social-link {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    transition: all 0.2s ease;
-    text-decoration: none;
-    color: var(--text-muted);
-  }
-
-  .social-link:hover {
-    border-color: rgba(139, 92, 246, 0.4);
-    background: rgba(139, 92, 246, 0.08);
-    transform: translateY(-2px);
-  }
-
-  .footer-copy {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  @media (max-width: 768px) {
-    .contact-cta {
-      padding: 40px 24px;
-    }
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-    }
-  }
-</style>
-
-<!-- Back to top button -->
-<button id="back-to-top" aria-label="Back to top" class="back-to-top">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-    <polyline points="18 15 12 9 6 15"/>
-  </svg>
-</button>
-
-<style>
-  .back-to-top {
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(16px);
-    pointer-events: none;
-    z-index: 100;
-  }
-
-  .back-to-top.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .back-to-top:hover {
-    border-color: var(--primary);
-    color: var(--primary-light);
-    background: rgba(139, 92, 246, 0.1);
-    transform: translateY(-2px);
-  }
-</style>
-
-<script>
-  const btn = document.getElementById('back-to-top');
-  window.addEventListener('scroll', () => {
-    btn?.classList.toggle('visible', window.scrollY > 400);
-  });
-  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-</script>

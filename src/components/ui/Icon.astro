@@ -1,0 +1,33 @@
+---
+import { icons } from 'lucide';
+
+/** A lucide icon by its PascalCase name (e.g. "ArrowRight"), drawn inline at build time. */
+interface Props {
+  name: keyof typeof icons;
+  class?: string;
+  strokeWidth?: number;
+  label?: string;
+}
+const { name, class: cls = '', strokeWidth = 2, label } = Astro.props;
+// Default 16px unless the caller sets a size.
+const className = /(^|\s)size-/.test(cls) ? cls : `size-4 ${cls}`;
+const esc = (v: unknown) => String(v).replace(/"/g, '&quot;');
+const body = (icons[name] as [string, Record<string, string | number>][])
+  .map(([tag, attrs]) => `<${tag} ${Object.entries(attrs).map(([k, v]) => `${k}="${esc(v)}"`).join(' ')}/>`)
+  .join('');
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={`shrink-0 ${className}`}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  set:html={body}
+/>
