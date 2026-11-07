@@ -70,6 +70,11 @@ export const hero = {
   statement: 'I build production AI for health and medicine, and teach the next generation of AI engineers.',
   intro:
     "A PharmD graduate turned AI engineer. I design machine learning, GenAI and MLOps systems end to end, and I've mentored 100+ students from medicine, business, engineering and the arts into data and AI roles.",
+  /** The future goal, highlighted after the milestones in the intro. */
+  goal: {
+    label: 'Next goal',
+    text: "Heading towards AI-assisted drug discovery and development, through a Master's and PhD in computational biology and bioinformatics.",
+  },
   primaryCta: 'See my work',
   platformCta: platform.cta,
   platformSub: 'Free learning community',
@@ -114,7 +119,7 @@ export const about = {
     'I trained as a pharmacist at Quaid-i-Azam University, and midway through my PharmD I discovered data science. I taught myself machine learning in the evenings, then took on freelance data science work on Fiverr and Upwork.',
     'After graduating with a 3.9 cGPA I moved fully into AI: consulting on ML projects, tutoring data science on Superprof, and interning in AIOps at Al Nafi, where I completed an RQF Level 6 Diploma in AIOps with an A*.',
     "My route into AI was the one any CS student takes: programming, computer systems and the mathematical foundations of machine learning, so I teach the fundamentals properly, not just the tools. Today I build production AI and MLOps systems, and I've mentored 100+ students, most of them from medicine, business, engineering and the arts, into data and AI roles.",
-    "Next, I'm heading for a Master's and PhD in computational biology and bioinformatics, with one goal: AI-assisted drug discovery and development. It brings my training in medicine together with AI engineering and operations, and it is where my specialisation and my future lie.",
+    "I want to excel at the intersection of AI and medicine, and I'm eager to learn AI-assisted drug discovery and development. That is why I'm heading for a Master's and PhD in computational biology and bioinformatics: it brings my training in medicine together with AI engineering and operations, and it is where my specialisation and my future lie.",
   ],
   quickInfo: [
     { icon: 'MapPin', text: 'Rawalpindi, Pakistan' },

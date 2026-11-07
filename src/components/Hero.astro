@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import photo from '../assets/ahmad.png';
 import Icon from './ui/Icon.astro';
 import BrandIcon from './ui/BrandIcon.astro';
-import { hero, person, platform, socials, stats, verdictrx } from '../content/site';
+import { hero, person, platform, socials, stats } from '../content/site';
 import { button, cx, external } from '../lib/ui';
 
 type IconName = Parameters<typeof Icon>[0]['name'];
@@ -16,14 +16,6 @@ const links: { label: string; href: string; brand?: string; icon?: IconName }[] 
   { label: 'Email', href: `mailto:${socials.email}`, icon: 'Mail' },
 ];
 
-// Floating chips around the photo (in a row under it on smaller screens). The VerdictRx chip reuses
-// the VerdictRx section's own wording, so the two always match.
-const chips: { title: string; sub: string; icon: IconName; href?: string; pos: string; delay: string }[] = [
-  { ...person.photoFacts[0], pos: 'lg:top-[8%] lg:-left-10 xl:-left-16', delay: '0s' },
-  { ...person.photoFacts[1], pos: 'lg:top-[62%] lg:-right-4 xl:-right-12', delay: '2s' },
-  { title: `${verdictrx.name} · ${verdictrx.status}`, sub: verdictrx.domain, icon: 'Stethoscope', href: '#verdictrx', pos: 'lg:bottom-[4%] lg:-left-6 xl:-left-12', delay: '4s' },
-];
-
 // "1,500+" → 1500 and "+": the numbers count up when the strip scrolls into view.
 const counted = stats.map((s) => {
   const m = s.value.match(/^([\d,]+)(.*)$/);
@@ -34,7 +26,7 @@ const counted = stats.map((s) => {
 <!--
   The hero, always dark: full-bleed backdrop (line grid, drifting glows, a spotlight that follows the
   pointer), the name with a typed role line, statement and CTAs on the left; the photo with a gentle
-  3D tilt and floating facts on the right; then a stat strip and a tools marquee.
+  3D tilt and the two credentials under it on the right; then a stat strip and a tools marquee.
   It slides under the sticky nav (-mt-16 / pt-16) so the nav floats over it.
 -->
 <section id="top" data-hero aria-labelledby="hero-title" class="dark relative isolate -mt-16 overflow-hidden bg-bg pt-16 text-fg">
@@ -78,6 +70,13 @@ const counted = stats.map((s) => {
 
       <p class="mt-7 max-w-3xl font-display text-h3 font-medium text-balance text-fg sm:text-h2">{hero.statement}</p>
       <p class="mt-4 max-w-2xl text-body-lg text-fg-muted">{hero.intro}</p>
+      <p class="mt-5 flex max-w-2xl items-start gap-3 rounded-2xl border border-brand/40 bg-brand-soft p-3.5 pr-5">
+        <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-solid text-on-brand" aria-hidden="true"><Icon name="FlaskConical" class="size-4.5" /></span>
+        <span class="text-body text-fg">
+          <span class="mr-1.5 font-mono text-caption tracking-[0.12em] text-brand uppercase">{hero.goal.label}</span>
+          {hero.goal.text}
+        </span>
+      </p>
 
       <div class="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
         <a href="#projects" class={cx(button('primary', 'xl'), 'group shadow-brand')}>
@@ -148,31 +147,20 @@ const counted = stats.map((s) => {
         </div>
       </div>
 
-      <ul class="mt-8 grid gap-3 sm:grid-cols-3 lg:contents">
+      <!-- The two credentials, under the photo (nothing sits on top of it). -->
+      <ul class="mt-8 grid gap-3 sm:grid-cols-2">
         {
-          chips.map((c) => {
-            const Tag = c.href ? 'a' : 'div';
-            return (
-              <li class={cx('lg:absolute lg:z-10 lg:animate-float', c.pos)} style={`--float-delay: -${c.delay}`}>
-                <Tag
-                  href={c.href}
-                  class={cx(
-                    'flex items-center gap-3 rounded-2xl border border-line-strong bg-surface-raised/85 p-3 pr-4 shadow-brand backdrop-blur-md',
-                    c.href && 'group transition-colors hover:border-brand',
-                  )}
-                >
-                  <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand ring-1 ring-brand/30">
-                    <Icon name={c.icon} class="size-5" strokeWidth={1.75} />
-                  </span>
-                  <span class="min-w-0">
-                    <span class="block text-small leading-tight font-semibold whitespace-nowrap text-fg">{c.title}</span>
-                    <span class="mt-1 block text-caption whitespace-nowrap text-fg-muted">{c.sub}</span>
-                  </span>
-                  {c.href && <Icon name="ArrowRight" class="size-3.5 text-brand transition-transform group-hover:translate-x-0.5" />}
-                </Tag>
-              </li>
-            );
-          })
+          person.photoFacts.map((f) => (
+            <li class="flex items-center gap-3 rounded-2xl border border-line-strong bg-surface-raised/85 p-3 pr-4 backdrop-blur-md transition-colors hover:border-brand/60">
+              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand ring-1 ring-brand/30">
+                <Icon name={f.icon} class="size-5" strokeWidth={1.75} />
+              </span>
+              <span class="min-w-0">
+                <span class="block text-small leading-tight font-semibold text-fg">{f.title}</span>
+                <span class="mt-1 block text-caption text-fg-muted">{f.sub}</span>
+              </span>
+            </li>
+          ))
         }
       </ul>
     </div>

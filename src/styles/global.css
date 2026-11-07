@@ -224,15 +224,11 @@
   }
 }
 
-/* Hero motion: drifting glows, floating fact chips, the typing caret and the tools marquee.
+/* Hero motion: drifting glows, the typing caret and the tools marquee.
    Utilities (so they take variants like `lg:`), and only for motion-OK visitors. */
 @keyframes drift {
   0%, 100% { translate: 0 0; }
   50% { translate: 4% 6%; }
-}
-@keyframes float {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -8px; }
 }
 @keyframes blink {
   50% { opacity: 0; }
@@ -242,9 +238,6 @@
 }
 @utility animate-drift {
   @media (prefers-reduced-motion: no-preference) { animation: drift 18s ease-in-out infinite; }
-}
-@utility animate-float {
-  @media (prefers-reduced-motion: no-preference) { animation: float 6s ease-in-out infinite var(--float-delay, 0s); }
 }
 @utility animate-blink {
   @media (prefers-reduced-motion: no-preference) { animation: blink 1s steps(1) infinite; }
