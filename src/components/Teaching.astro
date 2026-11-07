@@ -1,0 +1,57 @@
+---
+import Icon from './ui/Icon.astro';
+import Section from './ui/Section.astro';
+import { platform, teaching } from '../content/site';
+import { badge, button, card, cx, external, lift } from '../lib/ui';
+
+const roadmapUrl = (slug: string) => `${platform.url}/roadmaps/${slug}`;
+---
+
+<!--
+  Teaching: AI with Ahmad as a terracotta panel on the left, the six roadmaps as a 2×3 grid on the right.
+  The portfolio palette only; every card opens its roadmap on the platform.
+-->
+<Section id="teaching" eyebrow={teaching.eyebrow} title={teaching.title} intro={teaching.intro}>
+  <div class="mt-12 grid gap-4 lg:grid-cols-12">
+    <div data-reveal class="relative flex flex-col overflow-hidden rounded-feature bg-brand-solid p-6 text-on-brand shadow-brand sm:p-8 lg:col-span-5 lg:p-10">
+      <span aria-hidden="true" class="grain pointer-events-none absolute inset-0 opacity-10"></span>
+      <span class="relative grid size-12 place-items-center rounded-2xl bg-on-brand/15">
+        <Icon name="GraduationCap" class="size-6" strokeWidth={1.75} />
+      </span>
+      <h3 class="relative mt-6 font-display text-h2 font-semibold sm:text-h2-lg">{platform.name}</h3>
+      <p class="relative mt-3 flex-1 text-body-lg">{platform.pitch}</p>
+      <div class="relative mt-8 flex flex-wrap gap-3">
+        <a href={`${platform.url}/roadmaps`} {...external} class={button('inverse', 'lg')}>
+          {platform.roadmapsCta}
+          <Icon name="ArrowUpRight" />
+        </a>
+        <a href={`${platform.url}/join`} {...external} class={button('inverse-outline', 'lg')}>{platform.joinCta}</a>
+      </div>
+    </div>
+
+    <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+      {
+        teaching.list.map((r, i) => (
+          <li data-reveal style={`--reveal-delay: ${(i % 2) * 60}ms`}>
+            <a
+              href={roadmapUrl(r.slug)}
+              {...external}
+              aria-label={teaching.openLabel(r.title)}
+              class={cx(card(), 'group flex h-full flex-col', lift)}
+            >
+              <span class="flex items-center justify-between gap-3">
+                <span class="font-mono text-small font-semibold text-brand tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                <Icon name="ArrowUpRight" class="size-5 text-fg-subtle transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand motion-reduce:transition-none" />
+              </span>
+              <span class="mt-4 flex flex-wrap items-center gap-2">
+                <span class="font-display text-h3 font-semibold text-fg">{r.title}</span>
+                {r.flagship && <span class={badge('brand')}>{teaching.flagshipBadge}</span>}
+              </span>
+              <span class="mt-1.5 text-small text-fg-muted">{r.tagline}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>

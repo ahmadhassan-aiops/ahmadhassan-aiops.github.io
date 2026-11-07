@@ -1,0 +1,45 @@
+---
+import Icon from './ui/Icon.astro';
+import Section from './ui/Section.astro';
+import { milestones } from '../content/site';
+import { badge, card, cx, external, iconTile } from '../lib/ui';
+---
+
+<!-- Six milestones; in-progress items are dashed, labelled and never read as earned. -->
+<Section id="milestones" tone="subtle" eyebrow={milestones.eyebrow} title={milestones.title}>
+  <ul class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {
+      milestones.items.map((m, i) => (
+        <li data-reveal style={`--reveal-delay: ${(i % 3) * 60}ms`}>
+          <div class={cx(card(), 'flex h-full flex-col', m.inProgress && 'border-dashed border-line-strong')}>
+            <div class="flex items-start justify-between gap-3">
+              <span class={iconTile(m.inProgress ? 'neutral' : 'brand')}>
+                <Icon name={m.icon} strokeWidth={1.75} />
+              </span>
+              {m.inProgress ? (
+                <span class={badge('dashed')}>{milestones.inProgressLabel}</span>
+              ) : (
+                <span class="font-mono text-small text-fg-subtle tabular-nums">{m.date}</span>
+              )}
+            </div>
+            <h3 class="mt-5 font-semibold text-fg">{m.title}</h3>
+            <p class="mt-1 text-small text-fg-muted">{m.meta}</p>
+            <p class="mt-3 flex-1 text-small text-fg-muted">{m.desc}</p>
+            <ul class="mt-4 flex flex-wrap gap-1.5">
+              {m.tags.map((t) => (
+                <li class={badge('outline')}>{t}</li>
+              ))}
+            </ul>
+            {m.link && (
+              <a href={m.link} {...external} class="mt-4 inline-flex min-h-11 items-center gap-1.5 self-start text-small font-medium text-brand underline-offset-4 hover:underline">
+                <Icon name="CirclePlay" />
+                {milestones.watchLabel}
+                <Icon name="ArrowUpRight" />
+              </a>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
