@@ -1,8 +1,8 @@
 ---
 /**
- * The portfolio's own mark (the platform keeps its blue "A" square): an "AH" monogram in a hexagon,
- * the ring of a drug molecule, with two atom nodes that double as network nodes. "From drug molecules
- * to neural networks" in one shape. The wordmark adds the role underneath.
+ * The portfolio's own mark (the platform keeps its blue "A" square): an "AH" monogram in a terracotta
+ * hexagon, the ring of a drug molecule, with two atom nodes (terracotta and sage) that double as
+ * network nodes. The wordmark adds the role underneath.
  */
 interface Props {
   class?: string;
@@ -27,10 +27,10 @@ const gid = `ah-${Math.random().toString(36).slice(2, 8)}`;
       <path d="M18.2 11v10.2M23.4 11v10.2M18.2 16.1h5.2"></path>
     </g>
     <circle cx="16" cy="3.2" r="2.3" fill="var(--brand-300)" stroke="var(--bg)" stroke-width="1.2"></circle>
-    <circle cx="27" cy="22.4" r="1.9" fill="var(--spark)" stroke="var(--bg)" stroke-width="1.2"></circle>
+    <circle cx="27" cy="22.4" r="1.9" fill="var(--sage)" stroke="var(--bg)" stroke-width="1.2"></circle>
   </svg>
   <span class="flex flex-col leading-none">
     <span class="font-display text-body font-bold tracking-tight whitespace-nowrap text-fg">Ahmad Hassan</span>
-    {!compact && <span class="mt-1 font-mono text-[0.6875rem] tracking-[0.14em] text-fg-subtle uppercase">AI Engineer</span>}
+    {!compact && <span class="mt-1 text-caption text-fg-subtle">AI engineer</span>}
   </span>
 </span>

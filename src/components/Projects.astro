@@ -34,7 +34,7 @@ const labelOf = (id: string) => categories.find((c) => c.id === id)?.label;
     {
       projects.map((p) => (
         <li data-category={p.category} data-healthcare={p.healthcare ? '' : undefined}>
-          <article class={cx(card, 'flex h-full flex-col transition-[border-color,box-shadow] duration-150 hover:border-brand/40 hover:shadow-md')}>
+          <article class={cx(card(), 'flex h-full flex-col transition-[border-color,box-shadow] duration-150 hover:border-brand/40 hover:shadow-md')}>
             <div class="mb-3 flex flex-wrap gap-2">
               <span class={badge('neutral')}>{labelOf(p.category)}</span>
               {p.healthcare && (

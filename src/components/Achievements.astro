@@ -11,7 +11,7 @@ import { badge, card, cx, external } from '../lib/ui';
     {
       achievements.items.map((a, i) => (
         <li data-reveal style={`--reveal-delay: ${(i % 3) * 60}ms`}>
-          <div class={cx(card, 'flex h-full flex-col', a.inProgress && 'border-dashed')}>
+          <div class={cx(card(), 'flex h-full flex-col', a.inProgress && 'border-dashed')}>
             <div class="flex items-start justify-between gap-3">
               <span class={cx('grid size-10 place-items-center rounded-xl', a.inProgress ? 'bg-surface-hover text-fg-muted' : 'bg-brand-soft text-brand')}>
                 <Icon name={a.icon} class="size-5" strokeWidth={1.5} />

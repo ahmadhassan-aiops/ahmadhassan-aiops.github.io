@@ -23,31 +23,13 @@ const counted = stats.map((s) => {
 });
 ---
 
-<!--
-  The hero, always dark: full-bleed backdrop (line grid, drifting glows, a spotlight that follows the
-  pointer), the name with a typed role line, statement and CTAs on the left; the photo with a gentle
-  3D tilt and the two credentials under it on the right; then a stat strip and a tools marquee.
-  It slides under the sticky nav (-mt-16 / pt-16) so the nav floats over it.
--->
+<!-- The hero (redesigned in the next step): name, statement and CTAs; the photo and credentials; stats and tools. -->
 <section id="top" data-hero aria-labelledby="hero-title" class="dark relative isolate -mt-16 overflow-hidden bg-bg pt-16 text-fg">
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-    <div class="hero-grid absolute inset-0"></div>
-    <div class="animate-drift absolute -top-48 -left-40 size-[40rem] rounded-full bg-brand-500/20 blur-3xl"></div>
-    <div class="animate-drift absolute top-1/4 -right-48 size-[34rem] rounded-full bg-brand-300/10 blur-3xl [animation-delay:-9s]"></div>
-    <div
-      data-spotlight
-      class="absolute inset-0 opacity-0 transition-opacity duration-500"
-      style="background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--brand-400) 13%, transparent), transparent 65%)"
-    >
-    </div>
-  </div>
-
   <div class="container-wide relative grid items-center gap-14 py-14 sm:py-20 lg:min-h-[min(calc(100svh-4rem),56rem)] lg:grid-cols-12 lg:gap-10 lg:py-16 xl:gap-16">
     <div class="lg:col-span-7">
       <p class="inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-surface/60 py-1.5 pr-4 pl-2.5 text-small text-fg-muted backdrop-blur">
         <span class="relative flex size-2.5" aria-hidden="true">
-          <span class="absolute inset-0 rounded-full bg-brand-400 opacity-70 motion-safe:animate-ping"></span>
-          <span class="relative size-2.5 rounded-full bg-brand-400"></span>
+                    <span class="relative size-2.5 rounded-full bg-brand-400"></span>
         </span>
         {person.availability}
         <span class="hidden h-3.5 w-px bg-line-strong sm:block" aria-hidden="true"></span>
@@ -59,14 +41,11 @@ const counted = stats.map((s) => {
         {hero.kicker}
       </p>
       <h1 id="hero-title" class="mt-4 font-display text-hero font-bold">
-        <span class="text-gradient">{person.name}</span>
+        {person.name}
         <span class="sr-only">: {person.roles.join(', ')}</span>
       </h1>
 
-      <p aria-hidden="true" class="mt-5 flex h-9 items-center gap-3 font-mono text-h3 text-fg sm:h-10 sm:text-h2">
-        <span class="text-brand">~/</span>
-        <span><span data-typer data-words={JSON.stringify(hero.roles)}>{hero.roles[0]}</span><span class="animate-blink ml-1 inline-block h-[1.1em] w-[0.5ch] translate-y-[0.15em] bg-spark"></span></span>
-      </p>
+
 
       <p class="mt-7 max-w-3xl font-display text-h3 font-medium text-balance text-fg sm:text-h2">{hero.statement}</p>
       <p class="mt-4 max-w-2xl text-body-lg text-fg-muted">{hero.intro}</p>
@@ -130,7 +109,7 @@ const counted = stats.map((s) => {
         <circle cx="5" cy="9.6" r="0.9" fill="currentColor"></circle>
       </svg>
 
-      <div data-tilt class="relative transition-transform duration-300 ease-out will-change-transform">
+      <div class="relative">
         <div aria-hidden="true" class="absolute -inset-8 -z-10 rounded-[3rem] bg-linear-to-br from-brand-400/35 via-brand-600/10 to-transparent blur-2xl"></div>
         <div aria-hidden="true" class="absolute -inset-3 rounded-[2.25rem] border border-brand-400/25"></div>
         <div class="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-line-strong bg-surface shadow-brand">
@@ -223,52 +202,6 @@ const counted = stats.map((s) => {
 <script>
   const hero = document.querySelector<HTMLElement>('[data-hero]');
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = matchMedia('(pointer: fine)').matches;
-
-  // A soft spotlight follows the pointer, and the photo tilts towards it (mouse and trackpad only).
-  const spot = hero?.querySelector<HTMLElement>('[data-spotlight]');
-  const tilt = hero?.querySelector<HTMLElement>('[data-tilt]');
-  if (hero && spot && tilt && finePointer && !calm) {
-    hero.addEventListener('pointermove', (e) => {
-      const r = hero.getBoundingClientRect();
-      spot.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      spot.style.setProperty('--my', `${e.clientY - r.top}px`);
-      spot.style.opacity = '1';
-      const t = tilt.getBoundingClientRect();
-      const x = Math.max(-1, Math.min(1, (e.clientX - (t.left + t.width / 2)) / (r.width / 2)));
-      const y = Math.max(-1, Math.min(1, (e.clientY - (t.top + t.height / 2)) / (r.height / 2)));
-      tilt.style.transform = `perspective(1000px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg)`;
-    });
-    hero.addEventListener('pointerleave', () => {
-      spot.style.opacity = '0';
-      tilt.style.transform = '';
-    });
-  }
-
-  // The typed role line: hold, delete, type the next, repeat. Static (first role) for reduced motion.
-  const typer = hero?.querySelector<HTMLElement>('[data-typer]');
-  if (typer && !calm) {
-    const words: string[] = JSON.parse(typer.dataset.words ?? '[]');
-    let w = 0;
-    let n = words[0]?.length ?? 0;
-    let deleting = true;
-    const step = () => {
-      const word = words[w];
-      n += deleting ? -1 : 1;
-      typer.textContent = word.slice(0, n);
-      let delay = deleting ? 40 : 85;
-      if (!deleting && n === word.length) {
-        deleting = true;
-        delay = 2000;
-      } else if (deleting && n === 0) {
-        deleting = false;
-        w = (w + 1) % words.length;
-        delay = 350;
-      }
-      setTimeout(step, delay);
-    };
-    if (words.length > 1) setTimeout(step, 2400);
-  }
 
   // Stats count up from zero the first time the strip scrolls into view.
   const counters = [...(hero?.querySelectorAll<HTMLElement>('[data-count]') ?? [])];

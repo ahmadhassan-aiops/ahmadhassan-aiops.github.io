@@ -6,83 +6,83 @@
 @custom-variant theme-dark (&:where(html.dark, html.dark *));
 
 /*
- * Design tokens. The structure matches the AI with Ahmad platform (same semantic names, same
- * components), but the portfolio has its own palette: deep teal on warm-neutral greys instead of the
- * platform's blue, so the two sites feel related but distinct. Light is the default, `.dark`
- * overrides. The hero always renders with the dark set (`class="dark"` on the section).
+ * Design tokens: terracotta and ivory. The semantic names match the AI with Ahmad platform so the
+ * components read the same, but the palette is the portfolio's own (warm terracotta on ivory, an
+ * espresso dark theme and a sage second accent). Light is the default, `.dark` overrides.
  * Components use only the semantic utilities mapped in @theme below, never raw hex.
  */
 :root {
   color-scheme: light;
 
-  --brand-50: #effefa;
-  --brand-100: #c8fff1;
-  --brand-200: #91fee4;
-  --brand-300: #52f5d4;
-  --brand-400: #1edfbe;
-  --brand-500: #05c3a5;
-  --brand-600: #009d87;
-  --brand-700: #057d6e;
-  --brand-800: #0a635a;
-  --brand-900: #0d524b;
-  --brand-950: #003330;
+  --brand-50: #fdf5ef;
+  --brand-100: #f8e6d9;
+  --brand-200: #f0cbb3;
+  --brand-300: #edb592;
+  --brand-400: #e8956c;
+  --brand-500: #cf6a3e;
+  --brand-600: #b4532a;
+  --brand-700: #96421f;
+  --brand-800: #7a361c;
+  --brand-900: #632e1b;
+  --brand-950: #3a170c;
 
-  --bg: #fbfcfb;
-  --bg-subtle: #f3f6f5;
+  --bg: #fbf7f1;
+  --bg-subtle: #f4ede3;
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --surface-hover: #eef3f1;
-  --line: #e2e8e6;
-  --line-strong: #c9d3d0;
-  --fg: #0a1513;
-  --fg-muted: #44524f;
-  --fg-subtle: #5f6e6b;
+  --surface-hover: #f7f1e8;
+  --line: #e8dfd3;
+  --line-strong: #d6c9b8;
+  --fg: #1c1917;
+  --fg-muted: #57534e;
+  --fg-subtle: #736a62;
   --brand: var(--brand-700);
-  --brand-solid: var(--brand-700);
-  --brand-soft: var(--brand-50);
+  --brand-solid: var(--brand-600);
+  --brand-soft: var(--brand-100);
   --on-brand: #ffffff;
-  /* A warm second accent for small highlights only (the typing caret, the availability dot). */
-  --spark: #d97706;
-  --success: #15803d;
-  --warning: #b45309;
-  --danger: #b91c1c;
+  /* Sage: a calm second accent, used sparingly (healthcare tags, the next goal, the availability dot). */
+  --sage: #4d6b57;
+  --sage-soft: #e9efe9;
+  --success: #3f7a4f;
+  --warning: #a15c07;
+  --danger: #b42318;
   --whatsapp: #25d366;
   --selection: var(--brand-200);
+  /* The warm frame block behind the hero photo. */
+  --frame: var(--brand-100);
 
-  /* Default accent outside a roadmap card: the brand. */
-  --accent: var(--brand);
-  --on-accent: light-dark(#ffffff, #061210);
-
-  --elev-sm: 0 1px 2px rgb(10 21 19 / 0.06);
-  --elev-md: 0 4px 16px -4px rgb(10 21 19 / 0.1);
-  --elev-brand: 0 12px 32px -12px rgb(5 125 110 / 0.4);
+  --elev-sm: 0 1px 2px rgb(60 35 20 / 0.06);
+  --elev-md: 0 8px 24px -8px rgb(60 35 20 / 0.12);
+  --elev-brand: 0 16px 36px -14px rgb(180 83 42 / 0.35);
 }
 
 .dark {
   color-scheme: dark;
 
-  --bg: #061210;
-  --bg-subtle: #091a17;
-  --surface: #0d1f1c;
-  --surface-raised: #122824;
-  --surface-hover: #163029;
-  --line: rgb(255 255 255 / 0.08);
-  --line-strong: rgb(255 255 255 / 0.16);
-  --fg: #e4f1ee;
-  --fg-muted: #a0b6b1;
-  --fg-subtle: #7f9792;
+  --bg: #17120f;
+  --bg-subtle: #1d1714;
+  --surface: #231c18;
+  --surface-raised: #2a221d;
+  --surface-hover: #30271f;
+  --line: rgb(255 240 225 / 0.09);
+  --line-strong: rgb(255 240 225 / 0.17);
+  --fg: #f3ece4;
+  --fg-muted: #c4b8ab;
+  --fg-subtle: #9c8f82;
   --brand: var(--brand-400);
-  --brand-soft: rgb(30 223 190 / 0.12);
-  --spark: #fbbf24;
-  --success: #4ade80;
-  --warning: #fbbf24;
-  --danger: #f87171;
+  --brand-soft: rgb(232 149 108 / 0.12);
+  --sage: #9db8a4;
+  --sage-soft: rgb(157 184 164 / 0.12);
+  --success: #86c79a;
+  --warning: #f2b84b;
+  --danger: #f28b82;
   --selection: var(--brand-800);
+  --frame: var(--brand-950);
 
-  /* Dark depth comes from surface steps and borders, not shadows (the brand glow stays). */
+  /* Dark depth comes from surface steps and borders; only a softer brand shadow remains. */
   --elev-sm: 0 0 #0000;
   --elev-md: 0 0 #0000;
-  --elev-brand: 0 18px 48px -16px rgb(30 223 190 / 0.35);
+  --elev-brand: 0 16px 36px -16px rgb(0 0 0 / 0.5);
 }
 
 @theme inline {
@@ -116,15 +116,14 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-whatsapp: var(--whatsapp);
-  --color-spark: var(--spark);
-  --color-accent: var(--accent);
-  --color-on-accent: var(--on-accent);
-  --color-accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-frame: var(--frame);
 
   --font-sans: "Geist Variable", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
-  /* Headings: Space Grotesk, the portfolio's own voice (the platform uses Geist throughout). */
-  --font-display: "Space Grotesk Variable", "Geist Variable", system-ui, sans-serif;
+  /* Headings: Fraunces, a warm serif that sets the portfolio apart from the all-sans platform. */
+  --font-display: "Fraunces Variable", Georgia, serif;
 
   /* Type scale. Minimum size anywhere is 12px (text-caption / text-xs). */
   --text-display: 3rem;
@@ -133,10 +132,10 @@
   --text-display-lg: 4rem;
   --text-display-lg--line-height: 4.25rem;
   --text-display-lg--letter-spacing: -0.03em;
-  /* The hero name: fluid, 48px on phones up to 108px on wide screens. */
-  --text-hero: clamp(3rem, 7.2vw, 6.75rem);
-  --text-hero--line-height: 0.95;
-  --text-hero--letter-spacing: -0.04em;
+  /* The hero name: fluid, 48px on phones up to 96px on wide screens (a serif needs little tracking). */
+  --text-hero: clamp(3rem, 6.4vw, 6rem);
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.02em;
   --text-h1: 2rem;
   --text-h1--line-height: 2.375rem;
   --text-h1--letter-spacing: -0.02em;
@@ -145,8 +144,8 @@
   --text-h1-lg--letter-spacing: -0.02em;
   --text-h2: 1.5rem;
   --text-h2--line-height: 1.875rem;
-  --text-h2-lg: 1.875rem;
-  --text-h2-lg--line-height: 2.25rem;
+  --text-h2-lg: 2.25rem;
+  --text-h2-lg--line-height: 2.75rem;
   --text-h3: 1.25rem;
   --text-h3--line-height: 1.75rem;
   --text-body-lg: 1.125rem;
@@ -158,16 +157,19 @@
   --text-caption: 0.75rem;
   --text-caption--line-height: 1rem;
 
-  --tracking-eyebrow: 0.08em;
+  --tracking-eyebrow: 0.12em;
 
-  --radius-control: 0.625rem;
+  /* Radii: controls 12px, cards 20px, feature panels and the photo 28px; chips are full pills. */
+  --radius-control: 0.75rem;
+  --radius-card: 1.25rem;
+  --radius-feature: 1.75rem;
 
   --shadow-sm: var(--elev-sm);
   --shadow-md: var(--elev-md);
   --shadow-brand: var(--elev-brand);
 }
 
-/* Page container: wide (up to 1728px) so the page uses the screen; padding 16 / 24 (sm) / 40 (lg) / 56 (2xl). */
+/* Page container: full width up to 1728px; padding 16 / 24 (sm) / 40 (lg) / 56 (2xl). */
 @utility container-wide {
   width: 100%;
   max-width: 108rem;
@@ -178,20 +180,25 @@
   @variant 2xl { padding-inline: 3.5rem; }
 }
 
-/* Hero backdrop: a faint line grid that fades out towards the edges. */
-@utility hero-grid {
-  background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
+/* Hero backdrop: a faint warm dot grid that fades out towards the edges. */
+@utility hero-dots {
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1.2px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 75% 70% at 40% 40%, black 25%, transparent 75%);
 }
 
-/* The name in the hero: light ink fading into the brand teal. */
-@utility text-gradient {
-  background-image: linear-gradient(100deg, var(--fg) 30%, var(--brand-300) 70%, var(--brand-500));
-  background-clip: text;
-  color: transparent;
+/* Text measure: paragraphs stay readable even in full-width sections. */
+@utility measure {
+  max-width: 68ch;
+}
+@utility measure-intro {
+  max-width: 60ch;
+}
+
+/* Fraunces at its softer setting for every heading. */
+.font-display {
+  font-variation-settings: "SOFT" 50, "WONK" 0;
+  font-optical-sizing: auto;
 }
 
 @layer base {
@@ -202,6 +209,16 @@
     background: var(--bg);
     color: var(--fg);
     font-family: var(--font-sans);
+  }
+  /* A faint paper grain over the light theme only (inline SVG noise, never blocks clicks). */
+  html:not(.dark) body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   :focus-visible {
     outline: 3px solid color-mix(in oklab, var(--brand-500) 50%, transparent);
@@ -224,26 +241,12 @@
   }
 }
 
-/* Hero motion: drifting glows, the typing caret and the tools marquee.
-   Utilities (so they take variants like `lg:`), and only for motion-OK visitors. */
-@keyframes drift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 4% 6%; }
-}
-@keyframes blink {
-  50% { opacity: 0; }
-}
+/* The tools marquee: slow, and only for motion-OK visitors. */
 @keyframes marquee {
   to { translate: -50% 0; }
 }
-@utility animate-drift {
-  @media (prefers-reduced-motion: no-preference) { animation: drift 18s ease-in-out infinite; }
-}
-@utility animate-blink {
-  @media (prefers-reduced-motion: no-preference) { animation: blink 1s steps(1) infinite; }
-}
 @utility animate-marquee {
-  @media (prefers-reduced-motion: no-preference) { animation: marquee 45s linear infinite; }
+  @media (prefers-reduced-motion: no-preference) { animation: marquee 70s linear infinite; }
 }
 /* The marquee pauses while hovered or while a logo inside has focus. */
 [data-marquee]:hover .animate-marquee,

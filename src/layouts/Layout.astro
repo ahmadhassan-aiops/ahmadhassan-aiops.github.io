@@ -1,11 +1,13 @@
 ---
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
-import '@fontsource-variable/space-grotesk';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import photo from '../assets/ahmad.png';
 import { meta } from '../content/site';
+// Fraunces (headings), latin only, with every axis so SOFT and optical sizing work.
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
+import frauncesItalicUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2?url';
 
 interface Props {
   title?: string;
@@ -30,7 +32,13 @@ const ogImage = await getImage({ src: photo, width: 800, format: 'jpg' });
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
-    <meta name="theme-color" content="#061210" />
+    <meta name="theme-color" content="#fbf7f1" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17120f" />
+    <link rel="preload" href={frauncesUrl} as="font" type="font/woff2" crossorigin />
+    <style
+      is:inline
+      set:html={`@font-face{font-family:"Fraunces Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${frauncesUrl}) format("woff2-variations")}@font-face{font-family:"Fraunces Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(${frauncesItalicUrl}) format("woff2-variations")}`}
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Light by default, like the platform; the saved choice is applied before paint so there is no flash. -->
     <script is:inline>
