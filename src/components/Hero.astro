@@ -38,24 +38,18 @@ const counted = stats.map((s) => {
 
       <p class="mt-8 flex items-center gap-3 font-mono text-caption tracking-[0.1em] text-brand uppercase sm:text-small sm:tracking-[0.18em]">
         <span class="h-px w-8 bg-brand" aria-hidden="true"></span>
-        {hero.kicker}
+        {hero.eyebrow}
       </p>
       <h1 id="hero-title" class="mt-4 font-display text-hero font-bold">
         {person.name}
-        <span class="sr-only">: {person.roles.join(', ')}</span>
+        <span class="sr-only">: {hero.roles}</span>
       </h1>
 
 
 
       <p class="mt-7 max-w-3xl font-display text-h3 font-medium text-balance text-fg sm:text-h2">{hero.statement}</p>
       <p class="mt-4 max-w-2xl text-body-lg text-fg-muted">{hero.intro}</p>
-      <p class="mt-5 flex max-w-2xl items-start gap-3 rounded-2xl border border-brand/40 bg-brand-soft p-3.5 pr-5">
-        <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-solid text-on-brand" aria-hidden="true"><Icon name="FlaskConical" class="size-4.5" /></span>
-        <span class="text-body text-fg">
-          <span class="mr-1.5 font-mono text-caption tracking-[0.12em] text-brand uppercase">{hero.goal.label}</span>
-          {hero.goal.text}
-        </span>
-      </p>
+
 
       <div class="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
         <a href="#projects" class={cx(button('primary', 'xl'), 'group shadow-brand')}>
@@ -70,8 +64,8 @@ const counted = stats.map((s) => {
         >
           <span class="grid size-10 place-items-center rounded-lg bg-brand-solid text-on-brand"><Icon name="GraduationCap" class="size-5" /></span>
           <span class="leading-tight">
-            <span class="block text-small font-semibold text-fg">{hero.platformCta}</span>
-            <span class="mt-0.5 block text-caption text-fg-muted">{hero.platformSub}</span>
+            <span class="block text-small font-semibold text-fg">{platform.cta}</span>
+            <span class="mt-0.5 block text-caption text-fg-muted">{platform.sub}</span>
           </span>
           <Icon name="ArrowUpRight" class="ml-1 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
@@ -129,14 +123,14 @@ const counted = stats.map((s) => {
       <!-- The two credentials, under the photo (nothing sits on top of it). -->
       <ul class="mt-8 grid gap-3 sm:grid-cols-2">
         {
-          person.photoFacts.map((f) => (
+          person.credentials.map((f) => (
             <li class="flex items-center gap-3 rounded-2xl border border-line-strong bg-surface-raised/85 p-3 pr-4 backdrop-blur-md transition-colors hover:border-brand/60">
               <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand ring-1 ring-brand/30">
                 <Icon name={f.icon} class="size-5" strokeWidth={1.75} />
               </span>
               <span class="min-w-0">
                 <span class="block text-small leading-tight font-semibold text-fg">{f.title}</span>
-                <span class="mt-1 block text-caption text-fg-muted">{f.sub}</span>
+                <span class="mt-1 block text-caption text-fg-muted">{f.meta}</span>
               </span>
             </li>
           ))
@@ -164,9 +158,7 @@ const counted = stats.map((s) => {
               <p class="font-display text-h1 font-bold text-fg tabular-nums sm:text-h1-lg">
                 <span data-count={s.n} data-suffix={s.suffix}>{s.value}</span>
               </p>
-              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand transition-transform group-hover:scale-110 motion-reduce:transition-none" aria-hidden="true">
-                <Icon name={s.icon} class="size-5" strokeWidth={1.75} />
-              </span>
+
             </div>
             <p class="mt-2 text-small text-fg-muted">{s.label}</p>
           </li>

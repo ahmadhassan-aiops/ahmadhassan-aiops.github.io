@@ -2,7 +2,7 @@
 import BrandIcon from './ui/BrandIcon.astro';
 import Icon from './ui/Icon.astro';
 import Section from './ui/Section.astro';
-import { huggingface, socials } from '../content/site';
+import { openSource as huggingface, socials } from '../content/site';
 import { badge, button, card, cx, external } from '../lib/ui';
 ---
 
@@ -24,18 +24,18 @@ import { badge, button, card, cx, external } from '../lib/ui';
           <BrandIcon icon="huggingface" class="size-6" />
         </span>
         <span>
-          <span class="block font-mono font-semibold text-fg">{socials.huggingfaceUser}</span>
+          <span class="block font-mono font-semibold text-fg">myhuggingface333</span>
           <span class="block text-small text-fg-muted">Hugging Face</span>
         </span>
       </div>
       <div class="mt-5 flex flex-wrap gap-2">
-        {huggingface.stats.map((s) => <span class={badge('brand')}>{s}</span>)}
+        
       </div>
       <ul class="mt-4 flex flex-wrap gap-1.5">
-        {huggingface.tags.map((t) => <li class={badge('outline')}>{t}</li>)}
+        {huggingface.spaces.map((t) => <li class={badge('outline')}>{t.name}</li>)}
       </ul>
       <p class="mt-6 flex items-center justify-between border-t border-line pt-4 text-small font-medium text-brand">
-        {huggingface.cardFooter}
+        {huggingface.cta}
         <Icon name="ArrowUpRight" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </p>
     </a>

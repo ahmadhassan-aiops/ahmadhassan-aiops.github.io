@@ -1,12 +1,12 @@
 ---
 import Icon from './ui/Icon.astro';
 import Section from './ui/Section.astro';
-import { achievements } from '../content/site';
+import { milestones as achievements } from '../content/site';
 import { badge, card, cx, external } from '../lib/ui';
 ---
 
 <!-- Milestones as cards; in-progress items are dashed and labelled, never shown as earned. -->
-<Section id="achievements" tone="default" align="center" eyebrow={achievements.eyebrow} title={achievements.title} intro={achievements.intro}>
+<Section id="achievements" tone="default" align="center" eyebrow={achievements.eyebrow} title={achievements.title} >
   <ul class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {
       achievements.items.map((a, i) => (
@@ -19,11 +19,11 @@ import { badge, card, cx, external } from '../lib/ui';
               {a.inProgress ? (
                 <span class={badge('dashed')}>{achievements.inProgressLabel}</span>
               ) : (
-                <span class="font-mono text-small font-semibold text-brand">{a.year}</span>
+                <span class="font-mono text-small font-semibold text-brand">{a.date}</span>
               )}
             </div>
             <h3 class="mt-4 font-semibold text-fg">{a.title}</h3>
-            <p class="mt-1 text-small text-fg-muted">{a.subtitle}</p>
+            <p class="mt-1 text-small text-fg-muted">{a.meta}</p>
             <p class="mt-3 flex-1 text-small text-fg-muted">{a.desc}</p>
             <ul class="mt-4 flex flex-wrap gap-1.5">
               {a.tags.map((t) => (

@@ -2,13 +2,13 @@
 import BrandIcon from './ui/BrandIcon.astro';
 import Icon from './ui/Icon.astro';
 import Section from './ui/Section.astro';
-import { skills } from '../content/site';
+import { expertise as skills } from '../content/site';
 import { logoFor } from '../lib/brand-icons';
 import { card } from '../lib/ui';
 ---
 
 <!-- Four expertise groups with tool chips (logos where one exists), as on the platform. -->
-<Section id="skills" tone="subtle" eyebrow={skills.eyebrow} title={skills.title} intro={skills.intro}>
+<Section id="expertise" tone="subtle" eyebrow={skills.eyebrow} title={skills.title} intro={skills.intro}>
   <div class="mt-12 grid gap-4 md:grid-cols-2">
     {
       skills.groups.map((g, i) => (

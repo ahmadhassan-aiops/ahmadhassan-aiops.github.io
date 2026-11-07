@@ -1,7 +1,7 @@
 ---
 import Icon from './ui/Icon.astro';
 import Section from './ui/Section.astro';
-import { platform, roadmaps } from '../content/site';
+import { platform, teaching as roadmaps } from '../content/site';
 import { badge, button, cx, external } from '../lib/ui';
 
 const accent = (a: { light: string; dark: string }) => `--accent: light-dark(${a.light}, ${a.dark})`;
@@ -14,13 +14,13 @@ const roadmapUrl = (slug: string) => `${platform.url}/roadmaps/${slug}`;
   The six roadmaps by name only (the platform's list design: flagship card, then a two-column grid with
   accent bars). Topics, stages and lessons live on AI with Ahmad, so every card opens the roadmap there.
 -->
-<Section id="roadmaps" tone="subtle" eyebrow={roadmaps.eyebrow} title={roadmaps.title} intro={roadmaps.intro}>
+<Section id="teaching" tone="subtle" eyebrow={roadmaps.eyebrow} title={roadmaps.title} intro={roadmaps.intro}>
   <div class="mt-12 space-y-4">
     <a
       data-reveal
       href={roadmapUrl(flagship.slug)}
       {...external}
-      style={accent(flagship.accent)}
+      
       class="group relative block overflow-hidden rounded-3xl border border-line bg-surface p-6 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-accent hover:shadow-md sm:p-8"
     >
       <span
@@ -32,7 +32,7 @@ const roadmapUrl = (slug: string) => `${platform.url}/roadmaps/${slug}`;
         <span class="mt-4 block font-display text-h2 font-semibold text-fg sm:text-h2-lg">{flagship.title}</span>
       </span>
       <span class={cx(button('primary', 'md'), 'relative mt-7')}>
-        {roadmaps.openLabel}
+        {platform.cta}
         <Icon name="ArrowUpRight" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>
     </a>
@@ -40,7 +40,7 @@ const roadmapUrl = (slug: string) => `${platform.url}/roadmaps/${slug}`;
     <ul class="grid gap-4 md:grid-cols-2">
       {
         supporting.map((r, i) => (
-          <li data-reveal style={`${accent(r.accent)}; --reveal-delay: ${i * 60}ms`}>
+          <li data-reveal style={`--reveal-delay: ${i * 60}ms`}>
             <a
               href={roadmapUrl(r.slug)}
               {...external}

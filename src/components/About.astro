@@ -15,7 +15,7 @@ import { badge, card, cx } from '../lib/ui';
       <div class={card()}>
         <ul class="space-y-3">
           {
-            about.quickInfo.map((q) => (
+            about.facts.map((q) => (
               <li class="flex items-center gap-3 text-small text-fg-muted">
                 <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-brand-soft text-brand">
                   <Icon name={q.icon} class="size-4" />
@@ -42,7 +42,7 @@ import { badge, card, cx } from '../lib/ui';
   </div>
 </Section>
 
-<Section id="journey" tone="default" align="center" title={journey.title} intro={journey.intro}>
+<Section id="journey" tone="default" align="center" eyebrow={journey.eyebrow} title={journey.title}>
   <ol class="relative mx-auto mt-14 max-w-4xl space-y-6 before:absolute before:inset-y-2 before:left-5 before:w-0.5 before:bg-line-strong lg:space-y-0 lg:before:left-1/2 lg:before:-translate-x-1/2">
     {
       journey.timeline.map((t, i) => {
@@ -80,17 +80,17 @@ import { badge, card, cx } from '../lib/ui';
     }
   </ol>
 
-  <h3 class="mt-20 text-center text-h3 font-semibold text-fg">{journey.credentialsTitle}</h3>
+  <h3 class="mt-20 text-center text-h3 font-semibold text-fg">{journey.educationTitle}</h3>
   <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {
-      journey.credentials.map((c, i) => (
+      journey.education.map((c, i) => (
         <li data-reveal style={`--reveal-delay: ${i * 60}ms`}>
           <div class={cx(card(), 'flex h-full flex-col', c.inProgress && 'border-dashed')}>
             <div class="flex items-start justify-between gap-3">
               <span class={cx('grid size-10 place-items-center rounded-xl', c.inProgress ? 'bg-surface-hover text-fg-muted' : 'bg-brand-soft text-brand')}>
                 <Icon name={c.icon} class="size-5" strokeWidth={1.5} />
               </span>
-              <span class={badge(c.inProgress ? 'dashed' : 'brand')}>{c.detail}</span>
+              <span class={badge(c.inProgress ? 'dashed' : 'brand')}>{c.grade}</span>
             </div>
             <p class="mt-4 font-semibold text-fg">{c.title}</p>
             <p class="mt-1 text-small text-fg-muted">{c.org}</p>
