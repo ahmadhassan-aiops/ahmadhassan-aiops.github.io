@@ -1,9 +1,10 @@
 ---
-import { cx } from '../../lib/ui';
+import { cx, eyebrow as eyebrowClass } from '../../lib/ui';
 
 /**
- * A full-width section, as on the platform: alternating default / subtle backgrounds, 80px → 112px
- * vertical rhythm, and an optional eyebrow + H2 + intro heading (left or centred).
+ * A full-width section: alternating default / subtle backgrounds, 96px → 128px vertical rhythm and
+ * one heading pattern everywhere (eyebrow, a short terracotta rule, the H2 in Fraunces, an intro at
+ * most 60ch). Headings are left-aligned; only Contact centres its own.
  */
 interface Props {
   id: string;
@@ -11,23 +12,27 @@ interface Props {
   eyebrow?: string;
   title?: string;
   intro?: string;
-  align?: 'left' | 'center';
   class?: string;
 }
-const { id, tone = 'default', eyebrow, title, intro, align = 'left', class: className } = Astro.props;
+const { id, tone = 'default', eyebrow, title, intro, class: className } = Astro.props;
 const titleId = `${id}-title`;
 ---
 
-<section id={id} aria-labelledby={title ? titleId : undefined} class={cx('scroll-mt-16 py-20 lg:py-28', tone === 'subtle' && 'bg-bg-subtle', className)}>
+<section id={id} aria-labelledby={title ? titleId : undefined} class={cx('scroll-mt-16 py-24 lg:py-32', tone === 'subtle' && 'bg-bg-subtle', className)}>
   <div class="container-wide">
     {
       title && (
-        <div data-reveal class={cx(align === 'center' && 'mx-auto text-center')}>
-          {eyebrow && <p class="text-caption font-medium tracking-eyebrow text-brand uppercase">{eyebrow}</p>}
-          <h2 id={titleId} class={cx('font-display text-h2 font-semibold text-balance text-fg sm:text-h2-lg', eyebrow && 'mt-2')}>
+        <div data-reveal>
+          {eyebrow && (
+            <>
+              <p class={eyebrowClass}>{eyebrow}</p>
+              <span aria-hidden="true" class="mt-3 block h-0.5 w-10 rounded-full bg-brand" />
+            </>
+          )}
+          <h2 id={titleId} class={cx('font-display text-h2 font-semibold text-balance text-fg sm:text-h2-lg', eyebrow && 'mt-4')}>
             {title}
           </h2>
-          {intro && <p class={cx('mt-3 max-w-160 text-body-lg text-fg-muted', align === 'center' && 'mx-auto')}>{intro}</p>}
+          {intro && <p class="measure-intro mt-4 text-body-lg text-fg-muted">{intro}</p>}
         </div>
       )
     }

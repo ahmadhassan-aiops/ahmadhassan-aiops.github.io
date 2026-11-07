@@ -2,25 +2,25 @@
 import Icon from './ui/Icon.astro';
 import Logo from './ui/Logo.astro';
 import ThemeToggle from './ui/ThemeToggle.astro';
-import { nav, platform } from '../content/site';
+import { nav, navLabels, platform } from '../content/site';
 import { button, cx, external } from '../lib/ui';
 ---
 
 <!--
-  Full-width sticky nav: the mark on the far left, section links and actions on the far right.
-  While it sits over the hero it carries `dark` (the hero is always dark), then follows the theme.
+  Full-width sticky nav that follows the theme: the mark on the far left, six section links and the
+  actions on the far right ("AI with Ahmad" as a secondary button, "Get in touch" as the primary).
 -->
-<header id="site-nav" class="dark sticky top-0 z-40 h-16 border-b border-transparent bg-bg/70 text-fg backdrop-blur-md transition-colors duration-300">
+<header id="site-nav" class="sticky top-0 z-40 h-16 border-b border-transparent bg-bg/80 backdrop-blur-md transition-colors duration-300">
   <div class="flex h-full items-center gap-4 px-4 sm:px-6 lg:px-10 2xl:px-14">
-    <a href="#top" aria-label="Ahmad Hassan, back to top" class="shrink-0 rounded-control"><Logo /></a>
+    <a href="#top" aria-label={navLabels.home} class="shrink-0 rounded-control"><Logo /></a>
 
-    <nav aria-label="Sections" class="ml-auto hidden items-center gap-0.5 xl:flex">
+    <nav aria-label="Sections" class="ml-auto hidden items-center gap-1 lg:flex">
       {
         nav.map((l) => (
           <a
             href={l.href}
             data-nav-link
-            class="rounded-full px-3 py-1.5 text-small font-medium whitespace-nowrap text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg data-active:bg-brand-soft data-active:text-brand"
+            class="rounded-full px-3.5 py-2 text-small font-medium whitespace-nowrap text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg data-active:bg-brand-soft data-active:text-brand"
           >
             {l.label}
           </a>
@@ -28,14 +28,16 @@ import { button, cx, external } from '../lib/ui';
       }
     </nav>
 
-    <div class="ml-auto flex shrink-0 items-center gap-2 xl:ml-2 xl:border-l xl:border-line xl:pl-4">
-      <ThemeToggle class="max-xl:hidden" />
-      <a href={platform.url} {...external} class={cx(button('primary', 'sm'), 'shadow-brand sm:h-10 sm:px-4')}>
+    <div class="ml-auto flex shrink-0 items-center gap-2 lg:ml-2 lg:border-l lg:border-line lg:pl-4">
+      <ThemeToggle class="max-lg:hidden" />
+      <a href={platform.url} {...external} class={cx(button('secondary', 'sm'), 'max-xl:hidden xl:h-10 xl:px-4')}>
         <Icon name="GraduationCap" />
         {platform.navCta}
-        <Icon name="ArrowUpRight" class="hidden sm:block" />
       </a>
-      <button type="button" id="menu-open" aria-label="Open menu" aria-controls="mobile-menu" class={cx(button('ghost', 'icon'), 'xl:hidden')}>
+      <a href="#contact" class={cx(button('primary', 'sm'), 'xl:h-10 xl:px-4')}>
+        {navLabels.contactCta}
+      </a>
+      <button type="button" id="menu-open" aria-label={navLabels.openMenu} aria-controls="mobile-menu" aria-expanded="false" class={cx(button('ghost', 'icon'), 'lg:hidden')}>
         <Icon name="Menu" class="size-5" />
       </button>
     </div>
@@ -45,13 +47,13 @@ import { button, cx, external } from '../lib/ui';
 <!-- Mobile menu: a right-side sheet built on <dialog> (focus trap, Esc and backdrop close for free). -->
 <dialog
   id="mobile-menu"
-  aria-label="Menu"
-  class="fixed inset-y-0 right-0 left-auto m-0 h-full max-h-none w-80 max-w-[85vw] border-l border-line bg-surface p-0 text-fg shadow-md backdrop:bg-black/40"
+  aria-label={navLabels.menu}
+  class="fixed inset-y-0 right-0 left-auto m-0 h-full max-h-none w-80 max-w-[85vw] border-l border-line bg-surface-raised p-0 text-fg shadow-md backdrop:bg-black/40"
 >
   <div class="flex h-full flex-col">
     <div class="flex h-16 items-center justify-between border-b border-line px-4">
-      <span class="text-body font-semibold">Menu</span>
-      <button type="button" data-menu-close aria-label="Close menu" class={button('ghost', 'icon')}><Icon name="X" class="size-5" /></button>
+      <span class="text-body font-semibold">{navLabels.menu}</span>
+      <button type="button" data-menu-close aria-label={navLabels.closeMenu} class={button('ghost', 'icon')}><Icon name="X" class="size-5" /></button>
     </div>
     <nav aria-label="Sections" class="flex flex-col gap-1 p-3">
       {
@@ -63,13 +65,14 @@ import { button, cx, external } from '../lib/ui';
       }
     </nav>
     <div class="mt-auto space-y-3 border-t border-line p-4">
-      <a href={platform.url} {...external} class={cx(button('primary', 'md'), 'w-full')}>
+      <a href="#contact" data-menu-close class={cx(button('primary', 'md'), 'w-full')}>{navLabels.contactCta}</a>
+      <a href={platform.url} {...external} class={cx(button('secondary', 'md'), 'w-full')}>
         <Icon name="GraduationCap" />
         {platform.cta}
         <Icon name="ArrowUpRight" />
       </a>
       <div class="flex items-center justify-between text-small text-fg-muted">
-        Theme
+        {navLabels.theme}
         <ThemeToggle />
       </div>
     </div>
@@ -79,17 +82,13 @@ import { button, cx, external } from '../lib/ui';
 <script>
   const header = document.getElementById('site-nav');
   const menu = document.getElementById('mobile-menu') as HTMLDialogElement | null;
+  const opener = document.getElementById('menu-open');
   const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
   const sections = links.map((l) => document.querySelector<HTMLElement>(l.hash)).filter((s): s is HTMLElement => !!s);
 
-  const hero = document.getElementById('top');
-
-  // Dark while over the hero, the visitor's theme after it; bottom border once scrolled. The active
-  // link is the last section whose top passed 35% of the viewport.
+  // Bottom border once scrolled; the active link is the last section whose top passed 35% of the viewport.
   const onScroll = () => {
     const scrolled = window.scrollY > 4;
-    const overHero = !!hero && hero.getBoundingClientRect().bottom > 64;
-    header?.classList.toggle('dark', overHero);
     header?.classList.toggle('border-line', scrolled);
     header?.classList.toggle('border-transparent', !scrolled);
     const line = window.innerHeight * 0.35;
@@ -104,7 +103,11 @@ import { button, cx, external } from '../lib/ui';
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  document.getElementById('menu-open')?.addEventListener('click', () => menu?.showModal());
+  opener?.addEventListener('click', () => {
+    menu?.showModal();
+    opener.setAttribute('aria-expanded', 'true');
+  });
+  menu?.addEventListener('close', () => opener?.setAttribute('aria-expanded', 'false'));
   menu?.querySelectorAll('[data-menu-close]').forEach((el) => el.addEventListener('click', () => menu.close()));
   menu?.addEventListener('click', (e) => {
     if (e.target === menu) menu.close();

@@ -4,7 +4,7 @@ import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import photo from '../assets/ahmad.png';
-import { meta } from '../content/site';
+import { meta, navLabels } from '../content/site';
 // Fraunces (headings), latin only, with every axis so SOFT and optical sizing work.
 import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
 import frauncesItalicUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2?url';
@@ -53,7 +53,7 @@ const ogImage = await getImage({ src: photo, width: 800, format: 'jpg' });
       href="#main"
       class="sr-only rounded-control bg-brand-solid px-4 py-2 text-small font-medium text-on-brand focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
     >
-      Skip to content
+      {navLabels.skip}
     </a>
     <slot />
     <script>

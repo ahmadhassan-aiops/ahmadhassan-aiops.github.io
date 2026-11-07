@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { button, cx } from '../../lib/ui';
+import { navLabels } from '../../content/site';
 
 /** Light/dark switch; the click handler lives in Layout.astro. The icon shown follows the theme via CSS. */
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<button type="button" data-theme-toggle aria-label="Toggle dark mode" class={cx(button('ghost', 'icon'), className)}>
-  <span class="theme-dark:hidden"><Icon name="Moon" class="size-5" /></span>
-  <span class="hidden theme-dark:inline"><Icon name="Sun" class="size-5" /></span>
+<button type="button" data-theme-toggle aria-label={navLabels.toggleTheme} class={cx(button('ghost', 'icon'), className)}>
+  <span class="dark:hidden"><Icon name="Moon" class="size-5" /></span>
+  <span class="hidden dark:inline"><Icon name="Sun" class="size-5" /></span>
 </button>

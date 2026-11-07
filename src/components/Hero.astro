@@ -4,7 +4,7 @@ import photo from '../assets/ahmad.png';
 import Icon from './ui/Icon.astro';
 import BrandIcon from './ui/BrandIcon.astro';
 import { hero, person, platform, socials, stats } from '../content/site';
-import { button, cx, external } from '../lib/ui';
+import { button, cx, external, iconTile } from '../lib/ui';
 
 type IconName = Parameters<typeof Icon>[0]['name'];
 
@@ -16,150 +16,126 @@ const links: { label: string; href: string; brand?: string; icon?: IconName }[] 
   { label: 'Email', href: `mailto:${socials.email}`, icon: 'Mail' },
 ];
 
-// "1,500+" → 1500 and "+": the numbers count up when the strip scrolls into view.
+// "1,500+" → 1500 and "+": the numbers count up once when the band scrolls into view.
 const counted = stats.map((s) => {
   const m = s.value.match(/^([\d,]+)(.*)$/);
   return { ...s, n: m ? Number(m[1].replace(/,/g, '')) : undefined, suffix: m?.[2] ?? '' };
 });
 ---
 
-<!-- The hero (redesigned in the next step): name, statement and CTAs; the photo and credentials; stats and tools. -->
-<section id="top" data-hero aria-labelledby="hero-title" class="dark relative isolate -mt-16 overflow-hidden bg-bg pt-16 text-fg">
-  <div class="container-wide relative grid items-center gap-14 py-14 sm:py-20 lg:min-h-[min(calc(100svh-4rem),56rem)] lg:grid-cols-12 lg:gap-10 lg:py-16 xl:gap-16">
-    <div class="lg:col-span-7">
-      <p class="inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-surface/60 py-1.5 pr-4 pl-2.5 text-small text-fg-muted backdrop-blur">
-        <span class="relative flex size-2.5" aria-hidden="true">
-                    <span class="relative size-2.5 rounded-full bg-brand-400"></span>
-        </span>
+<!--
+  The hero, light and warm (it follows the theme): a faint dot grid and one static terracotta wash
+  behind; the name, roles, statement and CTAs on the left; the photo on a warm frame block with the two
+  credentials under it on the right. Then the stats band and the tools marquee.
+-->
+<section id="top" aria-labelledby="hero-title" class="relative isolate overflow-hidden bg-bg">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-dots absolute inset-0"></div>
+    <div class="absolute -top-56 -right-48 size-[52rem] rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--brand-soft)_60%,transparent),transparent)]"></div>
+  </div>
+
+  <div class="container-wide grid items-center gap-12 pt-10 pb-16 sm:pt-14 lg:min-h-[min(calc(100svh-4rem),52rem)] lg:grid-cols-12 lg:gap-10 lg:py-16 2xl:gap-16">
+    <div class="lg:col-span-7 2xl:col-span-6">
+      <p class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-line bg-surface py-1.5 pr-4 pl-3 text-small text-fg-muted shadow-sm">
+        <span aria-hidden="true" class="size-2 rounded-full bg-sage"></span>
         {person.availability}
-        <span class="hidden h-3.5 w-px bg-line-strong sm:block" aria-hidden="true"></span>
-        <span class="hidden items-center gap-1 sm:inline-flex"><Icon name="MapPin" class="size-3.5" />{person.location}</span>
+        <span aria-hidden="true" class="max-sm:hidden">·</span>
+        <span class="max-sm:hidden">{person.location}</span>
       </p>
 
-      <p class="mt-8 flex items-center gap-3 font-mono text-caption tracking-[0.1em] text-brand uppercase sm:text-small sm:tracking-[0.18em]">
-        <span class="h-px w-8 bg-brand" aria-hidden="true"></span>
+      <p class="mt-8 flex items-center gap-3 text-caption font-semibold tracking-eyebrow text-brand uppercase">
+        <span aria-hidden="true" class="h-0.5 w-10 rounded-full bg-brand"></span>
         {hero.eyebrow}
       </p>
-      <h1 id="hero-title" class="mt-4 font-display text-hero font-bold">
-        {person.name}
-        <span class="sr-only">: {hero.roles}</span>
+      <h1 id="hero-title" class="mt-4 font-display text-hero font-semibold text-fg">
+        {person.name}<span class="text-brand">.</span>
       </h1>
+      <p class="mt-4 text-h3 text-fg-muted">{hero.roles}</p>
 
-
-
-      <p class="mt-7 max-w-3xl font-display text-h3 font-medium text-balance text-fg sm:text-h2">{hero.statement}</p>
-      <p class="mt-4 max-w-2xl text-body-lg text-fg-muted">{hero.intro}</p>
-
+      <p class="mt-8 max-w-3xl font-display text-h2 font-medium text-balance text-fg sm:text-h2-lg">{hero.statement}</p>
+      <p class="measure-intro mt-4 text-body-lg text-fg-muted">{hero.intro}</p>
 
       <div class="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
-        <a href="#projects" class={cx(button('primary', 'xl'), 'group shadow-brand')}>
+        <a href="#projects" class={cx(button('primary', 'xl'), 'group')}>
           {hero.primaryCta}
-          <Icon name="ArrowDown" class="transition-transform group-hover:translate-y-0.5" />
+          <Icon name="ArrowDown" class="transition-transform group-hover:translate-y-0.5 motion-reduce:transition-none" />
         </a>
-        <!-- The learning platform, impossible to miss: an icon tile, the name and what it is. -->
+        <!-- The learning platform, as a secondary card-button: icon tile, name and what it is. -->
         <a
           href={platform.url}
           {...external}
-          class="group inline-flex h-14 items-center gap-3 rounded-control border border-brand/50 bg-brand-soft pr-5 pl-2 transition-colors hover:border-brand hover:bg-brand/20"
+          class="group inline-flex h-14 items-center gap-3 rounded-control border border-line-strong bg-surface pr-5 pl-2 transition-colors hover:border-brand/50 hover:bg-surface-hover"
         >
-          <span class="grid size-10 place-items-center rounded-lg bg-brand-solid text-on-brand"><Icon name="GraduationCap" class="size-5" /></span>
+          <span class={iconTile('solid')}><Icon name="GraduationCap" /></span>
           <span class="leading-tight">
             <span class="block text-small font-semibold text-fg">{platform.cta}</span>
             <span class="mt-0.5 block text-caption text-fg-muted">{platform.sub}</span>
           </span>
-          <Icon name="ArrowUpRight" class="ml-1 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <Icon name="ArrowUpRight" class="ml-1 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
         </a>
       </div>
 
-      <div class="mt-10 flex flex-wrap items-center gap-4">
-        <span class="text-caption font-medium tracking-eyebrow text-fg-subtle uppercase">{hero.socialsLabel}</span>
-        <span class="h-px w-8 bg-line-strong" aria-hidden="true"></span>
-        <ul class="flex flex-wrap gap-2">
-          {
-            links.map((l) => (
-              <li>
-                <a
-                  href={l.href}
-                  {...(l.href.startsWith('mailto:') ? {} : external)}
-                  aria-label={l.label}
-                  title={l.label}
-                  class="grid size-11 place-items-center rounded-full border border-line-strong bg-surface/50 text-fg-muted transition hover:-translate-y-0.5 hover:border-brand hover:text-brand motion-reduce:hover:translate-y-0"
-                >
-                  {l.brand ? <BrandIcon icon={l.brand} class="size-4.5" /> : <Icon name={l.icon!} class="size-4.5" />}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-
-    <div class="relative mx-auto w-full max-w-sm sm:max-w-md lg:col-span-5 lg:max-w-[27rem]">
-      <!-- A faint hexagon from the logo behind the photo. -->
-      <svg aria-hidden="true" viewBox="0 0 32 32" class="absolute -top-14 -right-10 size-44 text-brand-400/25 sm:-right-16 sm:size-56">
-        <path d="M16 3.2 27 9.6v12.8L16 28.8 5 22.4V9.6Z" fill="none" stroke="currentColor" stroke-width="0.4"></path>
-        <circle cx="16" cy="3.2" r="0.9" fill="currentColor"></circle>
-        <circle cx="27" cy="22.4" r="0.9" fill="currentColor"></circle>
-        <circle cx="5" cy="9.6" r="0.9" fill="currentColor"></circle>
-      </svg>
-
-      <div class="relative">
-        <div aria-hidden="true" class="absolute -inset-8 -z-10 rounded-[3rem] bg-linear-to-br from-brand-400/35 via-brand-600/10 to-transparent blur-2xl"></div>
-        <div aria-hidden="true" class="absolute -inset-3 rounded-[2.25rem] border border-brand-400/25"></div>
-        <div class="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-line-strong bg-surface shadow-brand">
-          <Image
-            src={photo}
-            alt={person.photoAlt}
-            widths={[320, 432, 640, 864]}
-            sizes="(min-width: 1024px) 432px, (min-width: 640px) 448px, 384px"
-            loading="eager"
-            fetchpriority="high"
-            class="size-full object-cover object-top"
-          />
-          <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-bg/60 to-transparent"></div>
-        </div>
-      </div>
-
-      <!-- The two credentials, under the photo (nothing sits on top of it). -->
-      <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+      <ul aria-label={hero.socialsLabel} class="mt-8 flex flex-wrap gap-2">
         {
-          person.credentials.map((f) => (
-            <li class="flex items-center gap-3 rounded-2xl border border-line-strong bg-surface-raised/85 p-3 pr-4 backdrop-blur-md transition-colors hover:border-brand/60">
-              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand ring-1 ring-brand/30">
-                <Icon name={f.icon} class="size-5" strokeWidth={1.75} />
-              </span>
-              <span class="min-w-0">
-                <span class="block text-small leading-tight font-semibold text-fg">{f.title}</span>
-                <span class="mt-1 block text-caption text-fg-muted">{f.meta}</span>
-              </span>
+          links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                {...(l.href.startsWith('mailto:') ? {} : external)}
+                aria-label={l.label}
+                title={l.label}
+                class="grid size-11 place-items-center rounded-full border border-line bg-surface text-fg-muted transition-colors hover:border-brand hover:text-brand"
+              >
+                {l.brand ? <BrandIcon icon={l.brand} class="size-4.5" /> : <Icon name={l.icon!} class="size-4.5" />}
+              </a>
             </li>
           ))
         }
       </ul>
     </div>
 
-    <a
-      href="#about"
-      class="group absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-caption text-fg-subtle transition-colors hover:text-fg xl:flex"
-    >
-      {hero.scrollCue}
-      <span class="grid h-9 w-6 justify-center rounded-full border border-line-strong pt-1.5" aria-hidden="true">
-        <span class="h-2 w-0.5 rounded-full bg-brand motion-safe:animate-bounce"></span>
-      </span>
-    </a>
+    <!-- On phones the photo comes first (max 320px); the credentials under it show from sm up. -->
+    <div class="order-first mx-auto w-full max-w-80 sm:max-w-md lg:order-none lg:col-span-5 lg:max-w-[28rem] 2xl:col-start-8">
+      <div class="relative">
+        <div aria-hidden="true" class="absolute inset-0 translate-x-4 translate-y-4 rounded-feature bg-frame"></div>
+        <div class="relative aspect-[4/5] overflow-hidden rounded-feature border border-line bg-surface shadow-md">
+          <Image
+            src={photo}
+            alt={person.photoAlt}
+            widths={[320, 448, 640, 896]}
+            sizes="(min-width: 1024px) 448px, (min-width: 640px) 448px, 320px"
+            loading="eager"
+            fetchpriority="high"
+            class="size-full object-cover object-top"
+          />
+        </div>
+      </div>
+      <ul class="mt-10 hidden gap-3 sm:grid sm:grid-cols-2">
+        {
+          person.credentials.map((c) => (
+            <li class="flex items-center gap-3 rounded-card border border-line bg-surface p-4 shadow-sm">
+              <span class={iconTile('brand')}>
+                <Icon name={c.icon} strokeWidth={1.75} />
+              </span>
+              <span class="min-w-0">
+                <span class="block text-small leading-tight font-semibold text-fg">{c.title}</span>
+                <span class="mt-1 block text-caption text-fg-muted">{c.meta}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 
-  <div class="container-wide pb-12 lg:pb-16">
-    <ul class="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line bg-line lg:grid-cols-4">
+  <div class="container-wide pb-16 lg:pb-20">
+    <ul class="grid grid-cols-2 gap-px overflow-hidden rounded-feature border border-line bg-line shadow-sm lg:grid-cols-4">
       {
         counted.map((s) => (
-          <li class="group bg-surface p-5 transition-colors hover:bg-surface-hover sm:p-7">
-            <div class="flex items-start justify-between gap-3">
-              <p class="font-display text-h1 font-bold text-fg tabular-nums sm:text-h1-lg">
-                <span data-count={s.n} data-suffix={s.suffix}>{s.value}</span>
-              </p>
-
-            </div>
+          <li class="bg-surface p-6 sm:p-8">
+            <p class="font-mono text-h1 font-semibold text-fg tabular-nums sm:text-h1-lg">
+              <span data-count={s.n} data-suffix={s.suffix}>{s.value}</span>
+            </p>
             <p class="mt-2 text-small text-fg-muted">{s.label}</p>
           </li>
         ))
@@ -167,9 +143,9 @@ const counted = stats.map((s) => {
     </ul>
   </div>
 
-  <div class="border-t border-line bg-bg-subtle/70 py-5">
+  <div class="border-y border-line bg-bg-subtle py-5">
     <div class="container-wide flex items-center gap-8">
-      <p class="shrink-0 text-caption font-medium tracking-eyebrow text-fg-subtle uppercase max-md:hidden">{hero.toolsLabel}</p>
+      <p class="shrink-0 text-caption font-semibold tracking-eyebrow text-fg-subtle uppercase max-md:hidden">{hero.toolsLabel}</p>
       <div data-marquee class="relative flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
         <p class="sr-only">{hero.toolsLabel}: {hero.tools.map(([, label]) => label).join(', ')}</p>
         <div class="animate-marquee flex w-max" aria-hidden="true">
@@ -177,7 +153,7 @@ const counted = stats.map((s) => {
             [0, 1].map(() => (
               <ul class="flex shrink-0 gap-10 pr-10">
                 {hero.tools.map(([icon, label]) => (
-                  <li class="flex items-center gap-2.5 text-fg-subtle transition-colors hover:text-brand">
+                  <li class="flex items-center gap-2.5 text-fg-subtle">
                     <BrandIcon icon={icon} class="size-5" />
                     <span class="text-small font-medium whitespace-nowrap">{label}</span>
                   </li>
@@ -192,12 +168,9 @@ const counted = stats.map((s) => {
 </section>
 
 <script>
-  const hero = document.querySelector<HTMLElement>('[data-hero]');
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Stats count up from zero the first time the strip scrolls into view.
-  const counters = [...(hero?.querySelectorAll<HTMLElement>('[data-count]') ?? [])];
-  if (!calm && counters.length) {
+  // Stats count up from zero once, the first time the band scrolls into view (skipped for reduced motion).
+  const counters = [...document.querySelectorAll<HTMLElement>('[data-count]')];
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && counters.length) {
     const fmt = new Intl.NumberFormat('en-US');
     const io = new IntersectionObserver(
       (entries) => {
@@ -210,7 +183,7 @@ const counted = stats.map((s) => {
           if (!end) continue;
           const start = performance.now();
           const tick = (now: number) => {
-            const p = Math.min(1, (now - start) / 1400);
+            const p = Math.min(1, (now - start) / 1200);
             el.textContent = fmt.format(Math.round(end * (1 - (1 - p) ** 3))) + suffix;
             if (p < 1) requestAnimationFrame(tick);
           };

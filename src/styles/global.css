@@ -2,8 +2,6 @@
 
 /* Dark mode follows the `.dark` class the theme script puts on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
-/* The visitor's chosen theme only (the hero and the nav over it are always dark). */
-@custom-variant theme-dark (&:where(html.dark, html.dark *));
 
 /*
  * Design tokens: terracotta and ivory. The semantic names match the AI with Ahmad platform so the
