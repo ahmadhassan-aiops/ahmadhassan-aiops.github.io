@@ -6,18 +6,21 @@ import { nav, platform } from '../content/site';
 import { button, cx, external } from '../lib/ui';
 ---
 
-<!-- Sticky 64px nav like the platform's: logo, section links (xl), theme toggle and the AI with Ahmad button. -->
-<header id="site-nav" class="sticky top-0 z-40 h-16 border-b border-transparent bg-bg/85 backdrop-blur-md transition-colors">
-  <div class="container-wide flex h-full items-center gap-6">
+<!--
+  Full-width sticky nav: the mark on the far left, section links and actions on the far right.
+  While it sits over the hero it carries `dark` (the hero is always dark), then follows the theme.
+-->
+<header id="site-nav" class="dark sticky top-0 z-40 h-16 border-b border-transparent bg-bg/70 text-fg backdrop-blur-md transition-colors duration-300">
+  <div class="flex h-full items-center gap-4 px-4 sm:px-6 lg:px-10 2xl:px-14">
     <a href="#top" aria-label="Ahmad Hassan, back to top" class="shrink-0 rounded-control"><Logo /></a>
 
-    <nav aria-label="Sections" class="hidden flex-1 items-center justify-center gap-1 xl:flex">
+    <nav aria-label="Sections" class="ml-auto hidden items-center gap-0.5 xl:flex">
       {
         nav.map((l) => (
           <a
             href={l.href}
             data-nav-link
-            class="relative px-2.5 py-2 text-small font-medium whitespace-nowrap text-fg-muted transition-colors hover:text-fg data-active:text-fg data-active:after:absolute data-active:after:inset-x-2.5 data-active:after:-bottom-px data-active:after:h-0.5 data-active:after:rounded-full data-active:after:bg-brand"
+            class="rounded-full px-3 py-1.5 text-small font-medium whitespace-nowrap text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg data-active:bg-brand-soft data-active:text-brand"
           >
             {l.label}
           </a>
@@ -25,9 +28,9 @@ import { button, cx, external } from '../lib/ui';
       }
     </nav>
 
-    <div class="ml-auto flex shrink-0 items-center gap-2 xl:ml-0">
+    <div class="ml-auto flex shrink-0 items-center gap-2 xl:ml-2 xl:border-l xl:border-line xl:pl-4">
       <ThemeToggle class="max-xl:hidden" />
-      <a href={platform.url} {...external} class={cx(button('primary', 'sm'), 'sm:h-10 sm:px-4')}>
+      <a href={platform.url} {...external} class={cx(button('primary', 'sm'), 'shadow-brand sm:h-10 sm:px-4')}>
         <Icon name="GraduationCap" />
         {platform.navCta}
         <Icon name="ArrowUpRight" class="hidden sm:block" />
@@ -79,9 +82,14 @@ import { button, cx, external } from '../lib/ui';
   const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
   const sections = links.map((l) => document.querySelector<HTMLElement>(l.hash)).filter((s): s is HTMLElement => !!s);
 
-  // Bottom border once scrolled; the active link is the last section whose top passed 35% of the viewport.
+  const hero = document.getElementById('top');
+
+  // Dark while over the hero, the visitor's theme after it; bottom border once scrolled. The active
+  // link is the last section whose top passed 35% of the viewport.
   const onScroll = () => {
     const scrolled = window.scrollY > 4;
+    const overHero = !!hero && hero.getBoundingClientRect().bottom > 64;
+    header?.classList.toggle('dark', overHero);
     header?.classList.toggle('border-line', scrolled);
     header?.classList.toggle('border-transparent', !scrolled);
     const line = window.innerHeight * 0.35;

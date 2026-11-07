@@ -2,7 +2,7 @@
 
 **Live site: https://ahmadhassanrx.com**
 
-Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It shares the platform's design system (colours, type, components, light and dark themes) and tells the same story, so the two sites read as one brand.
+Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It shares the platform's structure and story but has its own look: a deep teal palette, Space Grotesk headings, a hexagon "AH" mark and a full-width, always-dark hero.
 
 ---
 
@@ -24,9 +24,9 @@ my-portfolio/
 │   │   └── ui/           # Icon, BrandIcon, Logo, Section, ThemeToggle
 │   ├── lib/              # Button/badge/card class recipes, brand logo paths
 │   ├── styles/global.css # Design tokens (copied from the platform)
-│   ├── assets/ahmad.png  # Profile photo (optimised to WebP at build)
+│   ├── assets/ahmad.png  # Profile photo (WebP in the hero, JPEG for the social preview)
 │   └── pages/index.astro # The page
-├── public/               # favicon, picture.png (social preview image)
+├── public/               # favicon (the hexagon AH mark), CNAME
 └── .github/workflows/    # GitHub Pages deploy workflow
 ```
 

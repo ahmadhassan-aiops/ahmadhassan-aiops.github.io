@@ -2,42 +2,47 @@
 
 /* Dark mode follows the `.dark` class the theme script puts on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
+/* The visitor's chosen theme only (the hero and the nav over it are always dark). */
+@custom-variant theme-dark (&:where(html.dark, html.dark *));
 
 /*
- * Design tokens, the same as the AI with Ahmad learning platform (learn.ahmadhassanrx.com), so both
- * sites read as one brand. Light is the default, `.dark` overrides. Components use only the semantic
- * utilities mapped in @theme below, never raw hex. Roadmap accents are set per card as
- * `--accent: light-dark(<light>, <dark>)`, which resolves against the element's color-scheme.
+ * Design tokens. The structure matches the AI with Ahmad platform (same semantic names, same
+ * components), but the portfolio has its own palette: deep teal on warm-neutral greys instead of the
+ * platform's blue, so the two sites feel related but distinct. Light is the default, `.dark`
+ * overrides. The hero always renders with the dark set (`class="dark"` on the section).
+ * Components use only the semantic utilities mapped in @theme below, never raw hex.
  */
 :root {
   color-scheme: light;
 
-  --brand-50: #eff4ff;
-  --brand-100: #dbe6fe;
-  --brand-200: #bfd3fe;
-  --brand-300: #93b4fd;
-  --brand-400: #6b93ff;
-  --brand-500: #3b6cf6;
-  --brand-600: #2563eb;
-  --brand-700: #1d4ed8;
-  --brand-800: #1e40af;
-  --brand-900: #1e3a8a;
-  --brand-950: #0f1d4a;
+  --brand-50: #effefa;
+  --brand-100: #c8fff1;
+  --brand-200: #91fee4;
+  --brand-300: #52f5d4;
+  --brand-400: #1edfbe;
+  --brand-500: #05c3a5;
+  --brand-600: #009d87;
+  --brand-700: #057d6e;
+  --brand-800: #0a635a;
+  --brand-900: #0d524b;
+  --brand-950: #003330;
 
-  --bg: #ffffff;
-  --bg-subtle: #f6f8fc;
+  --bg: #fbfcfb;
+  --bg-subtle: #f3f6f5;
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --surface-hover: #f1f5fb;
-  --line: #e5eaf2;
-  --line-strong: #cfd8e6;
-  --fg: #0b1220;
-  --fg-muted: #475569;
-  --fg-subtle: #64748b;
-  --brand: var(--brand-600);
-  --brand-solid: var(--brand-600);
+  --surface-hover: #eef3f1;
+  --line: #e2e8e6;
+  --line-strong: #c9d3d0;
+  --fg: #0a1513;
+  --fg-muted: #44524f;
+  --fg-subtle: #5f6e6b;
+  --brand: var(--brand-700);
+  --brand-solid: var(--brand-700);
   --brand-soft: var(--brand-50);
   --on-brand: #ffffff;
+  /* A warm second accent for small highlights only (the typing caret, the availability dot). */
+  --spark: #d97706;
   --success: #15803d;
   --warning: #b45309;
   --danger: #b91c1c;
@@ -46,37 +51,38 @@
 
   /* Default accent outside a roadmap card: the brand. */
   --accent: var(--brand);
-  --on-accent: light-dark(#ffffff, #0a1020);
+  --on-accent: light-dark(#ffffff, #061210);
 
-  --elev-sm: 0 1px 2px rgb(15 23 42 / 0.06);
-  --elev-md: 0 4px 16px -4px rgb(15 23 42 / 0.1);
-  --elev-brand: 0 12px 32px -12px rgb(37 99 235 / 0.35);
+  --elev-sm: 0 1px 2px rgb(10 21 19 / 0.06);
+  --elev-md: 0 4px 16px -4px rgb(10 21 19 / 0.1);
+  --elev-brand: 0 12px 32px -12px rgb(5 125 110 / 0.4);
 }
 
 .dark {
   color-scheme: dark;
 
-  --bg: #0a1020;
-  --bg-subtle: #0d1428;
-  --surface: #121a2e;
-  --surface-raised: #17213a;
-  --surface-hover: #1a2540;
+  --bg: #061210;
+  --bg-subtle: #091a17;
+  --surface: #0d1f1c;
+  --surface-raised: #122824;
+  --surface-hover: #163029;
   --line: rgb(255 255 255 / 0.08);
   --line-strong: rgb(255 255 255 / 0.16);
-  --fg: #e6ecf5;
-  --fg-muted: #a3b0c4;
-  --fg-subtle: #8391a7;
+  --fg: #e4f1ee;
+  --fg-muted: #a0b6b1;
+  --fg-subtle: #7f9792;
   --brand: var(--brand-400);
-  --brand-soft: rgb(107 147 255 / 0.12);
+  --brand-soft: rgb(30 223 190 / 0.12);
+  --spark: #fbbf24;
   --success: #4ade80;
   --warning: #fbbf24;
   --danger: #f87171;
   --selection: var(--brand-800);
 
-  /* Dark depth comes from surface steps and borders, not shadows. */
+  /* Dark depth comes from surface steps and borders, not shadows (the brand glow stays). */
   --elev-sm: 0 0 #0000;
   --elev-md: 0 0 #0000;
-  --elev-brand: 0 0 #0000;
+  --elev-brand: 0 18px 48px -16px rgb(30 223 190 / 0.35);
 }
 
 @theme inline {
@@ -110,12 +116,15 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-whatsapp: var(--whatsapp);
+  --color-spark: var(--spark);
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
   --color-accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
 
   --font-sans: "Geist Variable", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  /* Headings: Space Grotesk, the portfolio's own voice (the platform uses Geist throughout). */
+  --font-display: "Space Grotesk Variable", "Geist Variable", system-ui, sans-serif;
 
   /* Type scale. Minimum size anywhere is 12px (text-caption / text-xs). */
   --text-display: 3rem;
@@ -124,6 +133,10 @@
   --text-display-lg: 4rem;
   --text-display-lg--line-height: 4.25rem;
   --text-display-lg--letter-spacing: -0.03em;
+  /* The hero name: fluid, 48px on phones up to 108px on wide screens. */
+  --text-hero: clamp(3rem, 7.2vw, 6.75rem);
+  --text-hero--line-height: 0.95;
+  --text-hero--letter-spacing: -0.04em;
   --text-h1: 2rem;
   --text-h1--line-height: 2.375rem;
   --text-h1--letter-spacing: -0.02em;
@@ -154,14 +167,31 @@
   --shadow-brand: var(--elev-brand);
 }
 
-/* Page container: 1200px, padding 16 / 24 (sm) / 32 (lg). */
+/* Page container: wide (up to 1728px) so the page uses the screen; padding 16 / 24 (sm) / 40 (lg) / 56 (2xl). */
 @utility container-wide {
   width: 100%;
-  max-width: 75rem;
+  max-width: 108rem;
   margin-inline: auto;
   padding-inline: 1rem;
   @variant sm { padding-inline: 1.5rem; }
-  @variant lg { padding-inline: 2rem; }
+  @variant lg { padding-inline: 2.5rem; }
+  @variant 2xl { padding-inline: 3.5rem; }
+}
+
+/* Hero backdrop: a faint line grid that fades out towards the edges. */
+@utility hero-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
+}
+
+/* The name in the hero: light ink fading into the brand teal. */
+@utility text-gradient {
+  background-image: linear-gradient(100deg, var(--fg) 30%, var(--brand-300) 70%, var(--brand-500));
+  background-clip: text;
+  color: transparent;
 }
 
 @layer base {
@@ -192,6 +222,40 @@
     opacity: 0;
     translate: 0 12px;
   }
+}
+
+/* Hero motion: drifting glows, floating fact chips, the typing caret and the tools marquee.
+   Utilities (so they take variants like `lg:`), and only for motion-OK visitors. */
+@keyframes drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 4% 6%; }
+}
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+@keyframes marquee {
+  to { translate: -50% 0; }
+}
+@utility animate-drift {
+  @media (prefers-reduced-motion: no-preference) { animation: drift 18s ease-in-out infinite; }
+}
+@utility animate-float {
+  @media (prefers-reduced-motion: no-preference) { animation: float 6s ease-in-out infinite var(--float-delay, 0s); }
+}
+@utility animate-blink {
+  @media (prefers-reduced-motion: no-preference) { animation: blink 1s steps(1) infinite; }
+}
+@utility animate-marquee {
+  @media (prefers-reduced-motion: no-preference) { animation: marquee 45s linear infinite; }
+}
+/* The marquee pauses while hovered or while a logo inside has focus. */
+[data-marquee]:hover .animate-marquee,
+[data-marquee]:focus-within .animate-marquee {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

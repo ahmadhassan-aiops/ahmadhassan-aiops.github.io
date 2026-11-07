@@ -22,6 +22,7 @@ const buttonSize = {
   sm: 'h-9 px-3',
   md: 'h-10 px-4 pointer-coarse:h-11',
   lg: 'h-12 px-6 text-body',
+  xl: 'h-14 px-7 text-body',
   icon: 'size-10 pointer-coarse:size-11',
 };
 

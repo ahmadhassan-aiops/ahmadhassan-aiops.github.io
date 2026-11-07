@@ -2,124 +2,310 @@
 import { Image } from 'astro:assets';
 import photo from '../assets/ahmad.png';
 import Icon from './ui/Icon.astro';
-import { hero, person, platform, socials, stats } from '../content/site';
-import { badge, button, cx, external, lift } from '../lib/ui';
+import BrandIcon from './ui/BrandIcon.astro';
+import { hero, person, platform, socials, stats, verdictrx } from '../content/site';
+import { button, cx, external } from '../lib/ui';
 
-const ROLE_ICONS = ['BrainCircuit', 'ChartColumn', 'GraduationCap'] as const;
+type IconName = Parameters<typeof Icon>[0]['name'];
+
+const links: { label: string; href: string; brand?: string; icon?: IconName }[] = [
+  { label: 'GitHub', href: socials.github, brand: 'github' },
+  { label: 'LinkedIn', href: socials.linkedin, brand: 'linkedin' },
+  { label: 'Hugging Face', href: socials.huggingface, brand: 'huggingface' },
+  { label: 'WhatsApp', href: socials.whatsappUrl, brand: 'whatsapp' },
+  { label: 'Email', href: `mailto:${socials.email}`, icon: 'Mail' },
+];
+
+// Floating chips around the photo (in a row under it on smaller screens). The VerdictRx chip reuses
+// the VerdictRx section's own wording, so the two always match.
+const chips: { title: string; sub: string; icon: IconName; href?: string; pos: string; delay: string }[] = [
+  { ...person.photoFacts[0], pos: 'lg:top-[8%] lg:-left-10 xl:-left-16', delay: '0s' },
+  { ...person.photoFacts[1], pos: 'lg:top-[62%] lg:-right-4 xl:-right-12', delay: '2s' },
+  { title: `${verdictrx.name} · ${verdictrx.status}`, sub: verdictrx.domain, icon: 'Stethoscope', href: '#verdictrx', pos: 'lg:bottom-[4%] lg:-left-6 xl:-left-12', delay: '4s' },
+];
+
+// "1,500+" → 1500 and "+": the numbers count up when the strip scrolls into view.
+const counted = stats.map((s) => {
+  const m = s.value.match(/^([\d,]+)(.*)$/);
+  return { ...s, n: m ? Number(m[1].replace(/,/g, '')) : undefined, suffix: m?.[2] ?? '' };
+});
 ---
 
-<!-- Hero, as on the platform: role chips, headline, intro, CTAs; the photo with two facts; four stat cards. -->
-<section id="top" aria-labelledby="hero-title" class="scroll-mt-16 pt-10 pb-16 sm:pt-14 lg:pt-20 lg:pb-24">
-  <div class="container-wide grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-    <div class="order-1 lg:col-span-7">
-      <p class="flex flex-wrap gap-2">
-        <span class="sr-only">{person.roles.join(', ')}</span>
-        {
-          person.roles.map((r, i) => (
-            <span
-              aria-hidden="true"
-              class={cx(
-                'inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-small font-medium',
-                i === 0 ? 'border-brand/30 bg-brand-soft text-brand' : 'border-line bg-surface text-fg-muted',
-              )}
-            >
-              <Icon name={ROLE_ICONS[i] ?? 'GraduationCap'} class="size-3.5" />
-              {r}
-            </span>
-          ))
-        }
-      </p>
-      <h1 id="hero-title" class="mt-5 text-display font-semibold text-balance text-fg lg:text-display-lg">
-        {person.name}
-        <span class="mt-2 block text-h1 font-semibold text-fg-muted lg:text-h1-lg">{person.headline}</span>
-      </h1>
-      <p class="mt-6 max-w-2xl text-body-lg text-fg-muted">{person.intro}</p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href={platform.url} {...external} class={button('primary', 'lg')}>
-          <Icon name="GraduationCap" />
-          {hero.primaryCta}
-          <Icon name="ArrowUpRight" />
-        </a>
-        <a href="#projects" class={button('secondary', 'lg')}>
-          {hero.secondaryCta}
-          <Icon name="ArrowRight" />
-        </a>
-      </div>
-      <a
-        href={socials.whatsappUrl}
-        {...external}
-        class="mt-4 inline-flex items-center gap-1 text-small text-fg-muted underline-offset-4 hover:text-fg hover:underline"
-      >
-        {hero.whatsappLink}
-        <Icon name="ArrowRight" class="size-3.5" />
-      </a>
-
-      <!-- The learning platform, impossible to miss: a brand card linking to AI with Ahmad. -->
-      <a
-        href={platform.url}
-        {...external}
-        class={cx('group mt-8 flex items-start gap-4 rounded-2xl border border-brand/40 bg-brand-soft p-4 sm:p-5', lift, 'hover:border-brand')}
-      >
-        <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-solid text-on-brand shadow-brand">
-          <Icon name="Route" class="size-5" strokeWidth={1.75} />
-        </span>
-        <span class="min-w-0 flex-1">
-          <span class="flex flex-wrap items-center gap-2">
-            <span class="font-semibold text-fg">{platform.name}</span>
-            <span class={cx(badge('brand'), 'bg-surface')}>{platform.tagline}</span>
-          </span>
-          <span class="mt-1 block text-small text-fg-muted">{platform.pitch}</span>
-          <span class="mt-2 inline-flex items-center gap-1 text-small font-medium text-brand">
-            learn.ahmadhassanrx.com
-            <Icon name="ArrowUpRight" class="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-        </span>
-      </a>
-    </div>
-
-    <div class="order-2 mx-auto w-full max-w-xs lg:col-span-5 lg:max-w-80">
-      <div class="relative mx-auto aspect-[4/5] w-56 overflow-hidden rounded-3xl border border-line bg-brand-soft shadow-brand ring-4 ring-surface sm:w-64 lg:w-full">
-        <Image
-          src={photo}
-          alt={person.photoAlt}
-          widths={[224, 320, 448, 640]}
-          sizes="(min-width: 1024px) 320px, (min-width: 640px) 256px, 224px"
-          loading="eager"
-          fetchpriority="high"
-          class="size-full object-cover object-top"
-        />
-      </div>
-      <ul class="mt-5 grid gap-3">
-        {
-          person.photoFacts.map((f) => (
-            <li class={cx('flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 shadow-sm', lift)}>
-              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-solid text-on-brand shadow-brand">
-                <Icon name={f.icon} class="size-5" strokeWidth={1.75} />
-              </span>
-              <span class="min-w-0">
-                <span class="block text-small leading-tight font-semibold text-fg">{f.title}</span>
-                <span class="mt-1 block text-caption text-fg-muted">{f.sub}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
+<!--
+  The hero, always dark: full-bleed backdrop (line grid, drifting glows, a spotlight that follows the
+  pointer), the name with a typed role line, statement and CTAs on the left; the photo with a gentle
+  3D tilt and floating facts on the right; then a stat strip and a tools marquee.
+  It slides under the sticky nav (-mt-16 / pt-16) so the nav floats over it.
+-->
+<section id="top" data-hero aria-labelledby="hero-title" class="dark relative isolate -mt-16 overflow-hidden bg-bg pt-16 text-fg">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="animate-drift absolute -top-48 -left-40 size-[40rem] rounded-full bg-brand-500/20 blur-3xl"></div>
+    <div class="animate-drift absolute top-1/4 -right-48 size-[34rem] rounded-full bg-brand-300/10 blur-3xl [animation-delay:-9s]"></div>
+    <div
+      data-spotlight
+      class="absolute inset-0 opacity-0 transition-opacity duration-500"
+      style="background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--brand-400) 13%, transparent), transparent 65%)"
+    >
     </div>
   </div>
 
-  <div class="container-wide mt-14 lg:mt-20">
-    <ul class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+  <div class="container-wide relative grid items-center gap-14 py-14 sm:py-20 lg:min-h-[min(calc(100svh-4rem),56rem)] lg:grid-cols-12 lg:gap-10 lg:py-16 xl:gap-16">
+    <div class="lg:col-span-7">
+      <p class="inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-surface/60 py-1.5 pr-4 pl-2.5 text-small text-fg-muted backdrop-blur">
+        <span class="relative flex size-2.5" aria-hidden="true">
+          <span class="absolute inset-0 rounded-full bg-brand-400 opacity-70 motion-safe:animate-ping"></span>
+          <span class="relative size-2.5 rounded-full bg-brand-400"></span>
+        </span>
+        {person.availability}
+        <span class="hidden h-3.5 w-px bg-line-strong sm:block" aria-hidden="true"></span>
+        <span class="hidden items-center gap-1 sm:inline-flex"><Icon name="MapPin" class="size-3.5" />{person.location}</span>
+      </p>
+
+      <p class="mt-8 flex items-center gap-3 font-mono text-caption tracking-[0.1em] text-brand uppercase sm:text-small sm:tracking-[0.18em]">
+        <span class="h-px w-8 bg-brand" aria-hidden="true"></span>
+        {hero.kicker}
+      </p>
+      <h1 id="hero-title" class="mt-4 font-display text-hero font-bold">
+        <span class="text-gradient">{person.name}</span>
+        <span class="sr-only">: {person.roles.join(', ')}</span>
+      </h1>
+
+      <p aria-hidden="true" class="mt-5 flex h-9 items-center gap-3 font-mono text-h3 text-fg sm:h-10 sm:text-h2">
+        <span class="text-brand">~/</span>
+        <span><span data-typer data-words={JSON.stringify(hero.roles)}>{hero.roles[0]}</span><span class="animate-blink ml-1 inline-block h-[1.1em] w-[0.5ch] translate-y-[0.15em] bg-spark"></span></span>
+      </p>
+
+      <p class="mt-7 max-w-3xl font-display text-h3 font-medium text-balance text-fg sm:text-h2">{hero.statement}</p>
+      <p class="mt-4 max-w-2xl text-body-lg text-fg-muted">{hero.intro}</p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
+        <a href="#projects" class={cx(button('primary', 'xl'), 'group shadow-brand')}>
+          {hero.primaryCta}
+          <Icon name="ArrowDown" class="transition-transform group-hover:translate-y-0.5" />
+        </a>
+        <!-- The learning platform, impossible to miss: an icon tile, the name and what it is. -->
+        <a
+          href={platform.url}
+          {...external}
+          class="group inline-flex h-14 items-center gap-3 rounded-control border border-brand/50 bg-brand-soft pr-5 pl-2 transition-colors hover:border-brand hover:bg-brand/20"
+        >
+          <span class="grid size-10 place-items-center rounded-lg bg-brand-solid text-on-brand"><Icon name="GraduationCap" class="size-5" /></span>
+          <span class="leading-tight">
+            <span class="block text-small font-semibold text-fg">{hero.platformCta}</span>
+            <span class="mt-0.5 block text-caption text-fg-muted">{hero.platformSub}</span>
+          </span>
+          <Icon name="ArrowUpRight" class="ml-1 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </a>
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <span class="text-caption font-medium tracking-eyebrow text-fg-subtle uppercase">{hero.socialsLabel}</span>
+        <span class="h-px w-8 bg-line-strong" aria-hidden="true"></span>
+        <ul class="flex flex-wrap gap-2">
+          {
+            links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  {...(l.href.startsWith('mailto:') ? {} : external)}
+                  aria-label={l.label}
+                  title={l.label}
+                  class="grid size-11 place-items-center rounded-full border border-line-strong bg-surface/50 text-fg-muted transition hover:-translate-y-0.5 hover:border-brand hover:text-brand motion-reduce:hover:translate-y-0"
+                >
+                  {l.brand ? <BrandIcon icon={l.brand} class="size-4.5" /> : <Icon name={l.icon!} class="size-4.5" />}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-sm sm:max-w-md lg:col-span-5 lg:max-w-[27rem]">
+      <!-- A faint hexagon from the logo behind the photo. -->
+      <svg aria-hidden="true" viewBox="0 0 32 32" class="absolute -top-14 -right-10 size-44 text-brand-400/25 sm:-right-16 sm:size-56">
+        <path d="M16 3.2 27 9.6v12.8L16 28.8 5 22.4V9.6Z" fill="none" stroke="currentColor" stroke-width="0.4"></path>
+        <circle cx="16" cy="3.2" r="0.9" fill="currentColor"></circle>
+        <circle cx="27" cy="22.4" r="0.9" fill="currentColor"></circle>
+        <circle cx="5" cy="9.6" r="0.9" fill="currentColor"></circle>
+      </svg>
+
+      <div data-tilt class="relative transition-transform duration-300 ease-out will-change-transform">
+        <div aria-hidden="true" class="absolute -inset-8 -z-10 rounded-[3rem] bg-linear-to-br from-brand-400/35 via-brand-600/10 to-transparent blur-2xl"></div>
+        <div aria-hidden="true" class="absolute -inset-3 rounded-[2.25rem] border border-brand-400/25"></div>
+        <div class="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-line-strong bg-surface shadow-brand">
+          <Image
+            src={photo}
+            alt={person.photoAlt}
+            widths={[320, 432, 640, 864]}
+            sizes="(min-width: 1024px) 432px, (min-width: 640px) 448px, 384px"
+            loading="eager"
+            fetchpriority="high"
+            class="size-full object-cover object-top"
+          />
+          <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-bg/60 to-transparent"></div>
+        </div>
+      </div>
+
+      <ul class="mt-8 grid gap-3 sm:grid-cols-3 lg:contents">
+        {
+          chips.map((c) => {
+            const Tag = c.href ? 'a' : 'div';
+            return (
+              <li class={cx('lg:absolute lg:z-10 lg:animate-float', c.pos)} style={`--float-delay: -${c.delay}`}>
+                <Tag
+                  href={c.href}
+                  class={cx(
+                    'flex items-center gap-3 rounded-2xl border border-line-strong bg-surface-raised/85 p-3 pr-4 shadow-brand backdrop-blur-md',
+                    c.href && 'group transition-colors hover:border-brand',
+                  )}
+                >
+                  <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand ring-1 ring-brand/30">
+                    <Icon name={c.icon} class="size-5" strokeWidth={1.75} />
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block text-small leading-tight font-semibold whitespace-nowrap text-fg">{c.title}</span>
+                    <span class="mt-1 block text-caption whitespace-nowrap text-fg-muted">{c.sub}</span>
+                  </span>
+                  {c.href && <Icon name="ArrowRight" class="size-3.5 text-brand transition-transform group-hover:translate-x-0.5" />}
+                </Tag>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    <a
+      href="#about"
+      class="group absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-caption text-fg-subtle transition-colors hover:text-fg xl:flex"
+    >
+      {hero.scrollCue}
+      <span class="grid h-9 w-6 justify-center rounded-full border border-line-strong pt-1.5" aria-hidden="true">
+        <span class="h-2 w-0.5 rounded-full bg-brand motion-safe:animate-bounce"></span>
+      </span>
+    </a>
+  </div>
+
+  <div class="container-wide pb-12 lg:pb-16">
+    <ul class="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line bg-line lg:grid-cols-4">
       {
-        stats.map((s) => (
-          <li class={cx('relative overflow-hidden rounded-2xl border border-line bg-linear-to-br from-brand-soft/70 via-surface to-surface p-4 shadow-sm sm:p-6', lift)}>
-            <span aria-hidden="true" class="grid size-10 place-items-center rounded-xl bg-surface text-brand shadow-sm ring-1 ring-brand/15">
-              <Icon name={s.icon} class="size-5" strokeWidth={1.75} />
-            </span>
-            <p class="mt-4 text-h1 font-semibold text-fg tabular-nums sm:text-h1-lg">{s.value}</p>
-            <p class="mt-1 text-small text-fg-muted">{s.label}</p>
+        counted.map((s) => (
+          <li class="group bg-surface p-5 transition-colors hover:bg-surface-hover sm:p-7">
+            <div class="flex items-start justify-between gap-3">
+              <p class="font-display text-h1 font-bold text-fg tabular-nums sm:text-h1-lg">
+                <span data-count={s.n} data-suffix={s.suffix}>{s.value}</span>
+              </p>
+              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand transition-transform group-hover:scale-110 motion-reduce:transition-none" aria-hidden="true">
+                <Icon name={s.icon} class="size-5" strokeWidth={1.75} />
+              </span>
+            </div>
+            <p class="mt-2 text-small text-fg-muted">{s.label}</p>
           </li>
         ))
       }
     </ul>
   </div>
+
+  <div class="border-t border-line bg-bg-subtle/70 py-5">
+    <div class="container-wide flex items-center gap-8">
+      <p class="shrink-0 text-caption font-medium tracking-eyebrow text-fg-subtle uppercase max-md:hidden">{hero.toolsLabel}</p>
+      <div data-marquee class="relative flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+        <p class="sr-only">{hero.toolsLabel}: {hero.tools.map(([, label]) => label).join(', ')}</p>
+        <div class="animate-marquee flex w-max" aria-hidden="true">
+          {
+            [0, 1].map(() => (
+              <ul class="flex shrink-0 gap-10 pr-10">
+                {hero.tools.map(([icon, label]) => (
+                  <li class="flex items-center gap-2.5 text-fg-subtle transition-colors hover:text-brand">
+                    <BrandIcon icon={icon} class="size-5" />
+                    <span class="text-small font-medium whitespace-nowrap">{label}</span>
+                  </li>
+                ))}
+              </ul>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(pointer: fine)').matches;
+
+  // A soft spotlight follows the pointer, and the photo tilts towards it (mouse and trackpad only).
+  const spot = hero?.querySelector<HTMLElement>('[data-spotlight]');
+  const tilt = hero?.querySelector<HTMLElement>('[data-tilt]');
+  if (hero && spot && tilt && finePointer && !calm) {
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      spot.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      spot.style.setProperty('--my', `${e.clientY - r.top}px`);
+      spot.style.opacity = '1';
+      const t = tilt.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (e.clientX - (t.left + t.width / 2)) / (r.width / 2)));
+      const y = Math.max(-1, Math.min(1, (e.clientY - (t.top + t.height / 2)) / (r.height / 2)));
+      tilt.style.transform = `perspective(1000px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg)`;
+    });
+    hero.addEventListener('pointerleave', () => {
+      spot.style.opacity = '0';
+      tilt.style.transform = '';
+    });
+  }
+
+  // The typed role line: hold, delete, type the next, repeat. Static (first role) for reduced motion.
+  const typer = hero?.querySelector<HTMLElement>('[data-typer]');
+  if (typer && !calm) {
+    const words: string[] = JSON.parse(typer.dataset.words ?? '[]');
+    let w = 0;
+    let n = words[0]?.length ?? 0;
+    let deleting = true;
+    const step = () => {
+      const word = words[w];
+      n += deleting ? -1 : 1;
+      typer.textContent = word.slice(0, n);
+      let delay = deleting ? 40 : 85;
+      if (!deleting && n === word.length) {
+        deleting = true;
+        delay = 2000;
+      } else if (deleting && n === 0) {
+        deleting = false;
+        w = (w + 1) % words.length;
+        delay = 350;
+      }
+      setTimeout(step, delay);
+    };
+    if (words.length > 1) setTimeout(step, 2400);
+  }
+
+  // Stats count up from zero the first time the strip scrolls into view.
+  const counters = [...(hero?.querySelectorAll<HTMLElement>('[data-count]') ?? [])];
+  if (!calm && counters.length) {
+    const fmt = new Intl.NumberFormat('en-US');
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          io.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const end = Number(el.dataset.count);
+          const suffix = el.dataset.suffix ?? '';
+          if (!end) continue;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - start) / 1400);
+            el.textContent = fmt.format(Math.round(end * (1 - (1 - p) ** 3))) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    counters.forEach((c) => io.observe(c));
+  }
+</script>

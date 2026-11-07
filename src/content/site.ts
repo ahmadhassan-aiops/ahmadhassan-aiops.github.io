@@ -64,10 +64,40 @@ export const nav = [
 ];
 
 export const hero = {
-  primaryCta: platform.cta,
-  secondaryCta: 'See my work',
-  whatsappLink: 'or message me on WhatsApp',
-  platformBadge: 'New',
+  kicker: 'From drug molecules to neural networks',
+  /** Typed one after another after the prompt; the first is also the static fallback. */
+  roles: ['AI Engineer', 'Data Scientist', 'AI Educator', 'MLOps Engineer'],
+  statement: 'I build production AI for health and medicine, and teach the next generation of AI engineers.',
+  intro:
+    "A PharmD graduate turned AI engineer. I design machine learning, GenAI and MLOps systems end to end, and I've mentored 100+ students from medicine, business, engineering and the arts into data and AI roles.",
+  primaryCta: 'See my work',
+  platformCta: platform.cta,
+  platformSub: 'Free learning community',
+  socialsLabel: 'Find me on',
+  scrollCue: 'Scroll to explore',
+  toolsLabel: 'Tools I build with',
+  tools: [
+    ['python', 'Python'],
+    ['pytorch', 'PyTorch'],
+    ['tensorflow', 'TensorFlow'],
+    ['scikitlearn', 'scikit-learn'],
+    ['pandas', 'Pandas'],
+    ['huggingface', 'Hugging Face'],
+    ['langchain', 'LangChain'],
+    ['opencv', 'OpenCV'],
+    ['fastapi', 'FastAPI'],
+    ['docker', 'Docker'],
+    ['kubernetes', 'Kubernetes'],
+    ['terraform', 'Terraform'],
+    ['ansible', 'Ansible'],
+    ['githubactions', 'GitHub Actions'],
+    ['argo', 'Argo CD'],
+    ['prometheus', 'Prometheus'],
+    ['grafana', 'Grafana'],
+    ['postgresql', 'PostgreSQL'],
+    ['linux', 'Linux'],
+    ['n8n', 'n8n'],
+  ] as [string, string][],
 };
 
 export const stats = [

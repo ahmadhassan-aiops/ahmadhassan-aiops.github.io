@@ -24,7 +24,7 @@ const titleId = `${id}-title`;
       title && (
         <div data-reveal class={cx(align === 'center' && 'mx-auto text-center')}>
           {eyebrow && <p class="text-caption font-medium tracking-eyebrow text-brand uppercase">{eyebrow}</p>}
-          <h2 id={titleId} class={cx('text-h2 font-semibold text-balance text-fg sm:text-h2-lg', eyebrow && 'mt-2')}>
+          <h2 id={titleId} class={cx('font-display text-h2 font-semibold text-balance text-fg sm:text-h2-lg', eyebrow && 'mt-2')}>
             {title}
           </h2>
           {intro && <p class={cx('mt-3 max-w-160 text-body-lg text-fg-muted', align === 'center' && 'mx-auto')}>{intro}</p>}
