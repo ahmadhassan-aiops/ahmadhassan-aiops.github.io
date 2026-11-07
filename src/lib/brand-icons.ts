@@ -100,7 +100,7 @@ const LOGOS: [RegExp, string][] = [
   [/^kubernetes/i, 'kubernetes'],
   [/^terraform$/i, 'terraform'],
   [/^jenkins/i, 'jenkins'],
-  [/^argocd$/i, 'argo'],
+  [/^argo ?cd$/i, 'argo'],
   [/^prometheus/i, 'prometheus'],
   [/^ansible$/i, 'ansible'],
   [/^git \/ github$/i, 'github'],
@@ -115,7 +115,6 @@ const LOGOS: [RegExp, string][] = [
   [/^typescript$/i, 'typescript'],
   [/^tailwind css$/i, 'tailwind'],
   [/^pytest$/i, 'pytest'],
-  [/^docker$/i, 'docker'],
 ];
 
 export const logoFor = (name: string) => LOGOS.find(([re]) => re.test(name))?.[1];

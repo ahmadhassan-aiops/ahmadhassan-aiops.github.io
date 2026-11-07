@@ -2,74 +2,68 @@
 import BrandIcon from './ui/BrandIcon.astro';
 import Icon from './ui/Icon.astro';
 import Section from './ui/Section.astro';
-import { categories, projects, projectsSection, socials } from '../content/site';
-import { badge, button, card, cx, external } from '../lib/ui';
+import { categories, featuredFlagship, projects, projectsSection, socials } from '../content/site';
+import { badge, button, card, chip, cx, external, lift } from '../lib/ui';
+
+// Rows shown in the full list before "Show all"; filtering always shows every match.
+const INITIAL = 9;
 
 const counts = Object.fromEntries(
   categories.map((c) => [c.id, c.id === 'all' ? projects.length : c.id === 'healthcare' ? projects.filter((p) => p.healthcare).length : projects.filter((p) => p.category === c.id).length]),
 );
 const labelOf = (id: string) => categories.find((c) => c.id === id)?.label;
+const featured = projects.filter((p) => p.featured).sort((a, b) => (a.featured ?? 0) - (b.featured ?? 0));
 ---
 
-<!-- Every project as a card (the platform's Featured work card), with filter chips above. -->
-<Section id="projects" tone="default" eyebrow={projectsSection.eyebrow} title={projectsSection.title} intro={projectsSection.intro}>
-  <div data-reveal class="mt-10 flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+<!--
+  Projects: the featured row (VerdictRx first, then the five healthcare picks), then every project in a
+  compact list: a table-like grid at lg, small cards below. Nine rows show first; "Show all" reveals the rest.
+-->
+<Section id="projects" eyebrow={projectsSection.eyebrow} title={projectsSection.title} intro={projectsSection.intro}>
+  <h3 class="mt-14 text-small font-semibold tracking-eyebrow text-fg-subtle uppercase">{projectsSection.featuredTitle}</h3>
+  <ul class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <li data-reveal>
+      <article class={cx(card('feature'), 'relative flex h-full flex-col overflow-hidden', lift)}>
+        <span aria-hidden="true" class="absolute inset-x-0 top-0 h-1 bg-brand-solid"></span>
+        <div class="flex flex-wrap gap-2">
+          <span class={badge('brand')}><Icon name="Sparkles" />{featuredFlagship.badges[0]}</span>
+          <span class={badge('neutral')}>{featuredFlagship.badges[1]}</span>
+        </div>
+        <h4 class="mt-5 font-display text-h2 font-semibold text-fg">{featuredFlagship.title}</h4>
+        <p class="mt-3 flex-1 text-small text-fg-muted">{featuredFlagship.desc}</p>
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {featuredFlagship.tags.map((t) => <li class={chip()}>{t}</li>)}
+        </ul>
+        <div class="mt-6 border-t border-line pt-5">
+          <a href={featuredFlagship.href} class={button('primary', 'sm')}>
+            {projectsSection.readMore}
+            <Icon name="ArrowDown" />
+          </a>
+        </div>
+      </article>
+    </li>
     {
-      categories.map((c, i) => (
-        <button
-          type="button"
-          data-filter={c.id}
-          aria-pressed={i === 0 ? 'true' : 'false'}
-          class="inline-flex h-9 items-center gap-2 rounded-full border border-line bg-surface px-3.5 text-small font-medium text-fg-muted transition-colors hover:bg-surface-hover hover:text-fg aria-pressed:border-brand-solid aria-pressed:bg-brand-solid aria-pressed:text-on-brand"
-        >
-          {c.id === 'healthcare' && <Icon name="HeartPulse" class="size-4" />}
-          {c.label}
-          <span class="font-mono text-caption tabular-nums opacity-80">{counts[c.id]}</span>
-        </button>
-      ))
-    }
-  </div>
-
-  <ul id="project-grid" class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-    {
-      projects.map((p) => (
-        <li data-category={p.category} data-healthcare={p.healthcare ? '' : undefined}>
-          <article class={cx(card(), 'flex h-full flex-col transition-[border-color,box-shadow] duration-150 hover:border-brand/40 hover:shadow-md')}>
-            <div class="mb-3 flex flex-wrap gap-2">
-              <span class={badge('neutral')}>{labelOf(p.category)}</span>
-              {p.healthcare && (
-                <span class={badge('brand')}>
-                  <Icon name="HeartPulse" />
-                  Healthcare
-                </span>
-              )}
-              {p.featured && (
-                <span class={badge('outline')}>
-                  <Icon name="Star" />
-                  Featured
-                </span>
-              )}
+      featured.map((p, i) => (
+        <li data-reveal style={`--reveal-delay: ${((i + 1) % 3) * 60}ms`} class={cx(i >= 3 && 'max-sm:hidden')}>
+          <article class={cx(card('feature'), 'flex h-full flex-col', lift)}>
+            <div class="flex flex-wrap gap-2">
+              <span class={badge('sage')}><Icon name="HeartPulse" />{projectsSection.healthcareBadge}</span>
             </div>
-            <h3 class="text-h3 font-semibold text-fg">{p.title}</h3>
-            <p class="mt-2 flex-1 text-small text-fg-muted">{p.desc}</p>
-            <ul class="mt-4 flex flex-wrap gap-1.5">
-              {p.tags.slice(0, 3).map((t) => (
-                <li class={badge('outline')}>{t}</li>
-              ))}
-              {p.tags.length > 3 && <li class={badge('neutral')}>+{p.tags.length - 3}</li>}
+            <h4 class="mt-5 font-display text-h3 font-semibold text-fg sm:text-h2">{p.title}</h4>
+            <p class="mt-3 flex-1 text-small text-fg-muted">{p.desc}</p>
+            <ul class="mt-5 flex flex-wrap gap-2">
+              {p.tags.map((t) => <li class={chip()}>{t}</li>)}
             </ul>
-            <div class="mt-5 flex flex-wrap gap-2 border-t border-line pt-4">
+            <div class="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
               {p.liveUrl && (
-                <a href={p.liveUrl} {...external} class={button('secondary', 'sm')} aria-label={`Live app: ${p.title} (opens in a new tab)`}>
+                <a href={p.liveUrl} {...external} class={button('secondary', 'sm')} aria-label={`${projectsSection.liveLabel}: ${p.title} (opens in a new tab)`}>
                   <BrandIcon icon="huggingface" />
-                  Live app
-                  <Icon name="ArrowUpRight" class="text-fg-subtle" />
+                  {projectsSection.liveLabel}
                 </a>
               )}
-              <a href={p.githubUrl} {...external} class={button('secondary', 'sm')} aria-label={`Code: ${p.title} (opens in a new tab)`}>
+              <a href={p.githubUrl} {...external} class={button('secondary', 'sm')} aria-label={`${projectsSection.codeLabel}: ${p.title} (opens in a new tab)`}>
                 <BrandIcon icon="github" />
-                Code
-                <Icon name="ArrowUpRight" class="text-fg-subtle" />
+                {projectsSection.codeLabel}
               </a>
             </div>
           </article>
@@ -77,35 +71,146 @@ const labelOf = (id: string) => categories.find((c) => c.id === id)?.label;
       ))
     }
   </ul>
-  <p id="project-empty" hidden class="mt-8 text-center text-fg-muted">{projectsSection.empty}</p>
 
-  <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-    <a href={socials.portfolioProjects} {...external} class="inline-flex items-center gap-1 font-medium text-brand underline-offset-4 hover:underline">
-      {projectsSection.codeLink}
-      <Icon name="ArrowUpRight" />
-    </a>
-    <a href={socials.huggingface} {...external} class="inline-flex items-center gap-1 font-medium text-brand underline-offset-4 hover:underline">
-      {projectsSection.appsLink}
-      <Icon name="ArrowUpRight" />
-    </a>
+  <h3 id="all-projects" class="mt-20 font-display text-h3 font-semibold text-fg sm:text-h2">{projectsSection.allTitle}</h3>
+  <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label={projectsSection.filterLabel}>
+    {
+      categories.map((c, i) => (
+        <button
+          type="button"
+          data-filter={c.id}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          class="group inline-flex h-11 items-center gap-2 rounded-full border border-line bg-surface pr-2 pl-4 text-small font-medium text-fg-muted transition-colors hover:border-brand/40 hover:text-fg aria-pressed:border-brand-solid aria-pressed:bg-brand-solid aria-pressed:text-on-brand"
+        >
+          {c.label}
+          <span class="grid h-6 min-w-6 place-items-center rounded-full bg-surface-hover px-1.5 font-mono text-caption text-fg-muted tabular-nums group-aria-pressed:bg-on-brand/20 group-aria-pressed:text-on-brand">
+            {counts[c.id]}
+          </span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="mt-8 hidden grid-cols-[minmax(0,2.4fr)_minmax(0,1fr)_minmax(0,1.5fr)_12rem] gap-6 border-b border-line-strong pb-3 text-caption font-semibold tracking-eyebrow text-fg-subtle uppercase lg:grid" aria-hidden="true">
+    <span>{projectsSection.columns.title}</span>
+    <span>{projectsSection.columns.category}</span>
+    <span>{projectsSection.columns.tools}</span>
+    <span class="text-right">{projectsSection.columns.links}</span>
+  </div>
+  <ul id="project-list" class="mt-4 grid gap-3 md:grid-cols-2 lg:mt-0 lg:block">
+    {
+      projects.map((p, i) => (
+        <li
+          data-category={p.category}
+          data-healthcare={p.healthcare ? '' : undefined}
+          data-extra={i >= INITIAL ? '' : undefined}
+          class="flex flex-col rounded-card border border-line bg-surface p-5 lg:grid lg:grid-cols-[minmax(0,2.4fr)_minmax(0,1fr)_minmax(0,1.5fr)_12rem] lg:items-center lg:gap-6 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:bg-transparent lg:px-0 lg:py-5"
+        >
+          <div>
+            <h4 class="font-semibold text-fg">{p.title}</h4>
+            <p class="mt-1 text-small text-fg-muted">{p.desc}</p>
+          </div>
+          <p class="mt-3 flex flex-wrap items-center gap-2 text-small text-fg-muted lg:mt-0">
+            {labelOf(p.category)}
+            {p.healthcare && (
+              <span class={badge('sage')}>
+                <Icon name="HeartPulse" />
+                {projectsSection.healthcareBadge}
+              </span>
+            )}
+          </p>
+          <ul class="mt-3 flex flex-wrap gap-1.5 lg:mt-0">
+            {p.tags.slice(0, 3).map((t) => (
+              <li class={chip()}>{t}</li>
+            ))}
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2 lg:mt-0 lg:justify-end">
+            {p.liveUrl && (
+              <a href={p.liveUrl} {...external} class={button('secondary', 'sm')} aria-label={`${projectsSection.liveLabel}: ${p.title} (opens in a new tab)`}>
+                <BrandIcon icon="huggingface" />
+                {projectsSection.liveLabel}
+              </a>
+            )}
+            <a href={p.githubUrl} {...external} class={button('secondary', 'sm')} aria-label={`${projectsSection.codeLabel}: ${p.title} (opens in a new tab)`}>
+              <BrandIcon icon="github" />
+              {projectsSection.codeLabel}
+            </a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <p id="project-empty" hidden class="mt-8 text-center text-fg-muted">{projectsSection.empty}</p>
+  <p id="project-status" class="sr-only" aria-live="polite" data-template={projectsSection.showing}></p>
+
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+    <button
+      type="button"
+      id="project-toggle"
+      aria-controls="project-list"
+      aria-expanded="false"
+      data-show={projectsSection.showAll(projects.length)}
+      data-hide={projectsSection.showFewer}
+      class={button('secondary', 'md')}
+    >
+      <Icon name="ChevronDown" />
+      <span>{projectsSection.showAll(projects.length)}</span>
+    </button>
+    <div class="flex flex-wrap gap-3">
+      <a href={socials.portfolioProjects} {...external} class={button('secondary', 'md')}>
+        <BrandIcon icon="github" />
+        {projectsSection.codeLink}
+        <Icon name="ArrowUpRight" />
+      </a>
+      <a href={socials.huggingface} {...external} class={button('secondary', 'md')}>
+        <BrandIcon icon="huggingface" />
+        {projectsSection.appsLink}
+        <Icon name="ArrowUpRight" />
+      </a>
+    </div>
   </div>
 </Section>
 
 <script>
   const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
-  const items = [...document.querySelectorAll<HTMLElement>('#project-grid > li')];
+  const items = [...document.querySelectorAll<HTMLElement>('#project-list > li')];
   const empty = document.getElementById('project-empty');
+  const status = document.getElementById('project-status');
+  const toggle = document.getElementById('project-toggle') as HTMLButtonElement | null;
+  let filter = 'all';
+  let expanded = false;
+
+  // "All" shows the first nine unless expanded; any other filter shows every match.
+  const render = (announce: boolean) => {
+    let shown = 0;
+    for (const li of items) {
+      const match = filter === 'all' || li.dataset.category === filter || (filter === 'healthcare' && li.hasAttribute('data-healthcare'));
+      const show = match && (filter !== 'all' || expanded || !li.hasAttribute('data-extra'));
+      li.hidden = !show;
+      if (show) shown++;
+    }
+    if (empty) empty.hidden = shown > 0;
+    if (toggle) {
+      toggle.hidden = filter !== 'all';
+      toggle.setAttribute('aria-expanded', String(expanded));
+      toggle.querySelector('span')!.textContent = expanded ? toggle.dataset.hide! : toggle.dataset.show!;
+      toggle.querySelector('svg')?.classList.toggle('rotate-180', expanded);
+    }
+    if (announce && status) status.textContent = (status.dataset.template ?? '').replace('{n}', String(shown));
+  };
+
   for (const btn of buttons) {
     btn.addEventListener('click', () => {
-      const f = btn.dataset.filter;
+      filter = btn.dataset.filter ?? 'all';
       for (const b of buttons) b.setAttribute('aria-pressed', String(b === btn));
-      let shown = 0;
-      for (const li of items) {
-        const show = f === 'all' || li.dataset.category === f || (f === 'healthcare' && li.hasAttribute('data-healthcare'));
-        li.hidden = !show;
-        if (show) shown++;
-      }
-      if (empty) empty.hidden = shown > 0;
+      render(true);
     });
   }
+  toggle?.addEventListener('click', () => {
+    const wasExpanded = expanded;
+    expanded = !expanded;
+    render(true);
+    if (wasExpanded) document.getElementById('all-projects')?.scrollIntoView({ block: 'start' });
+  });
+  render(false);
 </script>

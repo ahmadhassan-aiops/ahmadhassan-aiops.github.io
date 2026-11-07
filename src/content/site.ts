@@ -263,6 +263,8 @@ export const projectsSection = {
   columns: { title: 'Project', category: 'Category', tools: 'Tools', links: 'Links' },
   showAll: (n: number) => `Show all ${n} projects`,
   showFewer: 'Show fewer projects',
+  /** Announced to screen readers after filtering; {n} is the number shown. */
+  showing: 'Showing {n} projects',
   empty: 'No projects in this category yet.',
   readMore: 'Read more',
   liveLabel: 'Live app',

@@ -1,0 +1,43 @@
+---
+import BrandIcon from './ui/BrandIcon.astro';
+import Icon from './ui/Icon.astro';
+import Section from './ui/Section.astro';
+import { openSource, socials } from '../content/site';
+import { badge, button, cx, external } from '../lib/ui';
+---
+
+<!-- A compact band: the heading, intro and profile button on the left; the four live Spaces on the right. -->
+<Section id="open-source" tone="subtle" split eyebrow={openSource.eyebrow} title={openSource.title} intro={openSource.intro}>
+  <a slot="lead" href={socials.huggingface} {...external} class={cx(button('primary', 'lg'), 'mt-8')}>
+    <BrandIcon icon="huggingface" />
+    {openSource.cta}
+    <Icon name="ArrowUpRight" />
+  </a>
+
+  <ul data-reveal class="divide-y divide-line overflow-hidden rounded-feature border border-line bg-surface shadow-sm">
+    {
+      openSource.spaces.map((s) => (
+        <li>
+          <a
+            href={s.url}
+            {...external}
+            class="group flex items-center gap-4 p-5 transition-colors hover:bg-surface-hover sm:p-6"
+            aria-label={`${s.name}: ${s.desc} (opens in a new tab)`}
+          >
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand" aria-hidden="true">
+              <BrandIcon icon="huggingface" class="size-5" />
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="flex flex-wrap items-center gap-2">
+                <span class="font-semibold text-fg">{s.name}</span>
+                <span class={badge('outline')}>{openSource.spaceBadge}</span>
+              </span>
+              <span class="mt-1 block text-small text-fg-muted">{s.desc}</span>
+            </span>
+            <Icon name="ArrowUpRight" class="size-5 text-fg-subtle transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand motion-reduce:transition-none" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
