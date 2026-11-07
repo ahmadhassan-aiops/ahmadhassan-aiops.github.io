@@ -77,19 +77,19 @@ const ROLE_ICONS = ['BrainCircuit', 'ChartColumn', 'GraduationCap'] as const;
       </a>
     </div>
 
-    <div class="order-2 mx-auto w-70 lg:col-span-5 lg:w-full lg:max-w-110">
-      <div class="relative aspect-[4/5] overflow-hidden rounded-3xl border border-line bg-brand-soft shadow-brand">
+    <div class="order-2 mx-auto w-full max-w-xs lg:col-span-5 lg:max-w-80">
+      <div class="relative mx-auto aspect-[4/5] w-56 overflow-hidden rounded-3xl border border-line bg-brand-soft shadow-brand ring-4 ring-surface sm:w-64 lg:w-full">
         <Image
           src={photo}
           alt={person.photoAlt}
-          widths={[280, 440, 560, 880]}
-          sizes="(min-width: 1024px) 440px, 280px"
+          widths={[224, 320, 448, 640]}
+          sizes="(min-width: 1024px) 320px, (min-width: 640px) 256px, 224px"
           loading="eager"
           fetchpriority="high"
           class="size-full object-cover object-top"
         />
       </div>
-      <ul class="mt-4 grid gap-3 lg:grid-cols-2">
+      <ul class="mt-5 grid gap-3">
         {
           person.photoFacts.map((f) => (
             <li class={cx('flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 shadow-sm', lift)}>

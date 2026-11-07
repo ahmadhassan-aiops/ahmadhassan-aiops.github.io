@@ -2,6 +2,8 @@
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import photo from '../assets/ahmad.png';
 import { meta } from '../content/site';
 
 interface Props {
@@ -10,6 +12,8 @@ interface Props {
 }
 const { title = meta.title, description = meta.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Social preview uses the same photo as the hero, resized to a light JPEG.
+const ogImage = await getImage({ src: photo, width: 800, format: 'jpg' });
 ---
 
 <!doctype html>
@@ -24,7 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/picture.png', Astro.site)} />
+    <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
     <meta name="theme-color" content="#2563eb" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Light by default, like the platform; the saved choice is applied before paint so there is no flash. -->
