@@ -2,16 +2,16 @@
 
 **Live site: https://ahmadhassanrx.com**
 
-Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It shares the platform's structure and story but has its own look: a deep teal palette, Space Grotesk headings, a hexagon "AH" mark and a full-width, always-dark hero.
+Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It tells the same story as the platform with its own warm look: a terracotta and ivory palette (espresso in dark mode), Fraunces headings with Geist for reading, and a hexagon "AH" mark. The full design and copy rules are in `docs/PORTFOLIO-REDESIGN-PLAN.md`.
 
 ---
 
 ## Tech Stack
 
 - [Astro](https://astro.build) 7: static site
-- [Tailwind CSS](https://tailwindcss.com) v4: the platform's design tokens in `src/styles/global.css`
+- [Tailwind CSS](https://tailwindcss.com) v4: design tokens in `src/styles/global.css`, class recipes in `src/lib/ui.ts`
 - [lucide](https://lucide.dev) and [simple-icons](https://simpleicons.org): icons and tool logos, inlined at build time
-- Geist and Geist Mono (Fontsource): the platform's fonts
+- Fraunces (headings), Geist (body) and Geist Mono (numbers only), all from Fontsource
 - GitHub Actions: builds and deploys to GitHub Pages
 
 ## Project Structure
@@ -20,19 +20,20 @@ Personal portfolio: projects, VerdictRx, credentials and teaching work, with lin
 my-portfolio/
 ├── src/
 │   ├── content/site.ts   # ALL copy and facts (keep in step with the platform's site.ts)
-│   ├── components/       # Sections (Hero, About, Skills, VerdictRx, Roadmaps, Projects, ...)
+│   ├── components/       # Sections (Hero, About + Journey, Expertise, VerdictRx, Projects, OpenSource, Teaching, Milestones, Footer)
 │   │   └── ui/           # Icon, BrandIcon, Logo, Section, ThemeToggle
-│   ├── lib/              # Button/badge/card class recipes, brand logo paths
-│   ├── styles/global.css # Design tokens (copied from the platform)
+│   ├── lib/              # Class recipes (button, badge, chip, card, iconTile), brand logo paths
+│   ├── styles/global.css # Design tokens: terracotta and ivory, espresso dark theme, sage accent
 │   ├── assets/ahmad.png  # Profile photo (WebP in the hero, JPEG for the social preview)
 │   └── pages/index.astro # The page
 ├── public/               # favicon (the hexagon AH mark), CNAME
+├── docs/                 # Redesign plan and QA screenshots
 └── .github/workflows/    # GitHub Pages deploy workflow
 ```
 
 ## Editing content
 
-Everything visitors read lives in `src/content/site.ts`. The story, stats, timeline, credentials, VerdictRx wording and roadmap names mirror the AI with Ahmad platform's `src/content/site.ts`: when one changes, change the other too. Never use the em dash in visitor-facing text.
+Everything visitors read lives in `src/content/site.ts`. The facts (stats, dates, credentials, roadmap names and taglines) match the AI with Ahmad platform: when one changes, change the other too. The wording is the portfolio's own: first person, sentence case, British spelling, no em dashes and no result metrics on projects.
 
 ## Local Development
 

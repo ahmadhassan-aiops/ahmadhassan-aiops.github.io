@@ -4,7 +4,7 @@ import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import photo from '../assets/ahmad.png';
-import { meta, navLabels } from '../content/site';
+import { meta, navLabels, person, socials } from '../content/site';
 // Fraunces (headings), latin only, with every axis so SOFT and optical sizing work.
 import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
 import frauncesItalicUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2?url';
@@ -17,6 +17,16 @@ const { title = meta.title, description = meta.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // Social preview uses the same photo as the hero, resized to a light JPEG.
 const ogImage = await getImage({ src: photo, width: 800, format: 'jpg' });
+// Structured data for search engines: who this site is about and where else they are.
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: person.name,
+  jobTitle: person.jobTitle,
+  url: Astro.site?.href,
+  image: new URL(ogImage.src, Astro.site).href,
+  sameAs: [socials.linkedin, socials.github, socials.huggingface],
+};
 ---
 
 <!doctype html>
@@ -40,6 +50,7 @@ const ogImage = await getImage({ src: photo, width: 800, format: 'jpg' });
       set:html={`@font-face{font-family:"Fraunces Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${frauncesUrl}) format("woff2-variations")}@font-face{font-family:"Fraunces Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(${frauncesItalicUrl}) format("woff2-variations")}`}
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
     <!-- Light by default, like the platform; the saved choice is applied before paint so there is no flash. -->
     <script is:inline>
       try {

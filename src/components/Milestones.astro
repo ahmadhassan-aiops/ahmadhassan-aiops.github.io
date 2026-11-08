@@ -7,10 +7,10 @@ import { badge, card, cx, external, iconTile } from '../lib/ui';
 
 <!-- Six milestones; in-progress items are dashed, labelled and never read as earned. -->
 <Section id="milestones" tone="subtle" eyebrow={milestones.eyebrow} title={milestones.title}>
-  <ul class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <ul class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-sm:-mx-4 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:overflow-x-auto max-sm:px-4 max-sm:pb-2 max-sm:scroll-px-4">
     {
       milestones.items.map((m, i) => (
-        <li data-reveal style={`--reveal-delay: ${(i % 3) * 60}ms`}>
+        <li data-reveal style={`--reveal-delay: ${(i % 3) * 60}ms`} class="max-sm:w-[85%] max-sm:shrink-0 max-sm:snap-start">
           <div class={cx(card(), 'flex h-full flex-col', m.inProgress && 'border-dashed border-line-strong')}>
             <div class="flex items-start justify-between gap-3">
               <span class={iconTile(m.inProgress ? 'neutral' : 'brand')}>

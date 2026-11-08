@@ -7,7 +7,7 @@ import { contact, footer, nav, person, platform, socials } from '../content/site
 import { button, external } from '../lib/ui';
 
 const heading = 'text-caption font-semibold tracking-eyebrow text-fg-muted uppercase';
-const link = 'inline-flex min-h-8 items-center gap-2 text-small text-fg-muted transition-colors hover:text-fg';
+const link = 'inline-flex min-h-11 items-center gap-2 text-small text-fg-muted transition-colors hover:text-fg lg:min-h-8';
 const contactHref: Record<string, string> = {
   email: `mailto:${socials.email}`,
   whatsapp: socials.whatsappUrl,
@@ -19,9 +19,9 @@ const contactHref: Record<string, string> = {
 ---
 
 <!-- Contact: a terracotta band with a faint paper grain, centred; then the four-column footer. -->
-<section id="contact" aria-labelledby="contact-title" class="scroll-mt-16 py-24 lg:py-32">
+<section id="contact" aria-labelledby="contact-title" class="scroll-mt-16 py-20 lg:py-24">
   <div class="container-wide">
-    <div data-reveal class="relative overflow-hidden rounded-feature bg-brand-solid px-6 py-14 text-center text-on-brand shadow-brand sm:px-12 lg:py-20">
+    <div data-reveal class="relative overflow-hidden rounded-feature bg-brand-solid px-6 py-10 text-center text-on-brand shadow-brand sm:px-12 sm:py-12 lg:py-16">
       <span aria-hidden="true" class="grain pointer-events-none absolute inset-0 opacity-10"></span>
       <div class="relative">
         <p class="text-caption font-semibold tracking-eyebrow uppercase">{contact.eyebrow}</p>
@@ -50,8 +50,8 @@ const contactHref: Record<string, string> = {
 </section>
 
 <footer class="mt-auto border-t border-line bg-bg-subtle">
-  <div class="container-wide grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
-    <div>
+  <div class="container-wide grid grid-cols-2 gap-x-6 gap-y-8 py-12 lg:grid-cols-4 lg:gap-y-10 lg:py-14">
+    <div class="col-span-2 lg:col-span-1">
       <Logo />
       <p class="mt-4 max-w-xs text-small text-fg-muted">{footer.tagline}</p>
       <p class="mt-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-caption font-medium text-fg-muted">
@@ -62,14 +62,14 @@ const contactHref: Record<string, string> = {
 
     <nav aria-label={footer.portfolioTitle}>
       <h2 class={heading}>{footer.portfolioTitle}</h2>
-      <ul class="mt-3 space-y-1">
+      <ul class="mt-2 lg:mt-3 lg:space-y-1">
         {nav.map((l) => <li><a href={l.href} class={link}>{l.label}</a></li>)}
       </ul>
     </nav>
 
     <nav aria-label={footer.learnTitle}>
       <h2 class={heading}>{footer.learnTitle}</h2>
-      <ul class="mt-3 space-y-1">
+      <ul class="mt-2 lg:mt-3 lg:space-y-1">
         {
           footer.learn.map((l) => (
             <li>
@@ -82,9 +82,9 @@ const contactHref: Record<string, string> = {
       </ul>
     </nav>
 
-    <nav aria-label={footer.contactTitle}>
+    <nav aria-label={footer.contactTitle} class="col-span-2 sm:col-span-1">
       <h2 class={heading}>{footer.contactTitle}</h2>
-      <ul class="mt-3 space-y-1">
+      <ul class="mt-2 lg:mt-3 lg:space-y-1">
         {
           footer.contact.map((l) => (
             <li>

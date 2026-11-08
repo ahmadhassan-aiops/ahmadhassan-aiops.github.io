@@ -13,12 +13,12 @@ const DESKTOP = 8;
 
 <!-- Four groups, each with a one-line description and its most important tools first. -->
 <Section id="expertise" eyebrow={expertise.eyebrow} title={expertise.title} intro={expertise.intro}>
-  <div class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+  <div class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4 max-sm:-mx-4 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:overflow-x-auto max-sm:px-4 max-sm:pb-2 max-sm:scroll-px-4">
     {
       expertise.groups.map((g, i) => {
         const rest = g.tools.slice(MOBILE);
         return (
-          <div data-reveal style={`--reveal-delay: ${i * 60}ms`} class={cx(card(), 'flex h-full flex-col')}>
+          <div data-reveal style={`--reveal-delay: ${i * 60}ms`} class={cx(card(), 'flex h-full flex-col', 'max-sm:w-[85%] max-sm:shrink-0 max-sm:snap-start')}>
             <span class={iconTile('brand')}>
               <Icon name={g.icon} strokeWidth={1.75} />
             </span>

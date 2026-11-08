@@ -2,7 +2,7 @@
 import { cx, eyebrow as eyebrowClass } from '../../lib/ui';
 
 /**
- * A full-width section: alternating default / subtle backgrounds, 96px → 128px vertical rhythm and
+ * A full-width section: alternating default / subtle backgrounds, 80px → 96px vertical rhythm and
  * one heading pattern everywhere (eyebrow, a short terracotta rule, the H2 in Fraunces, an intro at
  * most 60ch). Headings are left-aligned; only Contact centres its own.
  * `split` puts the heading (and the `lead` slot) in a 5-column left panel beside the content at lg.
@@ -20,7 +20,7 @@ const { id, tone = 'default', eyebrow, title, intro, split = false, class: class
 const titleId = `${id}-title`;
 ---
 
-<section id={id} aria-labelledby={title ? titleId : undefined} class={cx('scroll-mt-16 py-24 lg:py-32', tone === 'subtle' && 'bg-bg-subtle', className)}>
+<section id={id} aria-labelledby={title ? titleId : undefined} class={cx('scroll-mt-16 py-20 lg:py-24', tone === 'subtle' && 'bg-bg-subtle', className)}>
   <div class={cx('container-wide', split && 'grid gap-10 lg:grid-cols-12 lg:gap-12 2xl:gap-16')}>
     {
       title && (
