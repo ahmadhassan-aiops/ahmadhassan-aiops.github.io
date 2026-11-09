@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets';
-import photo from '../assets/ahmad.png';
+import photo from '../assets/ahmad-cutout.png';
 import Icon from './ui/Icon.astro';
 import BrandIcon from './ui/BrandIcon.astro';
 import { hero, person, platform, socials, stats } from '../content/site';
-import { button, cx, external, iconTile } from '../lib/ui';
+import { button, cx, external, iconTile, lift } from '../lib/ui';
 
 type IconName = Parameters<typeof Icon>[0]['name'];
 
@@ -24,119 +24,136 @@ const counted = stats.map((s) => {
 ---
 
 <!--
-  The hero, light and warm (it follows the theme): a faint dot grid and one static terracotta wash
-  behind; the name, roles, statement and CTAs on the left; the photo on a warm frame block with the two
-  credentials under it on the right. Then the stats band and the tools marquee.
+  The hero, light and warm (it follows the theme), on a faint dot grid with no colour behind the photo.
+  Left: availability, then the eyebrow, name, roles, statement, intro, the next-goal line, the CTAs with
+  the social links beside them, and the two credentials. Right: the cut-out photo standing on the hero's
+  bottom rule. Both columns share one centred width so the text and photo read as one block. Then the
+  stat cards and the tools marquee.
 -->
 <section id="top" aria-labelledby="hero-title" class="relative isolate overflow-hidden bg-bg">
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-    <div class="hero-dots absolute inset-0"></div>
-    <div class="absolute -top-56 -right-48 size-[52rem] rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--brand-soft)_60%,transparent),transparent)]"></div>
-  </div>
+  <div aria-hidden="true" class="hero-dots pointer-events-none absolute inset-0 -z-10"></div>
 
-  <div class="container-wide grid items-center gap-10 pt-10 pb-12 sm:pt-14 sm:pb-16 lg:min-h-[min(calc(100svh-4rem),52rem)] lg:grid-cols-12 lg:gap-10 lg:py-16 2xl:gap-16">
-    <div class="lg:col-span-7 2xl:col-span-6">
-      <p class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-line bg-surface py-1.5 pr-4 pl-3 text-small text-fg-muted shadow-sm">
-        <span aria-hidden="true" class="size-2 rounded-full bg-sage"></span>
-        {person.availability}
-        <span aria-hidden="true" class="max-sm:hidden">·</span>
-        <span class="max-sm:hidden">{person.location}</span>
-      </p>
+  <div class="border-b border-line">
+    <div class="container-wide">
+      <div class="mx-auto grid gap-x-12 lg:max-w-[78rem] lg:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] lg:items-end xl:max-w-[84rem] xl:grid-cols-[minmax(0,1fr)_minmax(0,29rem)] xl:gap-x-16 2xl:max-w-[90rem] 2xl:grid-cols-[minmax(0,1fr)_minmax(0,32rem)]">
+        <div class="pt-10 pb-12 sm:pb-14 lg:self-center lg:py-16">
+          <div>
+            <p class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-full border border-line bg-surface py-1.5 pr-4 pl-3 text-small text-fg-muted shadow-sm">
+              <span aria-hidden="true" class="size-2 rounded-full bg-sage"></span>
+              {person.availability}
+              <span aria-hidden="true" class="max-sm:hidden">·</span>
+              <span class="max-sm:hidden">{person.location}</span>
+            </p>
+          </div>
 
-      <p class="mt-8 flex items-center gap-3 text-caption font-semibold tracking-eyebrow text-brand uppercase">
-        <span aria-hidden="true" class="h-0.5 w-10 rounded-full bg-brand"></span>
-        {hero.eyebrow}
-      </p>
-      <h1 id="hero-title" class="mt-4 font-display text-hero font-semibold text-fg">
-        {person.name}<span class="text-brand">.</span>
-      </h1>
-      <p class="mt-4 text-h3 text-fg-muted">{hero.roles}</p>
+          <p class="mt-10 flex items-center gap-3 text-caption font-semibold tracking-eyebrow text-brand uppercase">
+            <span aria-hidden="true" class="h-0.5 w-10 rounded-full bg-brand"></span>
+            {hero.eyebrow}
+          </p>
+          <h1 id="hero-title" class="mt-4 font-display text-hero font-semibold text-fg">
+            {person.name}<span class="text-brand">.</span>
+          </h1>
+          <p class="mt-3 text-h3 text-fg-muted">{hero.roles}</p>
 
-      <p class="mt-8 max-w-3xl font-display text-h2 font-medium text-balance text-fg sm:text-h2-lg">{hero.statement}</p>
-      <p class="measure-intro mt-4 text-body-lg text-fg-muted">{hero.intro}</p>
+          <p class="mt-7 font-display text-h2 font-medium text-balance text-fg sm:text-h2-lg">{hero.statement}</p>
+          <p class="mt-4 text-body-lg text-fg-muted">{hero.intro}</p>
 
-      <div class="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
-        <a href="#projects" class={cx(button('primary', 'xl'), 'group')}>
-          {hero.primaryCta}
-          <Icon name="ArrowDown" class="transition-transform group-hover:translate-y-0.5 motion-reduce:transition-none" />
-        </a>
-        <!-- The learning platform, as a secondary card-button: icon tile, name and what it is. -->
-        <a
-          href={platform.url}
-          {...external}
-          class="group inline-flex h-14 items-center gap-3 rounded-control border border-line-strong bg-surface pr-5 pl-2 transition-colors hover:border-brand/50 hover:bg-surface-hover"
-        >
-          <span class={iconTile('solid')}><Icon name="GraduationCap" /></span>
-          <span class="leading-tight">
-            <span class="block text-small font-semibold text-fg">{platform.cta}</span>
-            <span class="mt-0.5 block text-caption text-fg-muted">{platform.sub}</span>
-          </span>
-          <Icon name="ArrowUpRight" class="ml-1 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
-        </a>
-      </div>
+          <!-- Where I'm heading, right under the intro: sage like every other "next goal" on the page. -->
+          <div class="mt-6 flex items-start gap-3 rounded-card border border-sage/30 bg-sage-soft p-4">
+            <span class={cx(iconTile('sage'), 'bg-surface ring-1 ring-sage/30')}>
+              <Icon name="Dna" strokeWidth={1.75} />
+            </span>
+            <p class="text-small text-fg-muted">
+              <span class="block text-caption font-semibold tracking-eyebrow text-sage uppercase">{hero.goal.label}</span>
+              <span class="mt-1 block text-body font-medium text-fg">{hero.goal.text}</span>
+            </p>
+          </div>
 
-      <ul aria-label={hero.socialsLabel} class="mt-8 flex flex-wrap gap-2">
-        {
-          links.map((l) => (
-            <li>
-              <a
-                href={l.href}
-                {...(l.href.startsWith('mailto:') ? {} : external)}
-                aria-label={l.label}
-                title={l.label}
-                class="grid size-11 place-items-center rounded-full border border-line bg-surface text-fg-muted transition-colors hover:border-brand hover:text-brand"
-              >
-                {l.brand ? <BrandIcon icon={l.brand} class="size-4.5" /> : <Icon name={l.icon!} class="size-4.5" />}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+          <div class="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+            <a href="#projects" class={cx(button('primary', 'xl'), 'group')}>
+              {hero.primaryCta}
+              <Icon name="ArrowDown" class="transition-transform group-hover:translate-y-0.5 motion-reduce:transition-none" />
+            </a>
+            <!-- The learning platform, as a secondary card-button: icon tile, name and what it is. -->
+            <a
+              href={platform.url}
+              {...external}
+              class="group inline-flex h-14 items-center gap-3 rounded-control border border-line-strong bg-surface pr-5 pl-2 transition-colors hover:border-brand/50 hover:bg-surface-hover"
+            >
+              <span class={iconTile('solid')}><Icon name="GraduationCap" /></span>
+              <span class="leading-tight">
+                <span class="block text-small font-semibold text-fg">{platform.cta}</span>
+                <span class="mt-0.5 block text-caption text-fg-muted">{platform.sub}</span>
+              </span>
+              <Icon name="ArrowUpRight" class="ml-1 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
+            </a>
+            <ul aria-label={hero.socialsLabel} class="flex flex-wrap gap-2 xl:ml-auto">
+              {
+                links.map((l) => (
+                  <li>
+                    <a
+                      href={l.href}
+                      {...(l.href.startsWith('mailto:') ? {} : external)}
+                      aria-label={l.label}
+                      title={l.label}
+                      class="grid size-11 place-items-center rounded-full border border-line bg-surface text-fg-muted transition-colors hover:border-brand hover:text-brand"
+                    >
+                      {l.brand ? <BrandIcon icon={l.brand} class="size-4.5" /> : <Icon name={l.icon!} class="size-4.5" />}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
 
-    <!-- On phones the photo comes first (max 320px); the credentials under it show from sm up. -->
-    <div class="order-first mx-auto w-full max-w-80 sm:max-w-md lg:order-none lg:col-span-5 lg:max-w-[28rem] 2xl:col-start-8">
-      <div class="relative">
-        <div aria-hidden="true" class="absolute inset-0 translate-x-4 translate-y-4 rounded-feature bg-frame"></div>
-        <div class="relative aspect-[4/5] overflow-hidden rounded-feature border border-line bg-surface shadow-md">
+          <ul class="mt-8 grid gap-x-8 gap-y-5 border-t border-line pt-7 sm:grid-cols-2">
+            {
+              person.credentials.map((c) => (
+                <li class="flex items-center gap-4">
+                  <span class={iconTile('brand', 'lg')}>
+                    <Icon name={c.icon} strokeWidth={1.75} />
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block text-body-lg leading-tight font-semibold text-fg">{c.title}</span>
+                    <span class="mt-1 block text-small text-fg-muted">{c.meta}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- The photo alone, centred in the right half at lg with space above and below and a soft shadow; on phones it comes first (max 300px), standing on a rule. -->
+        <div class="order-first pt-8 max-lg:-mx-4 max-lg:border-b max-lg:border-line max-lg:px-4 lg:order-none lg:self-center lg:py-16">
+          <div class="mx-auto w-full max-w-[18.75rem] sm:max-w-sm lg:max-w-none">
           <Image
             src={photo}
             alt={person.photoAlt}
-            widths={[320, 448, 640, 896]}
-            sizes="(min-width: 1024px) 448px, (min-width: 640px) 448px, 320px"
+            widths={[320, 426]}
+            sizes="(min-width: 1536px) 512px, (min-width: 1280px) 464px, (min-width: 1024px) 400px, (min-width: 640px) 384px, 300px"
             loading="eager"
             fetchpriority="high"
-            class="size-full object-cover object-top"
+            class="block h-auto w-full lg:drop-shadow-[0_24px_32px_color-mix(in_oklab,var(--fg)_18%,transparent)] lg:dark:drop-shadow-[0_24px_32px_color-mix(in_oklab,black_55%,transparent)]"
           />
+          </div>
         </div>
       </div>
-      <ul class="mt-10 hidden gap-3 sm:grid sm:grid-cols-2">
-        {
-          person.credentials.map((c) => (
-            <li class="flex items-center gap-3 rounded-card border border-line bg-surface p-4 shadow-sm">
-              <span class={iconTile('brand')}>
-                <Icon name={c.icon} strokeWidth={1.75} />
-              </span>
-              <span class="min-w-0">
-                <span class="block text-small leading-tight font-semibold text-fg">{c.title}</span>
-                <span class="mt-1 block text-caption text-fg-muted">{c.meta}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
     </div>
   </div>
 
-  <div class="container-wide pb-12 lg:pb-16">
-    <ul class="grid grid-cols-2 gap-px overflow-hidden rounded-feature border border-line bg-line shadow-sm lg:grid-cols-4">
+  <div class="container-wide py-12 lg:py-14">
+    <ul class="mx-auto grid grid-cols-2 gap-3 sm:gap-4 lg:max-w-[78rem] lg:grid-cols-4 xl:max-w-[84rem] 2xl:max-w-[90rem]">
       {
         counted.map((s) => (
-          <li class="bg-surface p-6 sm:p-8">
-            <p class="font-mono text-h1 font-semibold text-fg tabular-nums sm:text-h1-lg">
+          <li class={cx('group relative overflow-hidden rounded-card border border-line bg-surface p-5 shadow-sm sm:p-6', lift)}>
+            <span class={cx(iconTile('brand'), 'transition-colors group-hover:bg-brand-solid group-hover:text-on-brand motion-reduce:transition-none')}>
+              <Icon name={s.icon} strokeWidth={1.75} />
+            </span>
+            <p class="mt-5 font-mono text-h1 font-semibold text-fg tabular-nums sm:text-h1-lg">
               <span data-count={s.n} data-suffix={s.suffix}>{s.value}</span>
             </p>
-            <p class="mt-2 text-small text-fg-muted">{s.label}</p>
+            <p class="mt-1 text-small text-fg-muted">{s.label}</p>
+            <span aria-hidden="true" data-bar class="absolute inset-x-0 bottom-0 h-1 origin-left bg-brand-solid"></span>
           </li>
         ))
       }
@@ -168,9 +185,15 @@ const counted = stats.map((s) => {
 </section>
 
 <script>
-  // Stats count up from zero once, the first time the band scrolls into view (skipped for reduced motion).
+  // Stats count up from zero once, the first time the band scrolls into view, and each card's bottom bar
+  // fills with its number (skipped for reduced motion, where numbers and bars show complete).
   const counters = [...document.querySelectorAll<HTMLElement>('[data-count]')];
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && counters.length) {
+    const barOf = (el: Element) => el.closest('li')?.querySelector<HTMLElement>('[data-bar]');
+    counters.forEach((c) => {
+      const bar = barOf(c);
+      if (bar) bar.style.transform = 'scaleX(0)';
+    });
     const fmt = new Intl.NumberFormat('en-US');
     const io = new IntersectionObserver(
       (entries) => {
@@ -180,11 +203,14 @@ const counted = stats.map((s) => {
           const el = e.target as HTMLElement;
           const end = Number(el.dataset.count);
           const suffix = el.dataset.suffix ?? '';
+          const bar = barOf(el);
           if (!end) continue;
           const start = performance.now();
           const tick = (now: number) => {
             const p = Math.min(1, (now - start) / 1200);
-            el.textContent = fmt.format(Math.round(end * (1 - (1 - p) ** 3))) + suffix;
+            const eased = 1 - (1 - p) ** 3;
+            el.textContent = fmt.format(Math.round(end * eased)) + suffix;
+            if (bar) bar.style.transform = `scaleX(${eased})`;
             if (p < 1) requestAnimationFrame(tick);
           };
           requestAnimationFrame(tick);

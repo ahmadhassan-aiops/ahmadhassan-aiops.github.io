@@ -27,7 +27,7 @@ export const person = {
   /** The two credential cards under the hero photo. */
   credentials: [
     { title: 'PharmD', meta: '3.9 / 4.0 cGPA · Quaid-i-Azam University', icon: 'GraduationCap' },
-    { title: 'Level 6 Diploma in AIOps', meta: 'Grade A* · EduQual', icon: 'Award' },
+    { title: 'RQF Level 6 AIOps Diploma', meta: 'Grade A* · EduQual', icon: 'Award' },
   ],
 } as const;
 
@@ -74,6 +74,11 @@ export const hero = {
   roles: 'AI engineer · Data scientist · MLOps engineer',
   statement: 'I build production AI for health and medicine, and teach the next generation of AI engineers.',
   intro: 'A PharmD graduate turned AI engineer, designing machine learning, GenAI and MLOps systems end to end.',
+  /** The next-goal line in the hero. */
+  goal: {
+    label: 'Heading towards',
+    text: 'AI-assisted drug discovery and development, and AI engineering in the pharma industry.',
+  },
   primaryCta: 'See my work',
   socialsLabel: 'Find me on',
   toolsLabel: 'Tools I build with',
@@ -103,10 +108,10 @@ export const hero = {
 
 /** The headline numbers: shown once, in the stats band under the hero. */
 export const stats = [
-  { value: '5+', label: 'years in data science' },
-  { value: '1,500+', label: 'hours of live teaching' },
-  { value: '100+', label: 'students mentored' },
-  { value: '30+', label: 'end-to-end ML projects' },
+  { value: '5+', label: 'years in data science', icon: 'CalendarRange' },
+  { value: '1,500+', label: 'hours of live teaching', icon: 'Presentation' },
+  { value: '100+', label: 'students mentored', icon: 'Users' },
+  { value: '30+', label: 'end-to-end ML projects', icon: 'FolderGit2' },
 ] as const;
 
 export const about = {
@@ -114,7 +119,7 @@ export const about = {
   title: 'A pharmacist who builds AI',
   story: [
     'I trained as a pharmacist at Quaid-i-Azam University, and midway through my PharmD I discovered data science. I taught myself machine learning in the evenings, then took on freelance data science work on Fiverr and Upwork.',
-    'After graduating I moved fully into AI: consulting on machine learning projects, tutoring data science on Superprof and interning in AIOps at Al Nafi International College, where I went on to complete a Level 6 Diploma in AIOps.',
+    'After graduating I moved fully into AI: consulting on machine learning projects, tutoring data science on Superprof and interning in AIOps at Al Nafi International College, where I went on to complete an RQF Level 6 AIOps Diploma.',
     'I learned AI the way a computer science student does: programming, computer systems and the mathematics behind machine learning. That is why I teach the fundamentals properly, not just the tools. Today I build AI and MLOps systems and mentor students from medicine, business, engineering and the arts as they move into data and AI roles.',
     "I want to excel at the intersection of AI and medicine, and I'm eager to learn AI-assisted drug discovery and development. That is why I'm heading for a Master's and PhD in computational biology and bioinformatics: it brings my training in medicine together with AI engineering and operations, and it is where my specialisation and my future lie.",
   ],
@@ -123,7 +128,7 @@ export const about = {
   facts: [
     { icon: 'MapPin', text: 'Rawalpindi, Pakistan' },
     { icon: 'GraduationCap', text: 'PharmD, Quaid-i-Azam University' },
-    { icon: 'Award', text: 'Level 6 Diploma in AIOps' },
+    { icon: 'Award', text: 'RQF Level 6 AIOps Diploma' },
     { icon: 'Presentation', text: 'Superprof Ambassador · Data science tutor' },
   ],
   nextGoal: {
@@ -131,7 +136,13 @@ export const about = {
     text: "A Master's and PhD in computational biology and bioinformatics, towards AI-assisted drug discovery and development.",
   },
   focusTitle: 'Current focus',
-  focus: ['MLOps and AIOps', 'Kubernetes (CKA/CKAD track)', 'Generative AI', 'Cloud security', 'n8n automation', 'AWS and Azure'],
+  focus: [
+    { icon: 'FlaskConical', text: 'AI-assisted drug discovery and development' },
+    { icon: 'Rocket', text: 'Production code practices for AI product deployment' },
+    { icon: 'Activity', text: 'Maintainable, scalable and observable AI systems' },
+    { icon: 'ShieldCheck', text: 'AI governance' },
+    { icon: 'Network', text: 'Advanced agentic and multi-agent system design' },
+  ],
 } as const;
 
 export const journey = {
@@ -143,7 +154,7 @@ export const journey = {
     { year: '2022', title: 'Freelance data scientist', text: 'Client projects on Fiverr and Upwork.', icon: 'Briefcase' },
     { year: '2024', title: 'PharmD, Quaid-i-Azam University', text: 'Graduated with a 3.9 / 4.0 cGPA.', icon: 'GraduationCap' },
     { year: '2024', title: 'AI consultant and tutor', text: 'Machine learning consulting, data science tutoring on Superprof and an AIOps internship at Al Nafi.', icon: 'Presentation' },
-    { year: '2026', title: 'Level 6 Diploma in AIOps', text: 'Graduated with Grade A*, covering cloud, DevOps, security and AI systems.', icon: 'Award' },
+    { year: '2026', title: 'RQF Level 6 AIOps Diploma', text: 'Graduated with Grade A*, covering cloud, DevOps, security and AI systems.', icon: 'Award' },
     { year: 'Next', title: 'Computational biology and bioinformatics', text: "A Master's and PhD towards AI-assisted drug discovery and development.", icon: 'Dna', future: true },
   ],
   educationTitle: 'Education and credentials',
@@ -157,7 +168,7 @@ export const journey = {
       icon: 'GraduationCap',
     },
     {
-      title: 'RQF Level 6 Diploma in AIOps (EduQual)',
+      title: 'RQF Level 6 AIOps Diploma (EduQual)',
       org: 'Al Nafi International College',
       grade: 'Grade A*',
       years: '2024–2026',
@@ -381,7 +392,7 @@ export const milestones = {
     },
     {
       icon: 'Award',
-      title: 'RQF Level 6 Diploma in AIOps (EduQual)',
+      title: 'RQF Level 6 AIOps Diploma (EduQual)',
       meta: 'Al Nafi International College · Grade A*',
       date: '2024–2026',
       desc: 'I completed the full operational stack behind AI: cyber security, DevOps, cloud architecture, system administration and AI systems.',

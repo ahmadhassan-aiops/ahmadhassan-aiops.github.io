@@ -120,8 +120,8 @@
 
   --font-sans: "Geist Variable", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
-  /* Headings: Fraunces, a warm serif that sets the portfolio apart from the all-sans platform. */
-  --font-display: "Fraunces Variable", Georgia, serif;
+  /* Headings: Source Serif 4, a classic book serif drawn for screens, set apart from the all-sans platform. */
+  --font-display: "Source Serif 4 Variable", "Times New Roman", Georgia, serif;
 
   /* Type scale. Minimum size anywhere is 12px (text-caption / text-xs). */
   --text-display: 3rem;
@@ -201,9 +201,8 @@
   background-image: var(--grain);
 }
 
-/* Fraunces at its softer setting for every heading. */
+/* Optical sizing: display cuts at large sizes, sturdier text cuts at small ones. */
 .font-display {
-  font-variation-settings: "SOFT" 50, "WONK" 0;
   font-optical-sizing: auto;
 }
 
@@ -253,6 +252,14 @@
 }
 @utility animate-marquee {
   @media (prefers-reduced-motion: no-preference) { animation: marquee 70s linear infinite; }
+}
+/* The next-goal card's slow light sweep, only for motion-OK visitors. */
+@keyframes sheen {
+  0%, 55% { translate: 0 0; }
+  100% { translate: 400% 0; }
+}
+@utility animate-sheen {
+  @media (prefers-reduced-motion: no-preference) { animation: sheen 7s ease-in-out infinite; }
 }
 /* The marquee pauses while hovered or while a logo inside has focus. */
 [data-marquee]:hover .animate-marquee,

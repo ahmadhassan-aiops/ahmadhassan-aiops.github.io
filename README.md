@@ -2,7 +2,7 @@
 
 **Live site: https://ahmadhassanrx.com**
 
-Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It tells the same story as the platform with its own warm look: a terracotta and ivory palette (espresso in dark mode), Fraunces headings with Geist for reading, and a hexagon "AH" mark. The full design and copy rules are in `docs/PORTFOLIO-REDESIGN-PLAN.md`.
+Personal portfolio: projects, VerdictRx, credentials and teaching work, with links to my free learning platform, [AI with Ahmad](https://learn.ahmadhassanrx.com). It tells the same story as the platform with its own warm look: a terracotta and ivory palette (espresso in dark mode), Source Serif 4 headings with Geist for reading, and a hexagon "AH" mark. The full design and copy rules are in `docs/PORTFOLIO-REDESIGN-PLAN.md`.
 
 ---
 
@@ -11,7 +11,7 @@ Personal portfolio: projects, VerdictRx, credentials and teaching work, with lin
 - [Astro](https://astro.build) 7: static site
 - [Tailwind CSS](https://tailwindcss.com) v4: design tokens in `src/styles/global.css`, class recipes in `src/lib/ui.ts`
 - [lucide](https://lucide.dev) and [simple-icons](https://simpleicons.org): icons and tool logos, inlined at build time
-- Fraunces (headings), Geist (body) and Geist Mono (numbers only), all from Fontsource
+- Source Serif 4 (headings), Geist (body) and Geist Mono (numbers only), all from Fontsource
 - GitHub Actions: builds and deploys to GitHub Pages
 
 ## Project Structure

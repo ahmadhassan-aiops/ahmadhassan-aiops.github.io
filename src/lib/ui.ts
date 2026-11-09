@@ -64,10 +64,13 @@ export function card(variant: 'default' | 'feature' = 'default') {
 export const lift =
   'transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0';
 
-/** The square icon holder: brand (earned), neutral (in progress), sage (next goal) or solid. */
-export function iconTile(variant: 'brand' | 'neutral' | 'sage' | 'solid' = 'brand') {
+/** The square icon holder: brand (earned), neutral (in progress), sage (next goal) or solid; 40px, 32px for list rows or 48px for the hero credentials. */
+export function iconTile(variant: 'brand' | 'neutral' | 'sage' | 'solid' = 'brand', size: 'sm' | 'md' | 'lg' = 'md') {
   return cx(
-    'grid size-10 shrink-0 place-items-center rounded-xl [&_svg]:size-5',
+    'grid shrink-0 place-items-center',
+    size === 'sm' && 'size-8 rounded-lg [&_svg]:size-4',
+    size === 'md' && 'size-10 rounded-xl [&_svg]:size-5',
+    size === 'lg' && 'size-12 rounded-xl [&_svg]:size-6',
     variant === 'brand' && 'bg-brand-soft text-brand',
     variant === 'neutral' && 'border border-dashed border-line-strong bg-surface-hover text-fg-muted',
     variant === 'sage' && 'bg-sage-soft text-sage',

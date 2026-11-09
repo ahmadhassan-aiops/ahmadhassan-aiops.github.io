@@ -3,9 +3,11 @@ import { cx, eyebrow as eyebrowClass } from '../../lib/ui';
 
 /**
  * A full-width section: alternating default / subtle backgrounds, 80px → 96px vertical rhythm and
- * one heading pattern everywhere (eyebrow, a short terracotta rule, the H2 in Fraunces, an intro at
+ * one heading pattern everywhere (eyebrow, a short terracotta rule, the H2 in Source Serif 4, an intro at
  * most 60ch). Headings are left-aligned; only Contact centres its own.
  * `split` puts the heading (and the `lead` slot) in a 5-column left panel beside the content at lg.
+ * `headless` keeps the section labelled by `${id}-title` but leaves the heading to the caller, for
+ * layouts that place it inside their own grid (About).
  */
 interface Props {
   id: string;
@@ -14,16 +16,17 @@ interface Props {
   title?: string;
   intro?: string;
   split?: boolean;
+  headless?: boolean;
   class?: string;
 }
-const { id, tone = 'default', eyebrow, title, intro, split = false, class: className } = Astro.props;
+const { id, tone = 'default', eyebrow, title, intro, split = false, headless = false, class: className } = Astro.props;
 const titleId = `${id}-title`;
 ---
 
 <section id={id} aria-labelledby={title ? titleId : undefined} class={cx('scroll-mt-16 py-20 lg:py-24', tone === 'subtle' && 'bg-bg-subtle', className)}>
   <div class={cx('container-wide', split && 'grid gap-10 lg:grid-cols-12 lg:gap-12 2xl:gap-16')}>
     {
-      title && (
+      title && !headless && (
         <div data-reveal class={cx(split && 'lg:col-span-5')}>
           {eyebrow && (
             <>

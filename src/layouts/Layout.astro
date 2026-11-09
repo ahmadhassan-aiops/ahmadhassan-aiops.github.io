@@ -5,9 +5,9 @@ import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import photo from '../assets/ahmad.png';
 import { meta, navLabels, person, socials } from '../content/site';
-// Fraunces (headings), latin only, with every axis so SOFT and optical sizing work.
-import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
-import frauncesItalicUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-italic.woff2?url';
+// Source Serif 4 (headings), latin only, with the weight and optical size axes.
+import serifUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2?url';
+import serifItalicUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-italic.woff2?url';
 
 interface Props {
   title?: string;
@@ -44,10 +44,10 @@ const personLd = {
     <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
     <meta name="theme-color" content="#fbf7f1" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17120f" />
-    <link rel="preload" href={frauncesUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
     <style
       is:inline
-      set:html={`@font-face{font-family:"Fraunces Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${frauncesUrl}) format("woff2-variations")}@font-face{font-family:"Fraunces Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(${frauncesItalicUrl}) format("woff2-variations")}`}
+      set:html={`@font-face{font-family:"Source Serif 4 Variable";font-style:normal;font-display:swap;font-weight:200 900;src:url(${serifUrl}) format("woff2-variations")}@font-face{font-family:"Source Serif 4 Variable";font-style:italic;font-display:swap;font-weight:200 900;src:url(${serifItalicUrl}) format("woff2-variations")}`}
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
