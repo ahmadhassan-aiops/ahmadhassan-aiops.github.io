@@ -27,8 +27,8 @@ const counted = stats.map((s) => {
   The hero, light and warm (it follows the theme), on a faint dot grid.
   Left: availability, then the eyebrow, name, roles, statement, intro, the next-goal line, the CTAs with
   the social links beside them, and the two credentials. Right: the full-resolution portrait standing
-  on the hero's bottom edge, lit by a soft warm glow, with a faint contact shadow and fades that let the
-  suit dissolve into the page instead of ending in cut lines. Both columns share one centred width so the text and photo read as one block. Then the
+  centred in the right half, lit by a soft warm glow, with fades that let the suit dissolve into the
+  page instead of ending in cut lines. Both columns share one centred width so the text and photo read as one block. Then the
   stat cards and the tools marquee.
 -->
 <section id="top" aria-labelledby="hero-title" class="relative isolate overflow-hidden bg-bg">
@@ -125,11 +125,11 @@ const counted = stats.map((s) => {
         </div>
 
         <!--
-          The portrait, standing on the bottom edge of its block (the hero's bottom edge at lg; first on
-          phones, max 300px). Behind it, a blurred warm "studio light"; under it, a flat contact shadow.
-          The image itself has no shadow: portrait-fade dissolves the torso and the cut shoulders.
+          The portrait, centred in the right half at lg with space above and below (first on phones,
+          max 300px, on the bottom edge of its block). Behind it, a blurred warm "studio light". The
+          image itself has no shadow: portrait-fade dissolves the torso and the cut shoulders.
         -->
-        <div class="order-first pt-8 lg:order-none lg:self-end lg:pt-12">
+        <div class="order-first pt-8 lg:order-none lg:self-center lg:py-16">
           <div class="relative mx-auto w-full max-w-[18.75rem] sm:max-w-sm lg:max-w-none">
             <div
               aria-hidden="true"
@@ -146,10 +146,6 @@ const counted = stats.map((s) => {
               fetchpriority="high"
               class="portrait-fade relative block h-auto w-full"
             />
-            <div
-              aria-hidden="true"
-              class="pointer-events-none absolute inset-x-[5%] bottom-0 h-10 bg-[radial-gradient(50%_100%_at_50%_100%,var(--contact-shadow),transparent)] [--contact-shadow:color-mix(in_oklab,var(--fg)_6%,transparent)] dark:[--contact-shadow:color-mix(in_oklab,black_35%,transparent)]"
-            ></div>
           </div>
         </div>
       </div>
