@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import photo from '../assets/ahmad-cutout.png';
+import photo from '../assets/ahmad-portrait.png';
 import Icon from './ui/Icon.astro';
 import BrandIcon from './ui/BrandIcon.astro';
 import { hero, person, platform, socials, stats } from '../content/site';
@@ -24,10 +24,11 @@ const counted = stats.map((s) => {
 ---
 
 <!--
-  The hero, light and warm (it follows the theme), on a faint dot grid with no colour behind the photo.
+  The hero, light and warm (it follows the theme), on a faint dot grid.
   Left: availability, then the eyebrow, name, roles, statement, intro, the next-goal line, the CTAs with
-  the social links beside them, and the two credentials. Right: the cut-out photo standing on the hero's
-  bottom rule. Both columns share one centred width so the text and photo read as one block. Then the
+  the social links beside them, and the two credentials. Right: the full-resolution portrait standing
+  on the hero's bottom edge, lit by a soft warm glow, with a faint contact shadow and fades that let the
+  suit dissolve into the page instead of ending in cut lines. Both columns share one centred width so the text and photo read as one block. Then the
   stat cards and the tools marquee.
 -->
 <section id="top" aria-labelledby="hero-title" class="relative isolate overflow-hidden bg-bg">
@@ -123,18 +124,32 @@ const counted = stats.map((s) => {
           </ul>
         </div>
 
-        <!-- The photo alone, centred in the right half at lg with space above and below and a soft shadow; on phones it comes first (max 300px), standing on a rule. -->
-        <div class="order-first pt-8 max-lg:-mx-4 max-lg:border-b max-lg:border-line max-lg:px-4 lg:order-none lg:self-center lg:py-16">
-          <div class="mx-auto w-full max-w-[18.75rem] sm:max-w-sm lg:max-w-none">
-          <Image
-            src={photo}
-            alt={person.photoAlt}
-            widths={[320, 426]}
-            sizes="(min-width: 1536px) 512px, (min-width: 1280px) 464px, (min-width: 1024px) 400px, (min-width: 640px) 384px, 300px"
-            loading="eager"
-            fetchpriority="high"
-            class="block h-auto w-full lg:drop-shadow-[0_24px_32px_color-mix(in_oklab,var(--fg)_18%,transparent)] lg:dark:drop-shadow-[0_24px_32px_color-mix(in_oklab,black_55%,transparent)]"
-          />
+        <!--
+          The portrait, standing on the bottom edge of its block (the hero's bottom edge at lg; first on
+          phones, max 300px). Behind it, a blurred warm "studio light"; under it, a flat contact shadow.
+          The image itself has no shadow: portrait-fade dissolves the torso and the cut shoulders.
+        -->
+        <div class="order-first pt-8 lg:order-none lg:self-end lg:pt-12">
+          <div class="relative mx-auto w-full max-w-[18.75rem] sm:max-w-sm lg:max-w-none">
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute top-[38%] left-1/2 aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,var(--studio-light),color-mix(in_oklab,var(--studio-light)_50%,transparent)_40%,color-mix(in_oklab,var(--studio-light)_15%,transparent)_70%,transparent)] blur-3xl [--studio-light:color-mix(in_oklab,var(--brand-100)_70%,transparent)] dark:[--studio-light:color-mix(in_oklab,var(--brand-400)_14%,transparent)]"
+            ></div>
+            <Image
+              src={photo}
+              alt={person.photoAlt}
+              widths={[400, 600, 800, 1024]}
+              sizes="(min-width: 1536px) 512px, (min-width: 1280px) 464px, (min-width: 1024px) 400px, (min-width: 640px) 384px, 300px"
+              format="webp"
+              quality={85}
+              loading="eager"
+              fetchpriority="high"
+              class="portrait-fade relative block h-auto w-full"
+            />
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-x-[5%] bottom-0 h-10 bg-[radial-gradient(50%_100%_at_50%_100%,var(--contact-shadow),transparent)] [--contact-shadow:color-mix(in_oklab,var(--fg)_6%,transparent)] dark:[--contact-shadow:color-mix(in_oklab,black_35%,transparent)]"
+            ></div>
           </div>
         </div>
       </div>

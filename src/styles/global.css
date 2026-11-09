@@ -253,6 +253,13 @@
 @utility animate-marquee {
   @media (prefers-reduced-motion: no-preference) { animation: marquee 70s linear infinite; }
 }
+/* The hero portrait: the torso dissolves into the page at the bottom, and both cut shoulders fade out
+   over the last 7% of the width, so no straight edge of the source photo is ever visible. */
+@utility portrait-fade {
+  mask-image: linear-gradient(to bottom, black 82%, transparent 100%), linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+  mask-composite: intersect;
+}
+
 /* The next-goal card's slow light sweep, only for motion-OK visitors. */
 @keyframes sheen {
   0%, 55% { translate: 0 0; }
