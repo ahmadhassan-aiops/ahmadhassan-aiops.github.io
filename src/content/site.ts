@@ -238,37 +238,99 @@ export const verdictrx = {
 
 export type ProjectCategory = 'analysis' | 'ml' | 'dl' | 'cv-nlp' | 'genai' | 'sql-bi';
 
+const repo = (path: string) => `${socials.portfolioProjects}/tree/main/${path}`;
+const gh = (name: string) => `${socials.github}/${name}`;
+const streamlit = (name: string) => `https://${name}.streamlit.app/`;
+
+/**
+ * A deployed app. Each project appears once on the page: an app card carries its live link, its own code
+ * repo and the notebook folder it grew from, so that folder is not listed again under "More projects".
+ */
+export interface App {
+  /** Product name, where the app has one. */
+  name?: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  category: ProjectCategory;
+  icon: string;
+  healthcare?: boolean;
+  /** Working demo, not yet a finished product. */
+  demo?: boolean;
+  liveUrl: string;
+  codeUrl: string;
+  notebookUrl?: string;
+}
+
+/** A Streamlit Community Cloud app, named after its GitHub repo. */
+const app = (repoName: string, notebook: string | undefined, a: Omit<App, 'liveUrl' | 'codeUrl' | 'notebookUrl'>): App => ({
+  ...a,
+  liveUrl: streamlit(repoName),
+  codeUrl: gh(repoName),
+  notebookUrl: notebook ? repo(notebook) : undefined,
+});
+
+const da = '1.%20Data-analysis-with-python-Projects/';
+const ml = '2.%20Machine%20Learning%20Projects/';
+
+export const appsSection = {
+  title: 'Live apps',
+  intro: 'Each app runs in the browser and comes with its own code and the notebook it grew from.',
+  filterLabel: 'Filter apps',
+  liveLabel: 'Open app',
+  codeLabel: 'Code',
+  notebookLabel: 'Notebook',
+  demoBadge: 'Demo',
+  showAll: (n: number) => `Show all ${n} apps`,
+  showFewer: 'Show fewer apps',
+  showing: 'Showing {n} apps',
+  empty: 'No apps in this category yet.',
+  wakeNote: 'Free hosting puts an app to sleep when nobody has used it for a while, so the first visit can take up to a minute.',
+};
+
+export const apps: App[] = [
+  // Generative AI
+  app('dailyvalue-nutrition-assistant-application', '6.%20Gen%20AI%20Projects/GEN%20AI%20(Nutritional%20Bot)', { name: 'DailyValue', title: 'Nutrition assistant that cites its sources', desc: 'Answers questions on nutritional disorders only from public-domain NIH pages, gives every sentence its source, declines what the pages do not cover and screens each message for safety first.', tags: ['RAG', 'Hybrid search', 'LLMs'], category: 'genai', icon: 'Salad', healthcare: true }),
+  app('caseroute-complaint-routing-application', '6.%20Gen%20AI%20Projects/Gen%20AI%20(Complaints_classification)', { name: 'CaseRoute', title: 'Complaint routing', desc: 'Routes consumer financial complaints to the right product team with a confidence level and a short brief of the issue, the company and what the customer wants.', tags: ['LLMs', 'Structured output', 'Evaluation'], category: 'genai', icon: 'Inbox' }),
+  app('deskbrief-support-ticket-application', '5.%20Natural%20Languague%20Projects/Bank%20customers%20complain%20Summarization%20task', { name: 'DeskBrief', title: 'Support ticket triage', desc: "Reads IT support tickets, sets the priority by a written rule grounded in the customer's own words and drafts a reply that is checked before it is shown.", tags: ['LLMs', 'JSON schema', 'Evaluation'], category: 'genai', icon: 'Ticket' }),
+  app('medical-assistant-chatbot', undefined, { name: 'MedGuide', title: 'Medical assistant', desc: "Explains a patient's already prescribed medicines, nutrition and lifestyle plan in plain language, without diagnosing.", tags: ['LLMs', 'RAG', 'Streamlit'], category: 'genai', icon: 'Stethoscope', healthcare: true, demo: true }),
+  // Computer vision
+  app('sproutcheck-seedling-classifier-application', '4.%20Computer%20Vision%20Projects/5.%20CV%20Project', { name: 'SproutCheck', title: 'Seedling classifier', desc: 'Identifies 12 seedling species from a photo and says whether each one is a crop or a weed, with a fine-tuned EfficientNet running on ONNX.', tags: ['PyTorch', 'Transfer learning', 'ONNX'], category: 'cv-nlp', icon: 'Sprout' }),
+  // Machine learning
+  app('strokescope-screening-application', ml + 'Stroke%20Prediction', { name: 'StrokeScope', title: 'Stroke risk screening', desc: 'Screens patients for stroke risk from routine health data, with a calibrated risk, a triage line and the factors behind every result.', tags: ['scikit-learn', 'Calibration', 'Imbalanced data'], category: 'ml', icon: 'Brain', healthcare: true }),
+  app('turbolife-engine-health-application', ml + 'RLU%20jet%20prediction', { name: 'TurboLife', title: 'Jet engine health', desc: 'Estimates the remaining useful life of turbofan engines from NASA sensor data and sorts a fleet into ground, plan and fly.', tags: ['LightGBM', 'Time series', 'SHAP'], category: 'ml', icon: 'Plane' }),
+  app('bank-churn-radar-application', ml + 'Bank%20churners%20project', { name: 'Bank Churn Radar', title: 'Credit card churn', desc: 'Flags the credit card customers most likely to leave and explains each risk, so a retention team knows who to call first.', tags: ['XGBoost', 'SHAP', 'Classification'], category: 'ml', icon: 'Radar' }),
+  app('beta-retention-desk-application', ml + 'customer%20attrition%20at%20Beta%20Bank%20using%20ML', { name: 'Retention Desk', title: 'Bank customer attrition', desc: 'Ranks bank customers by the deposits at risk if they leave and suggests a retention play for each one.', tags: ['XGBoost', 'Threshold tuning', 'SHAP'], category: 'ml', icon: 'Landmark' }),
+  app('loanlift-campaign-application', ml + 'ML%20project%20(Bank%20Loan%20Model)', { name: 'LoanLift', title: 'Loan campaign targeting', desc: "Chooses which bank customers to offer a personal loan and shows the campaign's cost and return before it runs.", tags: ['XGBoost', 'SHAP', 'Profit analysis'], category: 'ml', icon: 'HandCoins' }),
+  app('fairtag-car-valuation-application', ml + 'Rusty%20Bargain%20Company%20ML%20Model%20To%20Attract%20New%20Buyers%20For%20The%20Used%20Cars', { name: 'FairTag', title: 'Used car valuation', desc: 'Values a used car with a price range, an itemised breakdown and similar ads, and finds the bargains among the listings.', tags: ['LightGBM', 'Regression', 'SHAP'], category: 'ml', icon: 'Car' }),
+  app('rankcast-demand-forecast-application', ml + 'Forecasting%20Orders%20of%20Sweet%20Lift%20Taxi%20Company%20Using%20ML', { name: 'RankCast', title: 'Taxi demand forecast', desc: 'Forecasts airport taxi orders for each of the next 24 hours, with a range and the drivers behind every forecast.', tags: ['Time series', 'Forecasting', 'Ridge regression'], category: 'ml', icon: 'TrendingUp' }),
+  app('wellscout-region-selection-application', ml + 'optimal%20oil%20well%20location%20selection%20using%20ML', { name: 'WellScout', title: 'Oil well region selection', desc: 'Picks the region for 200 new oil wells by simulating thousands of surveys and weighing expected profit against the risk of a loss.', tags: ['Bootstrapping', 'Regression', 'Risk analysis'], category: 'ml', icon: 'Droplet' }),
+  // Data analysis
+  app('instacart-shopping-behaviour', da + 'Instacart-Analysis', { title: 'How Instacart customers shop', desc: 'When customers order, what they reorder and which products go together across millions of grocery orders.', tags: ['Pandas', 'EDA', 'Plotly'], category: 'analysis', icon: 'ShoppingCart' }),
+  app('megaline-plan-analysis', da + 'Megaline%20Analysis', { title: 'Which phone plan earns more', desc: 'Compares two prepaid plans with statistical tests to find which one brings Megaline more revenue.', tags: ['Statistics', 'Hypothesis testing', 'Pandas'], category: 'analysis', icon: 'Smartphone' }),
+  app('foodhub-order-analysis', da + 'Online%20Restaurant%20Data%20Analysis', { title: 'FoodHub orders and ratings', desc: 'What drives orders, delivery speed and customer ratings for a food delivery service.', tags: ['Pandas', 'EDA', 'Plotly'], category: 'analysis', icon: 'UtensilsCrossed' }),
+  app('sf-housing-market-analysis', da + 'San%20Francisco%20housing%20rental%20analysis', { title: 'San Francisco housing, 2010 to 2016', desc: 'Rents, prices and neighbourhoods across San Francisco over time, with an interactive map.', tags: ['GeoPandas', 'Maps', 'Real estate'], category: 'analysis', icon: 'Building2' }),
+  app('chicago-taxi-analysis', da + 'Taxi%20Company%20Analysis', { title: 'Chicago taxi market', desc: 'Market share, drop-off hotspots and whether rain slows the airport run, with SQL and Python.', tags: ['SQL', 'Python', 'Hypothesis testing'], category: 'analysis', icon: 'CarTaxiFront' }),
+  app('product-usage-analysis', da + 'Usage_Analysis_of_Customers', { title: 'Product usage in January 2023', desc: 'What really happened to product usage in one month, separating real change from data problems.', tags: ['Pandas', 'EDA', 'Time series'], category: 'analysis', icon: 'Activity' }),
+  app('video-game-sales-analysis', da + 'Video%20Games%20Console%20Sale%20Analysis', { title: 'What makes a video game sell', desc: 'Sales across platforms, genres, regions and reviews, turned into a plan for the next year.', tags: ['Pandas', 'Statistics', 'EDA'], category: 'analysis', icon: 'Gamepad2' }),
+];
+
 export interface Project {
   title: string;
   desc: string;
   tags: string[];
   category: ProjectCategory;
   healthcare?: boolean;
-  /** Position in the featured row (VerdictRx is always first, so these start at 2). */
-  featured?: number;
   githubUrl: string;
-  /** A public Hugging Face Space, where one exists. */
-  liveUrl?: string;
 }
-
-const repo = (path: string) => `${socials.portfolioProjects}/tree/main/${path}`;
-const space = (id: string) => `${socials.huggingface.replace('huggingface.co/', 'huggingface.co/spaces/')}/${id}`;
-
-/** The four public Spaces (verified live on 2026-11-08). */
-const spaces = {
-  turbofan: space('turbofan_RUL_prediction_App'),
-  lungCancer: space('lung_cancer_prediction'),
-  forecasting: space('email_and_calls_forecasting'),
-  nutritional: space('Nutritional_assistant'),
-};
 
 export const projectsSection = {
   eyebrow: 'Projects',
   title: 'Selected work',
   intro:
-    'Over 30 projects across data analysis, machine learning, deep learning, generative AI and BI. Healthcare is where I started, so much of my work lives there.',
-  featuredTitle: 'Featured',
-  allTitle: 'All projects',
+    'Over 30 projects across data analysis, machine learning, deep learning, generative AI and BI, and twenty of them are live apps you can try now. Healthcare is where I started, so much of my work lives there.',
+  allTitle: 'More projects',
+  allIntro: 'Notebooks, models and dashboards on GitHub.',
   filterLabel: 'Filter projects',
   healthcareBadge: 'Healthcare',
   columns: { title: 'Project', category: 'Category', tools: 'Tools', links: 'Links' },
@@ -277,86 +339,44 @@ export const projectsSection = {
   /** Announced to screen readers after filtering; {n} is the number shown. */
   showing: 'Showing {n} projects',
   empty: 'No projects in this category yet.',
-  readMore: 'Read more',
-  liveLabel: 'Live app',
   codeLabel: 'Code',
   codeLink: 'All project code on GitHub',
-  appsLink: 'Live apps on Hugging Face',
-};
-
-/** VerdictRx leads the featured row; it is not one of the filterable projects. */
-export const featuredFlagship = {
-  title: 'VerdictRx',
-  desc: 'My flagship product: clinical decision support that helps physicians make the right prescribing choice by weighing the complete patient profile, with every recommendation backed by documented proof from clinical guidelines and rules.',
-  badges: ['Flagship product', 'Ongoing work'],
-  tags: ['Clinical AI', 'LLMs', 'Healthcare'],
-  href: '#verdictrx',
 };
 
 export const categories: { id: 'all' | 'healthcare' | ProjectCategory; label: string }[] = [
-  { id: 'all', label: 'All projects' },
+  { id: 'all', label: 'All' },
   { id: 'healthcare', label: 'Healthcare & medical AI' },
-  { id: 'analysis', label: 'Data analysis' },
+  { id: 'genai', label: 'Generative AI' },
+  { id: 'cv-nlp', label: 'CV & NLP' },
   { id: 'ml', label: 'Machine learning' },
   { id: 'dl', label: 'Deep learning' },
-  { id: 'cv-nlp', label: 'CV & NLP' },
-  { id: 'genai', label: 'Generative AI' },
+  { id: 'analysis', label: 'Data analysis' },
   { id: 'sql-bi', label: 'SQL & BI' },
 ];
 
+/** Projects without an app. A project that became an app is listed only in `apps`. */
 export const projects: Project[] = [
-  // Data analysis
-  { title: 'Instacart customer behaviour analysis', desc: 'Explores grocery ordering patterns, repeat purchases, order timing and product affinities to segment Instacart customers.', tags: ['Python', 'Pandas', 'Matplotlib', 'EDA'], category: 'analysis', githubUrl: repo('1.%20Data-analysis-with-python-Projects/Instacart-Analysis') },
-  { title: 'Megaline telecom usage analysis', desc: 'Compares two prepaid plans with statistical tests to find which one earns Megaline more revenue.', tags: ['Python', 'Statistics', 'Hypothesis testing', 'Seaborn'], category: 'analysis', githubUrl: repo('1.%20Data-analysis-with-python-Projects/Megaline%20Analysis') },
-  { title: 'Microsoft SaaS products analysis', desc: 'Analyses product usage, customer segments and retention across Microsoft SaaS product lines to guide business decisions.', tags: ['Pandas', 'EDA', 'Business intelligence'], category: 'analysis', githubUrl: repo('1.%20Data-analysis-with-python-Projects/Microsift%20SaaS%20products%20Analysis') },
-  { title: 'San Francisco housing rental analysis', desc: 'Maps rental prices across San Francisco over time to reveal pricing trends, neighbourhood patterns and investment opportunities.', tags: ['Python', 'GeoPandas', 'Visualisation', 'Real estate'], category: 'analysis', githubUrl: repo('1.%20Data-analysis-with-python-Projects/San%20Francisco%20housing%20rental%20analysis') },
-  { title: 'Taxi company revenue analysis', desc: 'Studies ride patterns, peak hours and driver efficiency to suggest ways a taxi company can optimise revenue.', tags: ['Pandas', 'Time series', 'Matplotlib'], category: 'analysis', githubUrl: repo('1.%20Data-analysis-with-python-Projects/Taxi%20Company%20Analysis') },
-  { title: 'Video game console sales analysis', desc: 'Tracks sales across platforms, genres and regions to identify the most profitable segments for a games retailer.', tags: ['Python', 'EDA', 'Statistical testing'], category: 'analysis', githubUrl: repo('1.%20Data-analysis-with-python-Projects/Video%20Games%20Console%20Sale%20Analysis') },
-  { title: 'Stroke risk exploratory analysis', desc: 'Explores clinical records to identify stroke risk factors such as hypertension, BMI, glucose level and age.', tags: ['Medical data', 'Seaborn', 'Correlation analysis'], category: 'analysis', healthcare: true, githubUrl: repo('1.%20Data-analysis-with-python-Projects/Stroke%20Analysis') },
-  // Machine learning
-  { title: 'Bank customer churn prediction', desc: 'Predicts which Beta Bank customers are likely to leave, using an XGBoost and random forest ensemble.', tags: ['XGBoost', 'scikit-learn', 'SMOTE', 'Feature engineering'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/customer%20attrition%20at%20Beta%20Bank%20using%20ML') },
-  { title: 'Gold recovery prediction', desc: 'Predicts gold recovery at the rougher and final purification stages with a multi-stage regression model to optimise extraction.', tags: ['Regression', 'Pipeline', 'Cross-validation', 'sMAPE'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/Predict%20recovery%20of%20gold%20during%20mining%20proces%20using%20ML') },
-  { title: 'Optimal oil well location', desc: 'Uses bootstrapped regression to choose the most profitable oil well region while balancing risk and expected return.', tags: ['Linear regression', 'Bootstrapping', 'Risk analysis'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/optimal%20oil%20well%20location%20selection%20using%20ML') },
-  { title: 'Rusty Bargain used car price model', desc: 'Predicts fair market prices for a used car marketplace, comparing LightGBM, XGBoost and random forest models.', tags: ['LightGBM', 'XGBoost', 'RMSE'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/Rusty%20Bargain%20Company%20ML%20Model%20To%20Attract%20New%20Buyers%20For%20The%20Used%20Cars') },
-  { title: 'Sweet Lift taxi demand forecasting', desc: 'Forecasts hourly airport taxi demand with ARIMA and LightGBM, using lag and rolling-window features.', tags: ['Time series', 'LightGBM', 'ARIMA', 'Feature engineering'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/Forecasting%20Orders%20of%20Sweet%20Lift%20Taxi%20Company%20Using%20ML') },
-  { title: 'Insurance benefit regression', desc: 'Predicts insurance payouts with linear regression while masking customer data to protect privacy.', tags: ['Linear regression', 'Data masking', 'Similarity analysis'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/Regression%20Analysis%20on%20Insurance%20Benifits%20Data') },
-  { title: 'Mobile user plan classification', desc: 'Recommends the right mobile plan, Smart or Ultra, from user behaviour with decision tree and random forest classifiers.', tags: ['Classification', 'Decision tree', 'Random forest'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/Mobile%20company%20users%20classification%20model') },
-  { title: 'Bank loan default prediction', desc: 'Predicts the probability of loan default in an end-to-end pipeline, with SHAP values explaining each decision.', tags: ['XGBoost', 'SHAP', 'Class imbalance', 'Pipeline'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/ML%20project%20(Bank%20Loan%20Model)') },
-  { title: 'Predictive maintenance cost reduction', desc: 'Predicts equipment failure so maintenance can move from reactive to proactive, reducing operating costs.', tags: ['Classification', 'Cost-benefit analysis', 'Reliability'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/Maintenance%20cost%20reduction%20through%20predictive%20techniques') },
-  { title: 'Stroke prediction', desc: 'Predicts stroke risk from patient health records, handling heavy class imbalance with resampling and boosted trees.', tags: ['scikit-learn', 'XGBoost', 'Imbalanced data'], category: 'ml', healthcare: true, featured: 4, githubUrl: repo('2.%20Machine%20Learning%20Projects/Stroke%20Prediction') },
-  { title: 'Lung cancer prediction app', desc: 'A multiclass lung cancer risk model served as a Dockerised Flask web app that generates a PDF report.', tags: ['XGBoost', 'Flask', 'Docker'], category: 'ml', healthcare: true, featured: 5, githubUrl: repo('2.%20Machine%20Learning%20Projects/Lungs%20cancer%20Prediction%20App'), liveUrl: spaces.lungCancer },
-  { title: 'Jet engine RUL prediction app', desc: "Predicts the remaining useful life of jet engines on NASA's turbofan data, served as a Flask app that alerts maintenance teams.", tags: ['Random forest', 'Time series', 'Flask', 'Docker', 'Predictive maintenance'], category: 'ml', githubUrl: repo('2.%20Machine%20Learning%20Projects/RLU%20jet%20prediction'), liveUrl: spaces.turbofan },
-  // Deep learning
-  { title: 'Churn prediction with a neural network', desc: 'Predicts customer churn with a Keras neural network using dropout regularisation, compared against classical machine learning baselines.', tags: ['Keras', 'ANN', 'Dropout', 'Binary classification'], category: 'dl', githubUrl: repo('3.%20Deep%20Learning%20Projects/Churn%20prediction%20using%20neural%20network') },
-  { title: "Alzheimer's disease detection", desc: 'A deep learning image classifier that grades MRI brain scans across four stages of dementia.', tags: ['Deep learning', 'CNN', 'TensorFlow'], category: 'dl', healthcare: true, featured: 6, githubUrl: repo('3.%20Deep%20Learning%20Projects/alzheimer%20Disease%20Detection') },
-  // Computer vision and NLP
-  { title: 'Computer vision image classification', desc: 'Classifies images with a CNN pipeline using ResNet transfer learning and data augmentation, ready for inference.', tags: ['CNN', 'ResNet', 'Transfer learning', 'OpenCV'], category: 'cv-nlp', githubUrl: repo('4.%20Computer%20Vision%20Projects/5.%20CV%20Project') },
-  { title: 'Bank complaint summarisation', desc: "Summarises bank customer complaints automatically with transformer models to cut support teams' reading time.", tags: ['Transformers', 'Hugging Face', 'NLP', 'Summarisation'], category: 'cv-nlp', githubUrl: repo('5.%20Natural%20Languague%20Projects/Bank%20customers%20complain%20Summarization%20task') },
   // Generative AI
-  { title: 'MedGuide: medical assistant RAG bot', desc: "An LLM assistant that explains a patient's prescribed medicines, nutrition and lifestyle plan against international clinical guidelines.", tags: ['RAG', 'LLMs', 'Streamlit'], category: 'genai', healthcare: true, featured: 2, githubUrl: 'https://github.com/ahmadhassan-aiops/medical-assistant-chatbot' },
   { title: 'Complaint classification with a fine-tuned LLM', desc: 'Classifies customer complaints into categories with a fine-tuned DistilBERT model, compared against a zero-shot baseline.', tags: ['LoRA', 'Hugging Face', 'Fine-tuning', 'NLP'], category: 'genai', githubUrl: repo('6.%20Gen%20AI%20Projects/Gen%20AI%20(Cmplaints%20classification%20with%20fine%20tuning)') },
-  { title: 'Nutritional bot', desc: 'A nutrition-disorder specialist chatbot that answers from a medical reference library with retrieval-augmented generation.', tags: ['RAG', 'LangChain', 'ChromaDB'], category: 'genai', healthcare: true, featured: 3, githubUrl: repo('6.%20Gen%20AI%20Projects/GEN%20AI%20(Nutritional%20Bot)'), liveUrl: spaces.nutritional },
   { title: 'Text-to-image with Stable Diffusion', desc: 'Generates personalised images with Stable Diffusion, fine-tuned with DreamBooth to learn a custom subject and artist style.', tags: ['Stable Diffusion', 'DreamBooth', 'LoRA', 'Diffusers'], category: 'genai', githubUrl: repo('6.%20Gen%20AI%20Projects/Text%20To%20image%20using%20Stable%20Diffusion') },
+  // Deep learning
+  { title: "Alzheimer's disease detection", desc: 'A deep learning image classifier that grades MRI brain scans across four stages of dementia.', tags: ['Deep learning', 'CNN', 'TensorFlow'], category: 'dl', healthcare: true, githubUrl: repo('3.%20Deep%20Learning%20Projects/alzheimer%20Disease%20Detection') },
+  { title: 'Churn prediction with a neural network', desc: 'Predicts customer churn with a Keras neural network using dropout regularisation, compared against classical machine learning baselines.', tags: ['Keras', 'ANN', 'Dropout', 'Binary classification'], category: 'dl', githubUrl: repo('3.%20Deep%20Learning%20Projects/Churn%20prediction%20using%20neural%20network') },
+  // Machine learning
+  { title: 'Lung cancer prediction', desc: 'A multiclass lung cancer risk model served as a Dockerised Flask web app that generates a PDF report.', tags: ['XGBoost', 'Flask', 'Docker'], category: 'ml', healthcare: true, githubUrl: repo(ml + 'Lungs%20cancer%20Prediction%20App') },
+  { title: 'Gold recovery prediction', desc: 'Predicts gold recovery at the rougher and final purification stages with a multi-stage regression model to optimise extraction.', tags: ['Regression', 'Pipeline', 'Cross-validation', 'sMAPE'], category: 'ml', githubUrl: repo(ml + 'Predict%20recovery%20of%20gold%20during%20mining%20proces%20using%20ML') },
+  { title: 'Predictive maintenance cost reduction', desc: 'Predicts equipment failure so maintenance can move from reactive to proactive, reducing operating costs.', tags: ['Classification', 'Cost-benefit analysis', 'Reliability'], category: 'ml', githubUrl: repo(ml + 'Maintenance%20cost%20reduction%20through%20predictive%20techniques') },
+  { title: 'Insurance benefit regression', desc: 'Predicts insurance payouts with linear regression while masking customer data to protect privacy.', tags: ['Linear regression', 'Data masking', 'Similarity analysis'], category: 'ml', githubUrl: repo(ml + 'Regression%20Analysis%20on%20Insurance%20Benifits%20Data') },
+  { title: 'Mobile user plan classification', desc: 'Recommends the right mobile plan, Smart or Ultra, from user behaviour with decision tree and random forest classifiers.', tags: ['Classification', 'Decision tree', 'Random forest'], category: 'ml', githubUrl: repo(ml + 'Mobile%20company%20users%20classification%20model') },
+  // Data analysis
+  { title: 'Stroke risk exploratory analysis', desc: 'Explores clinical records to identify stroke risk factors such as hypertension, BMI, glucose level and age.', tags: ['Medical data', 'Seaborn', 'Correlation analysis'], category: 'analysis', healthcare: true, githubUrl: repo(da + 'Stroke%20Analysis') },
+  { title: 'Microsoft SaaS products analysis', desc: 'Analyses product usage, customer segments and retention across Microsoft SaaS product lines to guide business decisions.', tags: ['Pandas', 'EDA', 'Business intelligence'], category: 'analysis', githubUrl: repo(da + 'Microsift%20SaaS%20products%20Analysis') },
   // SQL and BI
   { title: 'AdventureHubs SQL analysis', desc: 'Answers business questions on the AdventureWorks database with joins, window functions and CTEs, tuned for performance.', tags: ['SQL', 'Window functions', 'CTEs', 'Query optimisation'], category: 'sql-bi', githubUrl: repo('7.%20SQL%20Projects/AdventureHubs') },
   { title: 'SQL, Python and Power BI ETL pipeline', desc: 'Extracts data from SQL Server, transforms it with Python and Pandas, and loads it into Power BI for executive dashboards.', tags: ['SQL', 'Python', 'Power BI', 'ETL'], category: 'sql-bi', githubUrl: repo('8.%20SQL%2BPython%2BPowerBI%20Combined%20ETL%20Project') },
   { title: 'HR attrition dashboard in Tableau', desc: 'An interactive Tableau dashboard showing employee attrition patterns, satisfaction scores and retention risk factors for HR teams.', tags: ['Tableau', 'HR analytics', 'Dashboard design'], category: 'sql-bi', githubUrl: repo('Tableau/HR-Employee-Attrition%20Project') },
   { title: 'Medical settings comparative analysis', desc: 'Compares patient outcomes, treatment efficacy and resource use across medical settings in Tableau.', tags: ['Tableau', 'Healthcare analytics', 'KPI visualisation'], category: 'sql-bi', healthcare: true, githubUrl: repo('Tableau/Medical%20seetings%20comparative%20Analysis') },
 ];
-
-export const openSource = {
-  eyebrow: 'Open source',
-  title: 'Live apps on Hugging Face',
-  intro: 'Some of my projects run as live apps on Hugging Face Spaces, so you can try them in your browser without installing anything.',
-  cta: 'View my Hugging Face profile',
-  spaceBadge: 'Space',
-  spaces: [
-    { name: 'Turbofan RUL prediction app', desc: "Predicts the remaining useful life of jet engines on NASA's turbofan data.", url: spaces.turbofan },
-    { name: 'Lung cancer prediction', desc: 'Estimates lung cancer risk and explains the result.', url: spaces.lungCancer },
-    { name: 'Email and calls forecasting', desc: 'Forecasts daily email and call volumes from 27 features.', url: spaces.forecasting },
-    { name: 'Nutritional bot', desc: 'A nutrition-disorder specialist chatbot built on RAG.', url: spaces.nutritional },
-  ],
-};
 
 /** The six roadmaps, with taglines copied word for word from the AI with Ahmad platform. */
 export const teaching = {
