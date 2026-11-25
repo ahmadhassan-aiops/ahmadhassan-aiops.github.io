@@ -262,10 +262,10 @@ export interface App {
   notebookUrl?: string;
 }
 
-/** A Streamlit Community Cloud app, named after its GitHub repo. */
-const app = (repoName: string, notebook: string | undefined, a: Omit<App, 'liveUrl' | 'codeUrl' | 'notebookUrl'>): App => ({
+/** A Streamlit Community Cloud app, at its repo's name unless `liveUrl` says otherwise. */
+const app = (repoName: string, notebook: string | undefined, a: Omit<App, 'liveUrl' | 'codeUrl' | 'notebookUrl'> & { liveUrl?: string }): App => ({
   ...a,
-  liveUrl: streamlit(repoName),
+  liveUrl: a.liveUrl ?? streamlit(repoName),
   codeUrl: gh(repoName),
   notebookUrl: notebook ? repo(notebook) : undefined,
 });
@@ -290,7 +290,7 @@ export const appsSection = {
 
 export const apps: App[] = [
   // Generative AI
-  app('dailyvalue-nutrition-assistant-application', '6.%20Gen%20AI%20Projects/GEN%20AI%20(Nutritional%20Bot)', { name: 'DailyValue', title: 'Nutrition assistant that cites its sources', desc: 'Answers questions on nutritional disorders only from public-domain NIH pages, gives every sentence its source, declines what the pages do not cover and screens each message for safety first.', tags: ['RAG', 'Hybrid search', 'LLMs'], category: 'genai', icon: 'Salad', healthcare: true }),
+  app('dailyvalue-nutrition-assistant-application', '6.%20Gen%20AI%20Projects/GEN%20AI%20(Nutritional%20Bot)', { name: 'DailyValue', title: 'Nutrition assistant that cites its sources', desc: 'Answers questions on nutritional disorders only from public-domain NIH pages, gives every sentence its source, declines what the pages do not cover and screens each message for safety first.', tags: ['RAG', 'Hybrid search', 'LLMs'], category: 'genai', icon: 'Salad', healthcare: true, liveUrl: streamlit('dailyvalue-nutrition-assistant') }),
   app('caseroute-complaint-routing-application', '6.%20Gen%20AI%20Projects/Gen%20AI%20(Complaints_classification)', { name: 'CaseRoute', title: 'Complaint routing', desc: 'Routes consumer financial complaints to the right product team with a confidence level and a short brief of the issue, the company and what the customer wants.', tags: ['LLMs', 'Structured output', 'Evaluation'], category: 'genai', icon: 'Inbox' }),
   app('deskbrief-support-ticket-application', '5.%20Natural%20Languague%20Projects/Bank%20customers%20complain%20Summarization%20task', { name: 'DeskBrief', title: 'Support ticket triage', desc: "Reads IT support tickets, sets the priority by a written rule grounded in the customer's own words and drafts a reply that is checked before it is shown.", tags: ['LLMs', 'JSON schema', 'Evaluation'], category: 'genai', icon: 'Ticket' }),
   app('medical-assistant-chatbot', undefined, { name: 'MedGuide', title: 'Medical assistant', desc: "Explains a patient's already prescribed medicines, nutrition and lifestyle plan in plain language, without diagnosing.", tags: ['LLMs', 'RAG', 'Streamlit'], category: 'genai', icon: 'Stethoscope', healthcare: true, demo: true }),
