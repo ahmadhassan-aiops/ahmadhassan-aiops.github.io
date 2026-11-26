@@ -38,6 +38,7 @@ export const socials = {
   linkedin: 'https://www.linkedin.com/in/ahmad-hassan-79a44b1a3',
   github: 'https://github.com/ahmadhassan-aiops',
   huggingface: 'https://huggingface.co/myhuggingface333',
+  streamlit: 'https://share.streamlit.io/user/ahmadhassan-aiops',
   portfolioProjects: 'https://github.com/ahmadhassan-aiops/AIOPS-Portfolio-Projects',
   superprof:
     'https://www.superprof.com/tutor-data-science-devops-mlops-cloud-cybersecurity-python-machine-learning-automation-lessons.html',
@@ -480,6 +481,7 @@ export const footer = {
     { key: 'linkedin', label: 'LinkedIn' },
     { key: 'github', label: 'GitHub' },
     { key: 'huggingface', label: 'Hugging Face' },
+    { key: 'streamlit', label: 'Streamlit apps' },
     { key: 'superprof', label: 'Superprof profile' },
   ],
 };
